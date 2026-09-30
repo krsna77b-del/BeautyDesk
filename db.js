@@ -93,6 +93,22 @@ addColumnIfMissing('clients', "wa_phone_number_id TEXT");
 addColumnIfMissing('clients', "wa_access_token TEXT");
 addColumnIfMissing('clients', "wa_verify_token TEXT");
 
+// Existing rows stay unverified; old outbound logs are not delivery evidence.
+addColumnIfMissing('messages', "wa_message_id TEXT");
+addColumnIfMissing('messages', "delivery_status TEXT");
+addColumnIfMissing('messages', "delivery_error_code TEXT");
+db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS messages_wa_id
+  ON messages(client_id, direction, wa_message_id) WHERE wa_message_id IS NOT NULL`);
+
+// Receipts can arrive before the POST /messages response returns its message ID.
+db.exec(`CREATE TABLE IF NOT EXISTS whatsapp_receipts (
+  client_id TEXT NOT NULL,
+  wa_message_id TEXT NOT NULL,
+  delivery_status TEXT NOT NULL,
+  delivery_error_code TEXT,
+  PRIMARY KEY (client_id, wa_message_id)
+)`);
+
 const DEFAULT_HOURS = JSON.stringify({
   mon: '09:00-18:00', tue: '09:00-18:00', wed: '09:00-18:00', thu: '09:00-18:00',
   fri: '09:00-18:00', sat: '09:00-14:00', sun: 'closed',

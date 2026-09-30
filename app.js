@@ -204,10 +204,7 @@ async function renderClient(me){
 
   document.getElementById('waWebhookUrl').value = me.webhook_url;
   document.getElementById('waVerifyToken').value = me.wa_verify_token;
-  const connectedPill = document.getElementById('waConnectedPill');
-  connectedPill.textContent = me.wa_connected ? 'Connected' : 'Not connected';
-  connectedPill.style.background = me.wa_connected ? 'var(--good-bg)' : 'var(--warn-bg)';
-  connectedPill.style.color = me.wa_connected ? 'var(--good)' : 'var(--warn)';
+  renderWhatsappConnection(me);
 
   CURRENT_HOURS = JSON.parse(me.hours);
   renderHoursForm(CURRENT_HOURS);
@@ -226,7 +223,7 @@ async function renderClient(me){
 
 function updateWaStatusUI(on){
   document.getElementById('waStatusCard').classList.toggle('off', !on);
-  document.getElementById('waStatusText').textContent = on ? 'AI Receptionist is online' : 'AI Receptionist is paused';
+  document.getElementById('waStatusText').textContent = on ? 'AI Receptionist is enabled' : 'AI Receptionist is paused';
 }
 function toggleWhatsapp(){
   updateWaStatusUI(document.getElementById('waToggle').checked);
@@ -314,19 +311,45 @@ async function saveHours(){
 }
 
 /* ---- WhatsApp connection ---- */
+function protectWhatsappInputs(){
+  const idInput = document.getElementById('waPhoneNumberId');
+  const tokenInput = document.getElementById('waAccessToken');
+  if(idInput){ idInput.setAttribute('autocomplete','off'); idInput.setAttribute('inputmode','numeric'); }
+  if(tokenInput){ tokenInput.setAttribute('autocomplete','new-password'); tokenInput.setAttribute('type','password'); }
+}
+function renderWhatsappConnection(me){
+  protectWhatsappInputs();
+  const pill = document.getElementById('waConnectedPill');
+  const last = me.wa_last_delivery;
+  let label = me.wa_connected ? 'Saved · delivery unverified' : 'Not configured';
+  let good = false;
+  if(me.wa_connected && last){
+    const labels = { pending: 'Reply sending', accepted: 'Reply accepted · awaiting delivery', sent: 'Reply sent · awaiting delivery', delivered: 'Last reply delivered', read: 'Last reply read', unknown: 'Reply delivery unknown', failed: 'Reply failed' };
+    label = labels[last.delivery_status] || label;
+    if(last.delivery_error_code) label += ' (' + last.delivery_error_code + ')';
+    good = ['delivered','read'].includes(last.delivery_status);
+  }
+  pill.textContent = label;
+  pill.style.background = good ? 'var(--good-bg)' : 'var(--warn-bg)';
+  pill.style.color = good ? 'var(--good)' : 'var(--warn)';
+}
 async function saveWhatsappConnection(){
+  const idInput = document.getElementById('waPhoneNumberId');
+  const tokenInput = document.getElementById('waAccessToken');
+  const phoneNumberId = idInput.value.trim();
+  const accessToken = tokenInput.value.trim();
+  if(!phoneNumberId && !accessToken){ toast('Enter connection details to update. Blank fields keep saved values.'); return; }
+  if(phoneNumberId && !/^\d{1,32}$/.test(phoneNumberId)){ toast('Phone Number ID must contain digits, not your email or display phone number.'); return; }
+  if(accessToken && (accessToken.length < 20 || accessToken.length > 4096 || /[\s@]/.test(accessToken))){ toast('Use your Meta access token, not your login password.'); return; }
   try{
-    await api('PATCH','/api/client/whatsapp-connection', {
-      phoneNumberId: document.getElementById('waPhoneNumberId').value.trim(),
-      accessToken: document.getElementById('waAccessToken').value.trim(),
-    });
-    toast('WhatsApp connection saved.');
-    const me = await api('GET','/api/client/me');
-    const connectedPill = document.getElementById('waConnectedPill');
-    connectedPill.textContent = me.wa_connected ? 'Connected' : 'Not connected';
-    connectedPill.style.background = me.wa_connected ? 'var(--good-bg)' : 'var(--warn-bg)';
-    connectedPill.style.color = me.wa_connected ? 'var(--good)' : 'var(--warn)';
-  }catch(e){ toast('Could not save — please try again.'); }
+    await api('PATCH','/api/client/whatsapp-connection', { phoneNumberId, accessToken });
+    tokenInput.value = '';
+    toast('Settings saved. Delivery is verified only after a WhatsApp reply arrives.');
+    renderWhatsappConnection(await api('GET','/api/client/me'));
+  }catch(e){
+    const labels = { invalid_phone_number_id: 'Enter the numeric Meta Phone Number ID.', invalid_access_token: 'Enter a valid-format Meta access token.', no_connection_changes: 'Enter new details; saved values are unchanged.' };
+    toast(labels[e.message] || 'Could not save — please try again.');
+  }
 }
 
 /* ---- WhatsApp AI simulator ---- */
@@ -402,4 +425,5 @@ function drawBars(containerId, entries){
 }
 
 /* ============ INIT ============ */
+protectWhatsappInputs();
 go('site');

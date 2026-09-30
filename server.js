@@ -159,6 +159,7 @@ app.get('/api/client/me', requireClient, (req, res) => {
     whatsapp_enabled: c.whatsapp_enabled, greeting: c.greeting, plan_status: c.plan_status,
     hours: c.hours || db.DEFAULT_HOURS,
     wa_connected: !!(c.wa_phone_number_id && c.wa_access_token),
+    wa_last_delivery: db.prepare("SELECT delivery_status, delivery_error_code FROM messages WHERE client_id=? AND direction='out' AND delivery_status IS NOT NULL ORDER BY created_at DESC, rowid DESC LIMIT 1").get(c.id) || null,
     wa_verify_token: c.wa_verify_token,
     webhook_url: webhookUrl,
   });
@@ -176,8 +177,22 @@ app.patch('/api/client/settings', requireClient, (req, res) => {
 });
 app.patch('/api/client/whatsapp-connection', requireClient, (req, res) => {
   const { phoneNumberId, accessToken } = req.body || {};
+  const current = db.prepare('SELECT * FROM clients WHERE id=?').get(req.clientId);
+  if (!current) return res.status(404).json({ error: 'not_found' });
+  if ((phoneNumberId != null && typeof phoneNumberId !== 'string') ||
+      (accessToken != null && typeof accessToken !== 'string')) {
+    return res.status(400).json({ error: 'invalid_connection_fields' });
+  }
+  const newId = (phoneNumberId || '').trim();
+  const newToken = (accessToken || '').trim();
+  if (!newId && !newToken) return res.status(400).json({ error: 'no_connection_changes' });
+  // Empty inputs retain saved credentials; never overwrite them with autofill/blank data.
+  const id = newId || current.wa_phone_number_id;
+  const token = newToken || current.wa_access_token;
+  if (!validPhoneNumberId(id)) return res.status(400).json({ error: 'invalid_phone_number_id' });
+  if (!validAccessToken(token)) return res.status(400).json({ error: 'invalid_access_token' });
   db.prepare('UPDATE clients SET wa_phone_number_id=?, wa_access_token=? WHERE id=?')
-    .run(String(phoneNumberId || '').trim() || null, String(accessToken || '').trim() || null, req.clientId);
+    .run(id, token, req.clientId);
   res.json({ ok: true });
 });
 
@@ -249,16 +264,60 @@ app.post('/api/whatsapp/simulate', requireClient, async (req, res) => {
 /* ---------- REAL WHATSAPP WEBHOOK (Meta Cloud API) ----------
    Wire this up once you have a WhatsApp Business number: see README. */
 
-async function sendWhatsAppMessage(client, to, text) {
-  if (!client.wa_phone_number_id || !client.wa_access_token) return { ok: false, reason: 'not_connected' };
-  const res = await fetch(`https://graph.facebook.com/v20.0/${client.wa_phone_number_id}/messages`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${client.wa_access_token}` },
-    body: JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body: text } }),
-  });
-  if (!res.ok) return { ok: false, reason: 'send_failed', status: res.status, body: await res.text() };
-  return { ok: true };
+function validPhoneNumberId(value) {
+  return typeof value === 'string' && /^\d{1,32}$/.test(value);
 }
+function validAccessToken(value) {
+  // Format checks prevent common autofill mistakes; they do NOT validate Meta access.
+  return typeof value === 'string' && value.length >= 20 && value.length <= 4096 && !/[\s@]/.test(value);
+}
+function metaErrorCode(error) {
+  return Number.isInteger(error?.code) ? String(error.code) : null;
+}
+async function sendWhatsAppMessage(client, to, text) {
+  if (!validPhoneNumberId(client.wa_phone_number_id) || !validAccessToken(client.wa_access_token)) {
+    return { ok: false, status: 'failed', code: 'invalid_connection' };
+  }
+  try {
+    const res = await fetch(`https://graph.facebook.com/v20.0/${client.wa_phone_number_id}/messages`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${client.wa_access_token}` },
+      body: JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body: text } }),
+      signal: AbortSignal.timeout(15000),
+    });
+    let payload;
+    try { payload = await res.json(); } catch { payload = null; }
+    if (!res.ok) return { ok: false, status: 'failed', code: metaErrorCode(payload?.error) || `http_${res.status}` };
+    const messageId = payload?.messages?.[0]?.id;
+    if (typeof messageId !== 'string' || !messageId) {
+      return { ok: false, status: 'unknown', code: 'missing_message_id' };
+    }
+    return { ok: true, status: 'accepted', messageId };
+  } catch {
+    // The request may already have reached Meta. Never retry automatically and risk duplicates.
+    return { ok: false, status: 'unknown', code: 'transport_error' };
+  }
+}
+
+function applyWhatsAppStatus(clientId, status) {
+  if (!['sent', 'delivered', 'read', 'failed'].includes(status?.status) || typeof status.id !== 'string') return;
+  const previous = db.prepare('SELECT delivery_status FROM whatsapp_receipts WHERE client_id=? AND wa_message_id=?').get(clientId, status.id);
+  const rank = { sent: 2, failed: 2, delivered: 3, read: 4 };
+  // Receipts can arrive out of order: never downgrade confirmed delivery/read.
+  if (previous && (status.status === 'failed' ? rank[previous.delivery_status] >= 3 : rank[status.status] <= rank[previous.delivery_status])) return;
+  const errorCode = status.status === 'failed' ? metaErrorCode(status.errors?.[0]) || 'delivery_failed' : null;
+  db.prepare(`INSERT INTO whatsapp_receipts(client_id,wa_message_id,delivery_status,delivery_error_code) VALUES (?,?,?,?)
+    ON CONFLICT(client_id,wa_message_id) DO UPDATE SET delivery_status=excluded.delivery_status, delivery_error_code=excluded.delivery_error_code`)
+    .run(clientId, status.id, status.status, errorCode);
+  applyStoredWhatsAppStatus(clientId, status.id);
+  if (status.status === 'failed') console.error('whatsapp_delivery_failed', { code: errorCode });
+}
+function applyStoredWhatsAppStatus(clientId, messageId) {
+  const receipt = db.prepare('SELECT * FROM whatsapp_receipts WHERE client_id=? AND wa_message_id=?').get(clientId, messageId);
+  if (receipt) db.prepare("UPDATE messages SET delivery_status=?, delivery_error_code=? WHERE client_id=? AND direction='out' AND wa_message_id=?")
+    .run(receipt.delivery_status, receipt.delivery_error_code, clientId, messageId);
+}
+function webhookArray(value) { return Array.isArray(value) ? value : []; }
 
 // Meta verification handshake
 app.get('/webhooks/whatsapp/:clientId', (req, res) => {
@@ -272,33 +331,60 @@ app.get('/webhooks/whatsapp/:clientId', (req, res) => {
   res.sendStatus(403);
 });
 
-// Inbound message webhook
+// Inbound messages and outbound delivery receipts share this webhook.
 app.post('/webhooks/whatsapp/:clientId', async (req, res) => {
-  res.sendStatus(200); // ack immediately, per Meta's requirements
+  res.sendStatus(200);
   try {
     const client = db.prepare('SELECT * FROM clients WHERE id=?').get(req.params.clientId);
-    if (!client || !client.whatsapp_enabled) return;
-    const entry = req.body?.entry?.[0]?.changes?.[0]?.value;
-    const msg = entry?.messages?.[0];
-    if (!msg || msg.type !== 'text') return;
-    const from = msg.from;
-    const text = msg.text?.body || '';
-    const customerName = entry?.contacts?.[0]?.profile?.name || 'WhatsApp customer';
-
-    db.prepare(`INSERT INTO messages (id,client_id,customer_phone,customer_name,direction,body,created_at) VALUES (?,?,?,?,?,?,?)`)
-      .run(uid(), client.id, from, customerName, 'in', text, nowIso());
-
-    const services = db.prepare('SELECT * FROM services WHERE client_id=?').all(client.id);
-    const history = db.prepare(`SELECT * FROM messages WHERE client_id=? AND customer_phone=? ORDER BY created_at ASC LIMIT 20`).all(client.id, from);
-    const reply = await ai.generateReply({ client, services, history, incomingMessage: text });
-
-    db.prepare(`INSERT INTO messages (id,client_id,customer_phone,customer_name,direction,body,created_at) VALUES (?,?,?,?,?,?,?)`)
-      .run(uid(), client.id, from, customerName, 'out', reply.text, nowIso());
-
-    await sendWhatsAppMessage(client, from, reply.text);
-  } catch (e) {
-    console.error('webhook error', e);
-  }
+    if (!client) return;
+    for (const entry of webhookArray(req.body?.entry)) {
+      for (const change of webhookArray(entry?.changes)) {
+        const value = change?.value;
+        if (!value) continue;
+        for (const status of webhookArray(value.statuses)) applyWhatsAppStatus(client.id, status);
+        if (!client.whatsapp_enabled) continue;
+        for (const msg of webhookArray(value.messages)) {
+          if (msg?.type !== 'text' || typeof msg.from !== 'string' || typeof msg.id !== 'string' || typeof msg.text?.body !== 'string') continue;
+          let outgoingId;
+          let sendStarted = false;
+          try {
+            const from = msg.from;
+            const text = msg.text.body;
+            const customerName = webhookArray(value.contacts).find(c => c?.wa_id === from)?.profile?.name || 'WhatsApp customer';
+            // Get recent history before adding this input; the AI appends it once itself.
+            const history = db.prepare(`SELECT * FROM messages WHERE client_id=? AND customer_phone=?
+              AND (direction='in' OR delivery_status IS NULL OR delivery_status IN ('accepted','sent','delivered','read'))
+              ORDER BY created_at DESC, rowid DESC LIMIT 20`).all(client.id, from).reverse();
+            const inserted = db.prepare(`INSERT OR IGNORE INTO messages
+              (id,client_id,customer_phone,customer_name,direction,body,created_at,wa_message_id)
+              VALUES (?,?,?,?,?,?,?,?)`).run(uid(), client.id, from, customerName, 'in', text, nowIso(), msg.id);
+            if (!inserted.changes) continue; // Meta retries must not create duplicate replies/bookings.
+            outgoingId = uid();
+            db.prepare(`INSERT INTO messages
+              (id,client_id,customer_phone,customer_name,direction,body,created_at,delivery_status)
+              VALUES (?,?,?,?,?,?,?,?)`).run(outgoingId, client.id, from, customerName, 'out', '', nowIso(), 'pending');
+            const services = db.prepare('SELECT * FROM services WHERE client_id=?').all(client.id);
+            const reply = await ai.generateReply({ client, services, history, incomingMessage: text });
+            if (typeof reply?.text !== 'string' || !reply.text.trim()) throw new Error('empty_reply');
+            db.prepare('UPDATE messages SET body=? WHERE id=?').run(reply.text, outgoingId);
+            const wrongSender = validPhoneNumberId(client.wa_phone_number_id) &&
+              typeof value.metadata?.phone_number_id === 'string' && value.metadata.phone_number_id !== client.wa_phone_number_id;
+            sendStarted = true;
+            const result = wrongSender ? { ok: false, status: 'failed', code: 'phone_number_mismatch' }
+              : await sendWhatsAppMessage(client, from, reply.text);
+            db.prepare('UPDATE messages SET delivery_status=?, delivery_error_code=?, wa_message_id=? WHERE id=?')
+              .run(result.status, result.code || null, result.messageId || null, outgoingId);
+            if (result.messageId) applyStoredWhatsAppStatus(client.id, result.messageId);
+            if (!result.ok) console.error('whatsapp_send_failed', { status: result.status, code: result.code });
+          } catch {
+            if (outgoingId) db.prepare('UPDATE messages SET delivery_status=?, delivery_error_code=? WHERE id=?').run(sendStarted ? 'unknown' : 'failed', sendStarted ? 'processing_error' : 'reply_generation_failed', outgoingId);
+            // Never log raw exceptions: provider errors can contain credentials or message text.
+            console.error('whatsapp_processing_failed');
+          }
+        }
+      }
+    }
+  } catch { console.error('whatsapp_webhook_processing_failed'); }
 });
 
 app.get('/healthz', (req, res) => res.json({ ok: true }));
