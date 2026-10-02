@@ -13,6 +13,23 @@ test('modular browser flows, mobile layout and stale-request safeguards',{skip:!
  const go=async p=>{await page.goto(base+p);};const click=a=>page.locator(`[data-action="${a}"]`).first().click();const form=id=>page.locator('#'+id);const save=id=>form(id).locator('[type=submit]').click();const gone=()=>page.locator('.modal').waitFor({state:'detached'});const shot=async name=>{if(screenshots)await page.screenshot({path:path.join(screenshots,name+'.png'),fullPage:true});};
  const json=async p=>{const r=await page.request.get(base+'/api/v1'+p);assert(r.ok(),await r.text());return r.json();};
  let salon,service,staff;
+ await t.test('homepage WhatsApp example is responsive, keyboard-accessible and cannot send messages',async()=>{
+  const writes=[];const onRequest=request=>{if(!['GET','HEAD','OPTIONS'].includes(request.method()))writes.push(request.url());};page.on('request',onRequest);
+  for(const width of [320,390,768,1440]){
+   await page.setViewportSize({width,height:1000});await go('/');
+   assert.equal(await page.locator('.preview-card').evaluate(el=>getComputedStyle(el).transform),'none');
+   assert.equal(await page.locator('.floating-note').evaluate(el=>getComputedStyle(el).transform),'none');
+   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'homepage overflow at '+width);
+   const demo=page.locator('#whatsapp-demo');await page.getByRole('link',{name:'See WhatsApp demo',exact:true}).click();await page.waitForURL('**/#whatsapp-demo');
+   await demo.scrollIntoViewIfNeeded();assert(await demo.isVisible());
+   assert.match(await demo.locator('figcaption').textContent(),/No message is sent and no appointment is booked/);
+   await page.locator('.whatsapp-photo-note summary').focus();await page.keyboard.press('Enter');assert.equal(await page.locator('.whatsapp-photo-note').getAttribute('open'),'');
+   await shot('whatsapp-demo-'+width);
+  }
+  assert.deepEqual(writes,[]);page.off('request',onRequest);
+  await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/pilot#/client');await page.locator('#client-login').waitFor();assert.equal(await page.locator('#view-site').isVisible(),false);
+  await page.goBack();await page.locator('.hero').waitFor();await page.setViewportSize({width:1440,height:1000});
+ });
  await t.test('owner signup, onboarding, service and staff create/edit, customer CRUD',async()=>{
   await go('/');await shot('marketing-desktop');await go('/signup');await form('auth-form').locator('[name=name]').fill('Local Owner');await page.locator('[name=salonName]').fill('Lumiere Browser QA');await page.locator('[name=email]').fill('browser@example.invalid');await page.locator('[name=password]').fill('local-browser-only-password');await save('auth-form');await page.waitForURL('**/onboarding');await page.getByText('Let’s make it yours.').waitFor();await shot('onboarding-desktop');salon=(await json('/session')).salon;assert.equal(salon.bookingEnabled,false);
   await go('/services');await click('new-service');await form('service-form').locator('[name=name]').fill('Signature cut');await form('service-form').locator('[name=price]').fill('250');await form('service-form').locator('[name=depositAmount]').fill('50');await save('service-form');await gone();await page.getByText('Signature cut',{exact:true}).first().waitFor();service=(await json('/services'))[0];
@@ -21,6 +38,9 @@ test('modular browser flows, mobile layout and stale-request safeguards',{skip:!
   await click('new-staff');await form('staff-form').locator('[name=name]').fill('Second Stylist');await form('staff-form').locator('[name=serviceIds]').check();await save('staff-form');await gone();assert.equal((await json('/staff')).length,2);
   await go('/customers');await click('new-customer');await form('customer-form').locator('[name=name]').fill('Synthetic Customer');await form('customer-form').locator('[name=phone]').fill('0820000011');await save('customer-form');await gone();await page.getByText('Synthetic Customer',{exact:true}).waitFor();await click('view-customer');await click('edit-current-customer');await form('customer-form').locator('[name=notes]').fill('Local QA note');await save('customer-form');await gone();assert.equal((await json('/customers'))[0].notes,'Local QA note');
   await go('/settings');await page.locator('[name=bookingEnabled]').check();await save('salon-form');await page.getByText('Salon details saved',{exact:true}).waitFor();assert.equal((await json('/session')).salon.bookingEnabled,true);
+ });
+ await t.test('authenticated Photo pilot entry reuses the workspace session and shows disabled photo controls',async()=>{
+  await go('/dashboard');await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/pilot#/client');await page.locator('#client-dash').waitFor();assert.equal(await page.locator('#client-login').isVisible(),false);assert.equal(await page.locator('#view-site').isVisible(),false);assert.equal(await page.locator('#photoEstimatesToggle').isDisabled(),true);assert.match(await page.locator('#photoEstimatesStatus').textContent(),/cannot run/);await page.goBack();await page.waitForURL('**/dashboard');await page.locator('.sidebar').waitFor();
  });
  await t.test('Cancel, Close, Escape, focus return and Back/Forward',async()=>{
   await go('/services');const before=(await json('/services')).length;await click('new-service');await form('service-form').locator('[name=name]').fill('Must not save');await page.getByRole('button',{name:'Cancel',exact:true}).click();await gone();assert.equal((await json('/services')).length,before);assert.equal(await page.locator('[data-action=new-service]').evaluate(e=>e===document.activeElement),true);
