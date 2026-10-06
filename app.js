@@ -41,21 +41,26 @@ function toast(msg){
 }
 
 /* ============ ROUTER & SESSION GATES ============ */
-let ACTIVE_VIEW = 'site';
+let ACTIVE_VIEW = null;
 let clientGeneration = 0;
 let refreshTimer;
-function viewForHash(){ return /^#(?:\/client|cl-)/.test(location.hash) ? 'client' : /^#(?:\/admin|adm-)/.test(location.hash) ? 'admin' : 'site'; }
+function viewForHash(){
+  const page = location.pathname.replace(/\/$/, '');
+  if (page === '/pilot/admin') return 'admin';
+  if (page === '/pilot/controls') return 'client';
+  return 'site';
+}
 function go(view, fromHistory){
+  if (!['admin','client'].includes(view)) { location.replace('/'); return; }
   ACTIVE_VIEW = view;
   clientGeneration++;
   clearInterval(refreshTimer);
-  ['site','admin','client'].forEach(name => { byId('view-'+name).hidden = view!==name; });
+  ['admin','client'].forEach(name => { byId('view-'+name).hidden = view!==name; byId(name+'-dash').hidden = true; byId(name+'-login').hidden = true; });
   if(!fromHistory){
     const hash = view === 'site' ? '' : '#/'+view;
     if(location.hash !== hash) history.pushState(null, '', location.pathname+location.search+hash);
     window.scrollTo(0,0);
   }
-  byId('loginMenu').hidden = true;
   if(view==='admin') renderAdminGate();
   if(view==='client') renderClientGate();
 }
@@ -65,7 +70,8 @@ async function renderAdminGate(){
   try{
     const { authed } = await api('GET','/api/admin/session');
     if(ACTIVE_VIEW !== 'admin') return;
-    byId('admin-login').hidden = authed; byId('admin-dash').hidden = !authed;
+    if (!authed) { byId('admin-dash').hidden = true; location.replace('/platform?next=pilot-admin'); return; }
+    byId('admin-login').hidden = true; byId('admin-dash').hidden = false;
     if(authed) await renderAdmin();
   }catch(err){ toast(errorMessage(err, 'Could not load the owner dashboard. Please retry.')); }
 }
@@ -83,43 +89,17 @@ async function renderClientGate(){
   }catch(err){
     if(generation !== clientGeneration) return;
     if(err.status === 401 || err.status === 404){
-      byId('client-login').hidden = false; byId('client-dash').hidden = true;
+      byId('client-dash').hidden = true;
+      location.replace('/login?next=photo-pilot');
     }else toast(errorMessage(err, 'Could not load the salon dashboard. Please retry.'));
   }
 }
-byId('loginMenuBtn').addEventListener('click', function(e){ e.stopPropagation(); byId('loginMenu').hidden = !byId('loginMenu').hidden; });
-document.addEventListener('click', ()=>{ byId('loginMenu').hidden = true; });
-
-/* ============ PUBLIC FORMS ============ */
-let signupReturnFocus;
-function openSignup(){ signupReturnFocus = document.activeElement; byId('signupModal').hidden = false; byId('signupModal').querySelector('input').focus(); }
-function closeSignup(){ byId('signupModal').hidden = true; if(signupReturnFocus) signupReturnFocus.focus(); }
-byId('signupModal').addEventListener('click', function(e){ if(e.target===this) closeSignup(); });
-document.addEventListener('keydown', e=>{
-  if(byId('signupModal').hidden) return;
-  if(e.key === 'Escape'){ closeSignup(); return; }
-  if(e.key === 'Tab'){
-    const nodes = Array.from(byId('signupModal').querySelectorAll('button:not(:disabled),input:not(:disabled),select:not(:disabled)'));
-    const first = nodes[0], last = nodes[nodes.length-1];
-    if(e.shiftKey && document.activeElement===first){ last.focus(); e.preventDefault(); }
-    else if(!e.shiftKey && document.activeElement===last){ first.focus(); e.preventDefault(); }
-  }
+// Clear private views before history caching; revalidate on a restored page.
+window.addEventListener('pagehide', () => {
+  clearInterval(refreshTimer);
+  ['admin','client'].forEach(view => { byId('view-'+view).hidden = true; });
 });
-async function submitSignup(e){
-  e.preventDefault(); const f = e.target;
-  const payload = Object.fromEntries(['salon','owner','email','phone','city'].map(name=>[name,fieldValue(f,name)]));
-  await runAction('signup', formControls(f), async()=>{
-    await api('POST','/api/signups',payload); f.reset(); closeSignup();
-    toast('Pilot request saved. The BeautyDesk owner will follow up. No payment was taken.');
-  }, err=>toast(errorMessage(err, err.message==='duplicate_signup' ? 'A request already exists for this email. Contact the BeautyDesk owner for access.' : 'Could not save your request. Check your details and try again.')));
-  return false;
-}
-async function submitInquiry(e){
-  e.preventDefault(); const f = e.target;
-  const payload = Object.fromEntries(['name','salon','email','phone','city','message'].map(name=>[name,fieldValue(f,name)]));
-  await runAction('inquiry', formControls(f), async()=>{ await api('POST','/api/inquiries',payload); f.reset(); toast('Thanks! Your enquiry is saved for the BeautyDesk owner.'); });
-  return false;
-}
+window.addEventListener('pageshow', event => { if (event.persisted) go(viewForHash(), true); });
 
 /* ============ OWNER PORTAL ============ */
 async function adminLogin(e){
@@ -186,7 +166,7 @@ async function clientLogout(){
   await runAction('client-logout',[],async()=>{
     await api('POST','/api/client/logout'); clientGeneration++; clearInterval(refreshTimer); CURRENT_CLIENT=null; CURRENT_SERVICES=[]; PHOTO_SETTINGS_DIRTY=false; clearClientLists();
     byId('waAccessToken').value=''; byId('waPhoneNumberId').value=''; byId('passwordForm').reset(); byId('passwordFeedback').textContent='';
-    byId('client-dash').hidden=true; byId('client-login').hidden=false;
+    byId('client-dash').hidden=true; byId('client-login').hidden=true; location.replace('/login?next=photo-pilot');
   });
 }
 function parseClientHours(hours){ try{ return typeof hours==='string' ? JSON.parse(hours) : (hours || {}); }catch(e){ return {}; } }
@@ -211,9 +191,9 @@ async function renderClient(me,generation){
 }
 function renderClientStatus(me){
   const claude = me.responder_mode==='claude';
-  byId('responderMode').textContent=claude?'Guided + AI':'Guided booking';
-  byId('responderModeNote').textContent=claude?'Optional Claude configured · unverified':'Works without an AI key';
-  if(!byId('simModePill').dataset.resultMode) byId('simModePill').textContent=claude?'Claude configured':'Guided booking';
+  byId('responderMode').textContent=claude?'Guided + enhanced replies':'Guided booking';
+  byId('responderModeNote').textContent=claude?'Optional language processing configured · unverified':'No extra provider setup needed';
+  if(!byId('simModePill').dataset.resultMode) byId('simModePill').textContent=claude?'Enhanced replies configured':'Guided booking';
   byId('clientConnectionState').textContent=!me.wa_signature_configured?'Host setup needed':me.wa_connected?'Details saved':'Not configured';
   byId('waSignatureStatus').textContent=me.wa_signature_configured?'Webhook signature verification is configured on the host. A real delivery test is still required.':'Blocked: the deployment owner must configure META_APP_SECRET securely on the host before WhatsApp webhook replies can work.';
   renderWhatsappConnection(me); renderPhotoSettings(me);
@@ -260,7 +240,7 @@ async function refreshClientData(manual){
   },err=>{
     if(generation!==clientGeneration) return;
     setRefreshStatus(errorMessage(err,'Refresh failed. Showing the last loaded data; try Refresh again.'));
-    if(err.status===401){ clearInterval(refreshTimer); CURRENT_CLIENT=null; byId('client-dash').hidden=true; byId('client-login').hidden=false; }
+    if(err.status===401){ clearInterval(refreshTimer); CURRENT_CLIENT=null; byId('client-dash').hidden=true; byId('client-login').hidden=true; location.replace('/login?next=photo-pilot'); }
     if(manual) toast(errorMessage(err));
   });
 }
@@ -507,7 +487,7 @@ async function sendSimMessage(){
   await runAction('simulator',[input,byId('simSendButton'),byId('simResetButton')],async()=>{
     const result=await api('POST','/api/whatsapp/simulate',{message});
     if(generation!==clientGeneration)return;
-    input.value='';byId('simModePill').dataset.resultMode=result.mode||'rules';byId('simModePill').textContent=result.mode==='claude'?'Claude AI':['rules_fallback','mock_fallback','guided_fallback'].includes(result.mode)?'Guided · AI fallback':result.mode==='error'?'Reply error':'Guided booking';
+    input.value='';byId('simModePill').dataset.resultMode=result.mode||'rules';byId('simModePill').textContent=result.mode==='claude'?'Enhanced automated reply':['rules_fallback','mock_fallback','guided_fallback'].includes(result.mode)?'Guided · provider fallback':result.mode==='error'?'Reply error':'Guided booking';
     renderSimMessages(await api('GET','/api/client/simulator/messages'));
   },err=>toast(errorMessage(err,'The simulator request failed. Refresh the dashboard before retrying if you are unsure whether it sent.')));
   if(!input.disabled && generation===clientGeneration && ACTIVE_VIEW==='client')input.focus();

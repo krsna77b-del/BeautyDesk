@@ -13,7 +13,9 @@ Use Node 22 (see `.nvmrc`). Install the locked dependencies with `npm ci`. Set a
 - `/book/:slug`: a configured salon’s public booking page
 - `/manage/:token`: private appointment-management link
 - `/platform`: separate administrator login
-- `/pilot`: retained reviewed WhatsApp/photo pilot interface
+- `/pilot`: compatibility gateway for old bookmarks, with the current public design only
+- `/pilot/controls`: WhatsApp/photo controls behind the existing salon session
+- `/pilot/admin`: pilot administration behind the separate administrator session
 
 `npm run check` checks all application JavaScript syntax. `npm test` runs disposable local fixtures and mocked providers. No production account or real provider credentials are needed for testing.
 

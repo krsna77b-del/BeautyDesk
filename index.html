@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BeautyDesk</title>
+<title>BeautyDesk · Pilot controls</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;0,700;1,500;1,600;1,700&family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
@@ -327,243 +328,7 @@ td{padding:13px 12px;border-top:1px solid var(--line);vertical-align:middle}
   </symbol>
 </svg>
 
-<div id="view-site">
-  <nav class="site-nav">
-    <div class="nav-pill">
-      <div class="nav-logo"><svg class="brand-mark" viewBox="0 0 120 120"><use href="#bd-mark"/></svg>Beauty<em>Desk</em></div>
-      <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#whatsapp">WhatsApp AI</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div class="nav-actions">
-        <div class="nav-login-wrap">
-          <button class="btn btn-ghost btn-pill-sm" id="loginMenuBtn">Log in ▾</button>
-          <div class="nav-login-menu" id="loginMenu" hidden>
-            <a href="#" onclick="go('admin');return false;">Owner portal</a>
-            <a href="#" onclick="go('client');return false;">Client portal</a>
-          </div>
-        </div>
-        <button class="btn btn-gold btn-pill-sm" onclick="openSignup()">Get BeautyDesk</button>
-      </div>
-    </div>
-  </nav>
-
-  <header class="hero">
-    <div class="container hero-grid">
-      <div>
-        <span class="eyebrow">AI Receptionist for South African Salons</span>
-        <h1>Give your salon <i>a helping hand</i> on WhatsApp</h1>
-        <p class="lead">BeautyDesk helps answer service and opening-hours questions, guides clients through booking, and keeps your salon's appointments in one dashboard. Now preparing for our first salon pilot.</p>
-        <div class="hero-ctas">
-          <button class="btn btn-gold" onclick="openSignup()">Request pilot access</button>
-          <a class="btn btn-ghost" href="#whatsapp">See it in action</a>
-        </div>
-        <div class="hero-stats">
-          <div class="hero-stat"><b>Pilot</b><span>First-salon onboarding</span></div>
-          <div class="hero-stat"><b>WhatsApp</b><span>Connect through Meta</span></div>
-          <div class="hero-stat"><b>R799</b><span>flat, per month</span></div>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="glass-card mock-app">
-          <div class="mock-topbar">
-            <div class="mock-pill">✦ BeautyDesk · example preview</div>
-            <div class="mock-dots"><span></span><span></span><span></span></div>
-          </div>
-          <div class="mock-headline">Your salon,<br>in one place</div>
-          <p class="mock-sub">An example of the booking dashboard. Names and appointments shown here are fictional.</p>
-          <div class="mock-booking">
-            <div class="mock-row"><b>Thandiwe M.</b><span class="tag">Confirmed</span></div>
-            <div class="mock-row"><span>Balayage + Treatment</span><span>Thu · 14:00</span></div>
-            <div class="mock-row"><b>Lerato K.</b><span class="tag">Example booking</span></div>
-            <div class="mock-row"><span>Gel Manicure</span><span>Fri · 10:30</span></div>
-          </div>
-        </div>
-        <div class="glass-card float-card review">
-          <b style="font-size:.82rem">Built for salon pilots</b>
-          <p style="font-size:.82rem;margin-top:4px">Your services, prices and opening hours in one place.</p>
-          <small>Product preview</small>
-        </div>
-        <div class="glass-card float-card wa">
-          <b style="font-size:.82rem"><span class="float-dot"></span>WhatsApp AI</b>
-          <small>Illustrative preview</small>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <section>
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">The problem</span>
-        <h2>Front desk chaos is costing you clients</h2>
-        <p>Between colour appointments, walk-ins and closing up, most salons simply can't answer every call or WhatsApp — and every unanswered message is a booking that walks to a competitor.</p>
-      </div>
-      <div class="pain-grid">
-        <div class="pain-card"><b>After hours</b><p>Enquiries can arrive at night or on a Sunday, when nobody is at the front desk to reply.</p></div>
-        <div class="pain-card"><b>Mid-treatment</b><p>Your stylist can't leave a client's foils to answer the phone — so the phone just rings out.</p></div>
-        <div class="pain-card"><b>Double bookings</b><p>Juggling a paper diary and three WhatsApp chats makes clashes almost inevitable.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="features">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">What you get</span>
-        <h2>One system for the whole front of house</h2>
-        <p>Configure your salon, test the booking conversation, then connect WhatsApp for a closely supervised first pilot.</p>
-      </div>
-      <div class="bento">
-        <div class="card big">
-          <div class="card-icon">💬</div>
-          <h3>WhatsApp AI Receptionist</h3>
-          <p>Answers service and opening-hours questions and guides clients through available appointment times. Guided booking works without an AI key; Claude is optional.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">📊</div>
-          <h3>Owner Analytics</h3>
-          <p>See enquiries, signups and growth at a glance from your own private login.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">🗂️</div>
-          <h3>Client Dashboard</h3>
-          <p>Each activated salon gets its own portal to manage services, hours, WhatsApp settings and bookings.</p>
-        </div>
-        <div class="card big">
-          <div class="card-icon">🇿🇦</div>
-          <h3>Built for South Africa</h3>
-          <p>Priced in Rand and built around WhatsApp, with appointments in South Africa time. An internet connection and a working Meta WhatsApp setup are required.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="wa-section" id="whatsapp">
-    <div class="container wa-grid">
-      <div>
-        <span class="eyebrow">WhatsApp AI</span>
-        <h2>A simpler way to manage booking enquiries</h2>
-        <p style="color:var(--ink-soft);margin-top:14px">Connect your salon's Meta WhatsApp Business number after testing. BeautyDesk uses your saved services, prices and hours to help clients book.</p>
-        <ul class="wa-list">
-          <li><span class="wa-check">✓</span>Checks availability and confirms new bookings</li>
-          <li><span class="wa-check">✓</span>Answers questions about your saved prices and opening hours</li>
-          <li><span class="wa-check">✓</span>Keeps confirmed bookings visible in your salon dashboard</li>
-          <li><span class="wa-check">✓</span>Pilot scope: new bookings and questions. Automated reminders, rescheduling and voice calls are not available yet.</li>
-        </ul>
-      </div>
-      <div class="phone">
-        <div class="phone-screen">
-          <div class="phone-head">
-            <div class="phone-avatar">BD</div>
-            <div><b>Rose &amp; Gold Studio</b><span>Illustrative conversation</span></div>
-          </div>
-          <div class="phone-body">
-            <div class="bubble in">Hi! Do you have anything open for a gel mani this Saturday? 💅<time>09:14</time></div>
-            <div class="bubble out">Hi Nomvula! Yes — we have 11:00 or 13:30 open this Saturday for a Gel Manicure (R350). Which works better?<time>09:14</time></div>
-            <div class="bubble in">13:30 please 🙏🏾<time>09:15</time></div>
-            <div class="bubble out">Please confirm: Gel Manicure, Saturday 13:30, R350, for Nomvula. Reply YES to book.<time>09:15</time></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="pricing">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Simple pricing</span>
-        <h2>One published plan price</h2>
-      </div>
-      <div class="pricing-card">
-        <span class="eyebrow">BeautyDesk Growth</span>
-        <div class="price-amount">R799<span>/month</span></div>
-        <p style="color:var(--ink-soft);font-size:.88rem;margin-top:6px">Published price · pilot terms agreed before billing</p>
-        <ul class="price-list">
-          <li>WhatsApp booking and service enquiries</li>
-          <li>New appointment booking and dashboard cancellation</li>
-          <li>Owner analytics dashboard</li>
-          <li>Client self-service portal</li>
-          <li>Guided booking with optional Claude AI</li>
-        </ul>
-        <button class="btn btn-gold btn-block" onclick="openSignup()">Request pilot access</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="container contact-grid">
-      <div>
-        <span class="eyebrow">Talk to us</span>
-        <h2>Questions before you join?</h2>
-        <p style="color:var(--ink-soft);margin-top:14px">Tell us about your salon. Your enquiry is saved for the BeautyDesk owner to review and follow up manually.</p>
-      </div>
-      <form class="form-card" id="inquiryForm" onsubmit="return submitInquiry(event)">
-        <div class="field-row">
-          <div class="field"><label>Your name</label><input required name="name" placeholder="Nomvula Dlamini"></div>
-          <div class="field"><label>Salon name</label><input required name="salon" placeholder="Rose &amp; Gold Studio"></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label>Email</label><input required type="email" name="email" placeholder="you@salon.co.za"></div>
-          <div class="field"><label>WhatsApp number</label><input required name="phone" placeholder="071 234 5678"></div>
-        </div>
-        <div class="field"><label>City</label>
-          <select name="city" required>
-            <option value="">Select city</option>
-            <option>Johannesburg</option><option>Cape Town</option><option>Durban</option>
-            <option>Pretoria</option><option>Gqeberha</option><option>Other</option>
-          </select>
-        </div>
-        <div class="field"><label>Message</label><textarea name="message" rows="3" placeholder="What would you like to know?"></textarea></div>
-        <button class="btn btn-gold btn-block" type="submit">Send enquiry</button>
-      </form>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <div class="foot-grid">
-        <div>
-          <div class="foot-logo"><svg class="brand-mark" viewBox="0 0 120 120"><use href="#bd-mark"/></svg>Beauty<em style="font-style:italic;font-weight:500;color:var(--gold-400)">Desk</em></div>
-          <p class="foot-tag">The AI receptionist and dashboard suite built for South African beauty salons.</p>
-        </div>
-        <div><h4>Product</h4><a href="#features">Features</a><a href="#whatsapp">WhatsApp AI</a><a href="#pricing">Pricing</a></div>
-        <div><h4>Company</h4><a href="#contact">Contact</a><a href="#" onclick="openSignup();return false;">Get started</a></div>
-        <div><h4>Portals</h4><a href="#" onclick="go('admin');return false;">Owner login</a><a href="#" onclick="go('client');return false;">Client login</a></div>
-      </div>
-      <div class="foot-bottom">
-        <span>🇿🇦 Proudly built for South Africa</span>
-        <span>© 2026 BeautyDesk. All rights reserved.</span>
-      </div>
-    </div>
-  </footer>
-</div>
-
-<!-- ============================================================ -->
-<!-- SIGNUP MODAL -->
-<!-- ============================================================ -->
-<div class="modal-backdrop" id="signupModal" role="dialog" aria-modal="true" aria-labelledby="signupTitle" hidden>
-  <div class="modal">
-    <div class="modal-head"><h3 id="signupTitle" style="font-size:1.2rem">Request pilot access</h3><button class="modal-close" aria-label="Close signup" onclick="closeSignup()">✕</button></div>
-    <form onsubmit="return submitSignup(event)">
-      <div class="field"><label>Salon name</label><input required name="salon" placeholder="Rose &amp; Gold Studio"></div>
-      <div class="field-row">
-        <div class="field"><label>Owner name</label><input required name="owner" placeholder="Your name"></div>
-        <div class="field"><label>City</label><input required name="city" placeholder="Johannesburg"></div>
-      </div>
-      <div class="field-row">
-        <div class="field"><label>Email</label><input required type="email" name="email" placeholder="you@salon.co.za"></div>
-        <div class="field"><label>WhatsApp number</label><input required name="phone" placeholder="071 234 5678"></div>
-      </div>
-      <p style="font-size:.8rem;color:var(--ink-faint);margin-bottom:16px">R799/month is the published price. PayFast is not integrated, and this form does not take payment or start a subscription. The BeautyDesk owner will agree pilot access and any billing terms with you separately.</p>
-      <button class="btn btn-gold btn-block" type="submit">Send pilot request</button>
-    </form>
-  </div>
-</div>
-
-<!-- ============================================================ -->
+<!-- Session-protected operational controls only. Public pages use ui.html. -->
 <!-- ADMIN / OWNER PORTAL -->
 <!-- ============================================================ -->
 <div id="view-admin" hidden>
@@ -577,7 +342,7 @@ td{padding:13px 12px;border-top:1px solid var(--line);vertical-align:middle}
         <button class="btn btn-gold btn-block" type="submit">Enter dashboard</button>
       </form>
       <p class="hint" id="adminLoginHint">Owner-only access. Contact BeautyDesk support if you've forgotten your passcode.</p>
-      <a class="back-link" href="#" onclick="go('site');return false;">← Back to site</a>
+      <a class="back-link" href="/">← Back to site</a>
     </div>
   </div>
 
@@ -587,9 +352,9 @@ td{padding:13px 12px;border-top:1px solid var(--line);vertical-align:middle}
       <a class="side-link" href="#adm-overview"><span class="ic">📊</span>Overview</a>
       <a class="side-link" href="#adm-inquiries"><span class="ic">✉️</span>Inquiries</a>
       <a class="side-link" href="#adm-signups"><span class="ic">🧾</span>Signups</a>
-      <a class="side-link" href="#adm-whatsapp"><span class="ic">💬</span>WhatsApp AI</a>
+      <a class="side-link" href="#adm-whatsapp"><span class="ic">💬</span>WhatsApp</a>
       <div class="spacer"></div>
-      <a class="side-link" href="#" onclick="go('site');return false;"><span class="ic">↩</span>Back to site</a>
+      <a class="side-link" href="/"><span class="ic">↩</span>Back to site</a>
       <a class="side-link" href="#" onclick="adminLogout();return false;"><span class="ic">⏻</span>Log out</a>
       <div class="who-card" style="margin-top:10px"><div class="who-avatar">K</div><div><b style="display:block;font-size:.85rem">Kris</b><span style="color:var(--ink-faint);font-size:.72rem">Owner</span></div></div>
     </aside>
@@ -640,7 +405,7 @@ td{padding:13px 12px;border-top:1px solid var(--line);vertical-align:middle}
 
         <section id="adm-whatsapp">
           <div class="panel">
-            <div class="panel-head"><h2>WhatsApp AI activity (demo)</h2></div>
+            <div class="panel-head"><h2>WhatsApp activity (demo)</h2></div>
             <p class="panel-note">Preview of what a live conversation log will look like once a WhatsApp number is connected.</p>
             <div class="phone" style="margin:0">
               <div class="phone-screen" style="min-height:320px">
@@ -675,8 +440,8 @@ td{padding:13px 12px;border-top:1px solid var(--line);vertical-align:middle}
         <button class="btn btn-gold btn-block" type="submit">Log in</button>
       </form>
       <p class="hint">Forgot your password? Contact the BeautyDesk owner who set up your salon for manual recovery. Email password reset is not available.</p>
-      <p class="hint" id="clientLoginHint">Not a client yet? <a href="#" onclick="go('site');setTimeout(function(){openSignup()},0);return false;" style="color:var(--gold-600);font-weight:700">Request pilot access</a>.</p>
-      <a class="back-link" href="#" onclick="go('site');return false;">← Back to site</a>
+      <p class="hint" id="clientLoginHint">Not a client yet? <a href="/signup" style="color:var(--gold-600);font-weight:700">Request pilot access</a>.</p>
+      <a class="back-link" href="/">← Back to site</a>
     </div>
   </div>
 
@@ -684,13 +449,13 @@ td{padding:13px 12px;border-top:1px solid var(--line);vertical-align:middle}
     <aside class="sidebar">
       <div class="brand"><svg class="brand-mark" viewBox="0 0 120 120"><use href="#bd-mark"/></svg>Beauty<em>Desk</em></div>
       <a class="side-link" href="#cl-overview"><span class="ic">🏠</span>Dashboard</a>
-      <a class="side-link" href="#cl-whatsapp"><span class="ic">💬</span>WhatsApp AI</a>
+      <a class="side-link" href="#cl-whatsapp"><span class="ic">💬</span>WhatsApp</a>
       <a class="side-link" href="#cl-appointments"><span class="ic">📅</span>Appointments</a>
       <a class="side-link" href="#cl-messages"><span class="ic">✉️</span>Messages</a>
       <a class="side-link" href="#cl-billing"><span class="ic">💳</span>Billing</a>
       <a class="side-link" href="#cl-security"><span class="ic">🔐</span>Account security</a>
       <div class="spacer"></div>
-      <a class="side-link" href="#" onclick="go('site');return false;"><span class="ic">↩</span>Back to site</a>
+      <a class="side-link" href="/"><span class="ic">↩</span>Back to site</a>
       <a class="side-link" href="#" onclick="clientLogout();return false;"><span class="ic">⏻</span>Log out</a>
       <div class="who-card" style="margin-top:10px"><div class="who-avatar" id="clientAvatar">R</div><div><b id="clientNameTag" style="display:block;font-size:.85rem">Rose &amp; Gold</b><span style="color:var(--ink-faint);font-size:.72rem">Client</span></div></div>
     </aside>
@@ -712,14 +477,14 @@ td{padding:13px 12px;border-top:1px solid var(--line);vertical-align:middle}
           </div>
           <div class="panel" style="margin-top:20px">
             <div class="panel-head"><h2>Before your first customer</h2></div>
-            <p class="panel-note">Guided booking works without an AI key. Review setup below, change your temporary password, and run a real WhatsApp test before sharing the salon number. Keep a human watching the pilot.</p>
+            <p class="panel-note">Guided booking is available without extra provider setup. Review setup below, change your temporary password, and run a real WhatsApp test before sharing the salon number. Keep a human watching the pilot.</p>
             <ul id="pilotChecklist" class="pilot-checklist"><li>Loading setup checks…</li></ul>
           </div>
         </section>
 
         <section id="cl-whatsapp">
           <div class="panel">
-            <div class="panel-head"><h2>WhatsApp AI receptionist</h2></div>
+            <div class="panel-head"><h2>WhatsApp receptionist</h2></div>
             <div class="wa-status-card" id="waStatusCard">
               <b><span class="float-dot" id="waDot"></span><span id="waStatusText">Loading receptionist settings…</span></b>
               <label class="toggle"><input type="checkbox" aria-label="Enable WhatsApp receptionist" id="waToggle" onchange="toggleWhatsapp()" checked><span class="slider"></span></label>
@@ -766,7 +531,7 @@ td{padding:13px 12px;border-top:1px solid var(--line);vertical-align:middle}
             <p class="panel-note">Text-only simulator: no WhatsApp messages are sent, no real appointments are created and no slots are reserved. Test service, date and time choices here before trying your Meta test number. Photo upload and photo estimates cannot be tested in this simulator.</p>
             <div class="phone" style="margin:0 auto">
               <div class="phone-screen" style="min-height:380px">
-                <div class="phone-head"><div class="phone-avatar">🤖</div><div><b>Test conversation</b><span>BeautyDesk AI</span></div></div>
+                <div class="phone-head"><div class="phone-avatar">🤖</div><div><b>Test conversation</b><span>BeautyDesk receptionist</span></div></div>
                 <div class="phone-body" id="simBody" aria-live="polite" style="overflow-y:auto"></div>
               </div>
             </div>

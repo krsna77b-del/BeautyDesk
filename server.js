@@ -75,8 +75,20 @@ app.use(cookieParser());
 // static mount over __dirname, since server.js/ai.js/db.js/package.json also
 // live at the repo root now (flattened so it can be uploaded from a phone
 // without a subfolder) and must never be servable over HTTP.
-app.get('/pilot', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-app.get(['/','/login','/signup','/onboarding','/dashboard','/calendar','/appointments','/bookings','/customers','/services','/staff','/payments','/messages','/whatsapp','/subscription','/reports','/settings','/book/:slug','/manage/:token','/platform'], (req,res)=>{res.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'");res.sendFile(path.join(__dirname,'ui.html'));});
+// The retired public pilot page is never served anonymously. Old bookmarked
+// hashes are resolved by the current UI; operational controls require a session.
+app.get('/pilot/controls', (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  if (!clientSession(req)) return res.redirect(302, '/login?next=photo-pilot');
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+app.get('/pilot/admin', (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  const data = req.cookies.bd_admin && verify(req.cookies.bd_admin);
+  if (!data || data.role !== 'admin') return res.redirect(302, '/platform?next=pilot-admin');
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+app.get(['/','/pilot','/login','/signup','/onboarding','/dashboard','/calendar','/appointments','/bookings','/customers','/services','/staff','/payments','/messages','/whatsapp','/subscription','/reports','/settings','/book/:slug','/manage/:token','/platform'], (req,res)=>{res.set('Cache-Control','no-store');res.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'");res.sendFile(path.join(__dirname,'ui.html'));});
 for(const file of ['ui.js','ui.css']) app.get('/'+file,(req,res)=>res.sendFile(path.join(__dirname,file)));
 app.use('/assets',express.static(path.join(__dirname,'assets'),{dotfiles:'deny',index:false}));
 app.get('/app.js', (req, res) => res.sendFile(path.join(__dirname, 'app.js')));
@@ -101,12 +113,16 @@ function requireAdmin(req, res, next) {
   if (!data || data.role !== 'admin') return res.status(401).json({ error: 'not_authenticated' });
   next();
 }
-function requireClient(req, res, next) {
+function clientSession(req) {
   const token = req.cookies.bd_client;
   const data = token && verify(token);
-  if (!data || data.role !== 'client') return res.status(401).json({ error: 'not_authenticated' });
+  if (!data || data.role !== 'client') return null;
   const client = db.prepare('SELECT id, auth_version FROM clients WHERE id=?').get(data.clientId);
-  if (!client || data.version !== client.auth_version) return res.status(401).json({ error: 'not_authenticated' });
+  return client && data.version === client.auth_version ? client : null;
+}
+function requireClient(req, res, next) {
+  const client = clientSession(req);
+  if (!client) return res.status(401).json({ error: 'not_authenticated' });
   req.clientId = client.id;
   next();
 }

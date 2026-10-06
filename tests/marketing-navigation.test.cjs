@@ -10,75 +10,86 @@ const css = fs.readFileSync(path.join(root, 'ui.css'), 'utf8');
 const pilot = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 
-function pilotRouter({ hash = '#/client', signedIn = true } = {}) {
-  const nodes = new Map(), listeners = {}, calls = [], renders = [];
+function pilotRouter({ signedIn = true, pathname = '/pilot/controls' } = {}) {
+  const nodes = new Map(), listeners = {}, calls = [], renders = [], redirects = [];
   const node = id => {
     if (!nodes.has(id)) nodes.set(id, { hidden: false, addEventListener() {} });
     return nodes.get(id);
   };
   const context = {
-    location: { hash, pathname: '/pilot', search: '' },
-    history: { pushState(state, title, url) { context.location.hash = new URL(url, 'http://localhost').hash; } },
+    location: { hash: '', pathname, search: '', replace(url) { redirects.push(url); } },
+    history: { pushState() {} },
     window: { scrollTo() {}, addEventListener(name, handler) { listeners[name] = handler; } },
-    document: { hidden: false, addEventListener() {} },
-    byId: node,
+    document: { hidden: false, addEventListener() {} }, byId: node,
     api: async (method, url) => {
       calls.push({ method, url });
       if (!signedIn) throw Object.assign(new Error('not_authenticated'), { status: 401 });
       return { id: 'fixture', salon: 'Test salon' };
     },
     renderClient: async me => { renders.push(me.id); },
-    setInterval: () => 1,
-    clearInterval() {},
-    toast(message) { throw new Error(message); },
-    errorMessage: error => error.message,
+    setInterval: () => 1, clearInterval() {},
+    toast(message) { throw new Error(message); }, errorMessage: error => error.message,
   };
   vm.createContext(context);
-  vm.runInContext(pilot.slice(pilot.indexOf('let ACTIVE_VIEW'), pilot.indexOf('/* ============ PUBLIC FORMS')), context);
-  return { context, nodes, listeners, calls, renders };
+  vm.runInContext(pilot.slice(pilot.indexOf('let ACTIVE_VIEW'), pilot.indexOf('/* ============ OWNER PORTAL')), context);
+  return { context, nodes, listeners, calls, renders, redirects };
 }
 
-test('all Photo pilot entry links request the legacy client view without SPA interception', () => {
-  const links = [...ui.matchAll(/<a\b[^>]*href="\/pilot[^"]*"[^>]*>/g)].map(match => match[0]);
+test('Photo pilot links enter session-protected controls without SPA interception', () => {
+  const links = [...ui.matchAll(/<a\b[^>]*href="\/pilot\/controls"[^>]*>/g)].map(match => match[0]);
   assert.equal(links.length, 3, 'marketing footer, workspace sidebar and Messages link');
-  for (const link of links) {
-    assert.match(link, /href="\/pilot#\/client"/);
-    assert.doesNotMatch(link, /data-nav/, 'the modular router would discard the legacy hash');
-  }
+  for (const link of links) assert.doesNotMatch(link, /data-nav/);
+  assert.match(ui, /href="\/pilot\/admin"/);
 });
 
-test('Photo pilot entry opens existing authenticated salon controls on entry and history return', async () => {
-  const { context, nodes, calls, renders, listeners } = pilotRouter();
+test('authenticated pilot controls survive anchors, reload and history restore without marketing', async () => {
+  const { context, nodes, renders, listeners } = pilotRouter();
   context.go(context.viewForHash(), true);
   await new Promise(resolve => setImmediate(resolve));
-  assert.equal(nodes.get('view-site').hidden, true);
   assert.equal(nodes.get('view-client').hidden, false);
-  assert.equal(nodes.get('client-login').hidden, true);
   assert.equal(nodes.get('client-dash').hidden, false);
   assert.deepEqual(renders, ['fixture']);
-  assert.deepEqual(calls, [{ method: 'GET', url: '/api/client/me' }]);
-  context.location.hash = '';
-  listeners.popstate();
-  assert.equal(nodes.get('view-site').hidden, false);
-  context.location.hash = '#/client';
-  listeners.popstate();
+  context.location.hash = '#pricing'; listeners.popstate();
+  assert.equal(context.viewForHash(), 'client');
+  listeners.pagehide(); assert.equal(nodes.get('view-client').hidden, true);
+  listeners.pageshow({ persisted: true });
   await new Promise(resolve => setImmediate(resolve));
-  assert.equal(nodes.get('view-site').hidden, true);
-  assert.equal(nodes.get('client-dash').hidden, false);
+  assert.equal(nodes.get('view-client').hidden, false);
   assert.equal(renders.length, 2);
+  assert.doesNotMatch(html, /id="view-site"|id="signupModal"/);
 });
 
-test('expired or absent salon session opens the client login rather than marketing', async () => {
-  const { context, nodes, calls } = pilotRouter({ signedIn: false });
+test('expired salon sessions redirect to current login; Back to site always uses current home', async () => {
+  const { context, nodes, redirects } = pilotRouter({ signedIn: false });
   context.go(context.viewForHash(), true);
   await new Promise(resolve => setImmediate(resolve));
-  assert.equal(nodes.get('view-site').hidden, true);
-  assert.equal(nodes.get('view-client').hidden, false);
-  assert.equal(nodes.get('client-login').hidden, false);
   assert.equal(nodes.get('client-dash').hidden, true);
-  assert.equal(calls.length, 1);
+  assert.deepEqual(redirects, ['/login?next=photo-pilot']);
+  context.go('site');
+  assert.equal(redirects.at(-1), '/');
+  const backLinks = [...html.matchAll(/<a[^>]*>[^<]*(?:← )?Back to site<\/a>/g)];
+  assert.equal(backLinks.length, 2);
+  assert.ok(backLinks.every(link => /href="\/"/.test(link[0])));
+  assert.match(html, /href="\/signup"[^>]*>Request pilot access/);
   assert.match(html, /id="photoEstimatesPanel"/);
-  assert.match(html, /id="cl-whatsapp"/);
+});
+
+test('old bookmarks resolve safely and login continuation is allowlisted', () => {
+  const context = { URLSearchParams, location: { search: '' } };
+  vm.createContext(context);
+  vm.runInContext(ui.slice(ui.indexOf('function pilotDestination'), ui.indexOf('async function renderRoute')), context);
+  for (const hash of ['', '#', '#pricing', '#/other', '#/client-malicious']) assert.equal(context.pilotDestination(hash), '/');
+  for (const hash of ['#/client', '#cl-whatsapp']) assert.equal(context.pilotDestination(hash), '/pilot/controls');
+  for (const hash of ['#/admin', '#adm-inquiries']) assert.equal(context.pilotDestination(hash), '/pilot/admin');
+  for (const search of ['', '?next=https://example.invalid', '?next=//example.invalid', '?next=/pilot/admin']) {
+    context.location.search = search; assert.equal(context.afterLoginDestination(), '');
+  }
+  context.location.search = '?next=photo-pilot'; assert.equal(context.afterLoginDestination(), '/pilot/controls');
+});
+
+test('visible pages and pilot status labels contain no promotional AI wording', () => {
+  for (const source of [html, ui, pilot]) assert.doesNotMatch(source.replaceAll('whatsapp-ai', ''), /\bAI\b|artificial intelligence|Claude configured|Claude AI/i);
+  assert.match(fs.readFileSync(path.join(root, 'photo-flow.js'), 'utf8'), /send this photo.*to Anthropic/);
 });
 
 test('homepage renders an accessible WhatsApp example with honest setup and photo limits', () => {

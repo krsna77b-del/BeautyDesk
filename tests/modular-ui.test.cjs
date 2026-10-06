@@ -27,8 +27,17 @@ test('modular browser flows, mobile layout and stale-request safeguards',{skip:!
    await shot('whatsapp-demo-'+width);
   }
   assert.deepEqual(writes,[]);page.off('request',onRequest);
-  await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/pilot#/client');await page.locator('#client-login').waitFor();assert.equal(await page.locator('#view-site').isVisible(),false);
+  await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/login?next=photo-pilot');await page.locator('#auth-form').waitFor();assert.equal(await page.locator('#view-site').count(),0);
   await page.goBack();await page.locator('.hero').waitFor();await page.setViewportSize({width:1440,height:1000});
+ });
+ await t.test('all public pilot bookmarks, direct URLs and reloads use the current public design',async()=>{
+  for(const [old,target] of [['/pilot','/'],['/pilot/','/'],['/pilot#pricing','/'],['/pilot/#whatsapp','/'],['/pilot#/client','/login?next=photo-pilot'],['/pilot/#cl-whatsapp','/login?next=photo-pilot'],['/pilot#/admin','/platform?next=pilot-admin'],['/pilot/#adm-inquiries','/platform?next=pilot-admin']]){
+   await go(old);await page.waitForURL(base+target);await page.locator('#main').waitFor();await page.reload();await page.locator('#main').waitFor();
+   assert.equal(await page.locator('#view-site, #signupModal, #client-login, #admin-login').count(),0);
+   assert.doesNotMatch(await page.locator('body').innerText(),/\bAI\b|Claude|artificial intelligence/i);
+  }
+  await go('/');await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/login?next=photo-pilot');await page.getByRole('link',{name:'Back to BeautyDesk',exact:true}).click();await page.waitForURL(base+'/');await page.locator('.hero').waitFor();
+  await page.goBack();await page.waitForURL('**/login?next=photo-pilot');await page.locator('#auth-form').waitFor();await page.goForward();await page.locator('.hero').waitFor();
  });
  await t.test('owner signup, onboarding, service and staff create/edit, customer CRUD',async()=>{
   await go('/');await shot('marketing-desktop');await go('/signup');await form('auth-form').locator('[name=name]').fill('Local Owner');await page.locator('[name=salonName]').fill('Lumiere Browser QA');await page.locator('[name=email]').fill('browser@example.invalid');await page.locator('[name=password]').fill('local-browser-only-password');await save('auth-form');await page.waitForURL('**/onboarding');await page.getByText('Let’s make it yours.').waitFor();await shot('onboarding-desktop');salon=(await json('/session')).salon;assert.equal(salon.bookingEnabled,false);
@@ -40,7 +49,18 @@ test('modular browser flows, mobile layout and stale-request safeguards',{skip:!
   await go('/settings');await page.locator('[name=bookingEnabled]').check();await save('salon-form');await page.getByText('Salon details saved',{exact:true}).waitFor();assert.equal((await json('/session')).salon.bookingEnabled,true);
  });
  await t.test('authenticated Photo pilot entry reuses the workspace session and shows disabled photo controls',async()=>{
-  await go('/dashboard');await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/pilot#/client');await page.locator('#client-dash').waitFor();assert.equal(await page.locator('#client-login').isVisible(),false);assert.equal(await page.locator('#view-site').isVisible(),false);assert.equal(await page.locator('#photoEstimatesToggle').isDisabled(),true);assert.match(await page.locator('#photoEstimatesStatus').textContent(),/cannot run/);await page.goBack();await page.waitForURL('**/dashboard');await page.locator('.sidebar').waitFor();
+  await go('/dashboard');await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/pilot/controls');await page.locator('#client-dash').waitFor();assert.equal(await page.locator('#client-login').isVisible(),false);assert.equal(await page.locator('#view-site').count(),0);assert.equal(await page.locator('#photoEstimatesToggle').isDisabled(),true);assert.match(await page.locator('#photoEstimatesStatus').textContent(),/cannot run/);await page.goBack();await page.waitForURL('**/dashboard');await page.locator('.sidebar').waitFor();
+ });
+ await t.test('pilot login continuation, Back to site, browser history, logout and admin access',async()=>{
+  const context=await browser.newContext({viewport:{width:390,height:844}});const p=await context.newPage();p.on('pageerror',e=>errors.push(e.message));await p.route('**/*',route=>new URL(route.request().url()).origin===base?route.continue():route.abort());
+  try{
+   await p.goto(base+'/pilot/controls');await p.waitForURL('**/login?next=photo-pilot');await p.locator('[name=email]').fill('browser@example.invalid');await p.locator('[name=password]').fill('local-browser-only-password');await p.locator('#auth-form [type=submit]').click();await p.waitForURL('**/pilot/controls');await p.locator('#client-dash').waitFor();
+   assert.doesNotMatch(await p.locator('body').innerText(),/\bAI\b|Claude|artificial intelligence/i);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+   await p.getByRole('link',{name:'Back to site',exact:false}).last().click();await p.waitForURL(base+'/');await p.locator('.hero').waitFor();await p.goBack();await p.waitForURL('**/pilot/controls');await p.locator('#client-dash').waitFor();await p.reload();await p.locator('#client-dash').waitFor();await p.goForward();await p.locator('.hero').waitFor();
+   await p.goto(base+'/pilot/controls');await p.locator('#client-dash').waitFor();await p.getByRole('button',{name:'Log out',exact:true}).click();await p.waitForURL('**/login?next=photo-pilot');await p.goBack();await p.locator('.hero').waitFor();assert.equal(await p.locator('#client-dash').count(),0);await p.goto(base+'/pilot/controls');await p.waitForURL('**/login?next=photo-pilot');
+   await p.goto(base+'/pilot#/admin');await p.waitForURL('**/platform?next=pilot-admin');await p.locator('[name=passcode]').fill('disposable-browser-admin');await p.locator('#platform-login-form [type=submit]').click();await p.waitForURL('**/pilot/admin');await p.locator('#admin-dash').waitFor();assert.doesNotMatch(await p.locator('body').innerText(),/\bAI\b|Claude|artificial intelligence/i);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+   await p.getByRole('link',{name:'Back to site',exact:false}).last().click();await p.waitForURL(base+'/');await p.locator('.hero').waitFor();await p.goto(base+'/platform');await p.getByRole('link',{name:'Pilot administration'}).waitFor();await p.getByRole('link',{name:'Pilot administration'}).click();await p.locator('#admin-dash').waitFor();await p.getByRole('button',{name:'Log out',exact:true}).click();await p.waitForURL('**/platform?next=pilot-admin');
+  }finally{await context.close();}
  });
  await t.test('Cancel, Close, Escape, focus return and Back/Forward',async()=>{
   await go('/services');const before=(await json('/services')).length;await click('new-service');await form('service-form').locator('[name=name]').fill('Must not save');await page.getByRole('button',{name:'Cancel',exact:true}).click();await gone();assert.equal((await json('/services')).length,before);assert.equal(await page.locator('[data-action=new-service]').evaluate(e=>e===document.activeElement),true);
