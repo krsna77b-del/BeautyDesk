@@ -35,9 +35,12 @@ function pilotRouter({ signedIn = true, pathname = '/pilot/controls' } = {}) {
   return { context, nodes, listeners, calls, renders, redirects };
 }
 
-test('Photo pilot links enter session-protected controls without SPA interception', () => {
+test('modern photo links use guarded workspace while legacy support avoids SPA interception', () => {
   const links = [...ui.matchAll(/<a\b[^>]*href="\/pilot\/controls"[^>]*>/g)].map(match => match[0]);
-  assert.equal(links.length, 3, 'marketing footer, workspace sidebar and Messages link');
+  assert.equal(links.length, 1, 'modern photo page has one gated support-tools link');
+  const modern = [...ui.matchAll(/<a\b[^>]*href="\/pilot"[^>]*>/g)].map(match => match[0]);
+  assert.ok(modern.length >= 2, 'public menu and workspace messages link');
+  for (const link of modern) assert.match(link, /data-nav/);
   for (const link of links) assert.doesNotMatch(link, /data-nav/);
   assert.match(ui, /href="\/pilot\/admin"/);
 });
@@ -85,6 +88,27 @@ test('old bookmarks resolve safely and login continuation is allowlisted', () =>
     context.location.search = search; assert.equal(context.afterLoginDestination(), '');
   }
   context.location.search = '?next=photo-pilot'; assert.equal(context.afterLoginDestination(), '/pilot/controls');
+});
+
+test('modern photo login return path is explicitly allowlisted', () => {
+  const context = { URLSearchParams, location: { search: '' } }; vm.createContext(context);
+  vm.runInContext(ui.slice(ui.indexOf('function loginReturnPath('), ui.indexOf('function authPage(')), context);
+  for (const search of ['', '?next=https://example.invalid', '?next=//example.invalid', '?next=/pilot/admin', '?next=/pilot/controls', '?next=/pilot%23/client']) {
+    context.location.search = search; assert.equal(context.loginReturnPath(), '/dashboard');
+  }
+  context.location.search = '?next=%2Fpilot'; assert.equal(context.loginReturnPath(), '/pilot');
+});
+
+test('all historical pilot hashes preserve production destination before owner routing', async () => {
+  const route = ui.slice(ui.indexOf('async function renderRoute(){'), ui.indexOf('async function refresh('));
+  for (const [hash, destination] of [['#/client','/pilot/controls'], ['#cl-whatsapp','/pilot/controls'], ['#cl-photo','/pilot/controls'], ['#cl/photo','/'], ['#/admin','/pilot/admin'], ['#adm-inquiries','/pilot/admin'], ['#pricing','/'], ['#whatsapp','/'], ['#/unknown','/']]) {
+    const redirects = [];
+    const context = { S: { navId: 0 }, window: {}, location: { pathname: '/pilot', search: '', hash, replace: value => redirects.push(value) }, history: { replaceState() { throw Error('Old hash was silently discarded'); } } };
+    vm.createContext(context);
+    vm.runInContext(ui.slice(ui.indexOf('function pilotDestination('), ui.indexOf('function afterLoginDestination(')) + route + '\nglobalThis.work=renderRoute();', context);
+    await context.work;
+    assert.deepEqual(redirects, [destination], hash);
+  }
 });
 
 test('visible pages and pilot status labels contain no promotional AI wording', () => {

@@ -27,17 +27,17 @@ test('modular browser flows, mobile layout and stale-request safeguards',{skip:!
    await shot('whatsapp-demo-'+width);
   }
   assert.deepEqual(writes,[]);page.off('request',onRequest);
-  await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/login?next=photo-pilot');await page.locator('#auth-form').waitFor();assert.equal(await page.locator('#view-site').count(),0);
+  await page.locator('.bd-shortcuts-toggle').click();await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/login?next=%2Fpilot');await page.locator('#auth-form').waitFor();assert.equal(await page.locator('#view-site').count(),0);
   await page.goBack();await page.locator('.hero').waitFor();await page.setViewportSize({width:1440,height:1000});
  });
  await t.test('all public pilot bookmarks, direct URLs and reloads use the current public design',async()=>{
-  for(const [old,target] of [['/pilot','/'],['/pilot/','/'],['/pilot#pricing','/'],['/pilot/#whatsapp','/'],['/pilot#/client','/login?next=photo-pilot'],['/pilot/#cl-whatsapp','/login?next=photo-pilot'],['/pilot#/admin','/platform?next=pilot-admin'],['/pilot/#adm-inquiries','/platform?next=pilot-admin']]){
+  for(const [old,target] of [['/pilot','/login?next=%2Fpilot'],['/pilot/','/login?next=%2Fpilot'],['/pilot#pricing','/'],['/pilot/#whatsapp','/'],['/pilot#/client','/login?next=photo-pilot'],['/pilot/#cl-whatsapp','/login?next=photo-pilot'],['/pilot#/admin','/platform?next=pilot-admin'],['/pilot/#adm-inquiries','/platform?next=pilot-admin']]){
    await go(old);await page.waitForURL(base+target);await page.locator('#main').waitFor();await page.reload();await page.locator('#main').waitFor();
    assert.equal(await page.locator('#view-site, #signupModal, #client-login, #admin-login').count(),0);
    assert.doesNotMatch(await page.locator('body').innerText(),/\bAI\b|Claude|artificial intelligence/i);
   }
-  await go('/');await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/login?next=photo-pilot');await page.getByRole('link',{name:'Back to BeautyDesk',exact:true}).click();await page.waitForURL(base+'/');await page.locator('.hero').waitFor();
-  await page.goBack();await page.waitForURL('**/login?next=photo-pilot');await page.locator('#auth-form').waitFor();await page.goForward();await page.locator('.hero').waitFor();
+  await go('/');await page.locator('.bd-shortcuts-toggle').click();await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/login?next=%2Fpilot');await page.getByRole('link',{name:'Back to BeautyDesk',exact:true}).first().click();await page.waitForURL(base+'/');await page.locator('.hero').waitFor();
+  await page.goBack();await page.waitForURL('**/login?next=%2Fpilot');await page.locator('#auth-form').waitFor();await page.goForward();await page.locator('.hero').waitFor();
  });
  await t.test('owner signup, onboarding, service and staff create/edit, customer CRUD',async()=>{
   await go('/');await shot('marketing-desktop');await go('/signup');await form('auth-form').locator('[name=name]').fill('Local Owner');await page.locator('[name=salonName]').fill('Lumiere Browser QA');await page.locator('[name=email]').fill('browser@example.invalid');await page.locator('[name=password]').fill('local-browser-only-password');await save('auth-form');await page.waitForURL('**/onboarding');await page.getByText('Let’s make it yours.').waitFor();await shot('onboarding-desktop');salon=(await json('/session')).salon;assert.equal(salon.bookingEnabled,false);
@@ -48,8 +48,9 @@ test('modular browser flows, mobile layout and stale-request safeguards',{skip:!
   await go('/customers');await click('new-customer');await form('customer-form').locator('[name=name]').fill('Synthetic Customer');await form('customer-form').locator('[name=phone]').fill('0820000011');await save('customer-form');await gone();await page.getByText('Synthetic Customer',{exact:true}).waitFor();await click('view-customer');await click('edit-current-customer');await form('customer-form').locator('[name=notes]').fill('Local QA note');await save('customer-form');await gone();assert.equal((await json('/customers'))[0].notes,'Local QA note');
   await go('/settings');await page.locator('[name=bookingEnabled]').check();await save('salon-form');await page.getByText('Salon details saved',{exact:true}).waitFor();assert.equal((await json('/session')).salon.bookingEnabled,true);
  });
- await t.test('authenticated Photo pilot entry reuses the workspace session and shows disabled photo controls',async()=>{
-  await go('/dashboard');await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/pilot/controls');await page.locator('#client-dash').waitFor();assert.equal(await page.locator('#client-login').isVisible(),false);assert.equal(await page.locator('#view-site').count(),0);assert.equal(await page.locator('#photoEstimatesToggle').isDisabled(),true);assert.match(await page.locator('#photoEstimatesStatus').textContent(),/cannot run/);await page.goBack();await page.waitForURL('**/dashboard');await page.locator('.sidebar').waitFor();
+ await t.test('authenticated modern photo workspace retains session and withheld ON, with gated legacy support',async()=>{
+  await go('/dashboard');await page.getByRole('link',{name:'Photo pilot',exact:true}).click();await page.waitForURL('**/pilot');await page.locator('#photo-settings-form').waitFor();assert.equal(await page.locator('#view-site').count(),0);assert.equal(await page.locator('[name=photoEstimatesEnabled]').isDisabled(),true);assert.match(await page.locator('#main').textContent(),/Photo analysis is off/);assert.equal(await page.locator('input[type=file]').count(),0);
+  await page.getByRole('link',{name:/Open support tools/}).click();await page.waitForURL('**/pilot/controls');await page.locator('#client-dash').waitFor();assert.equal(await page.locator('#client-login').isVisible(),false);assert.equal(await page.locator('#photoEstimatesToggle').isDisabled(),true);await page.goBack();await page.waitForURL('**/pilot');await page.locator('#photo-settings-form').waitFor();
  });
  await t.test('pilot login continuation, Back to site, browser history, logout and admin access',async()=>{
   const context=await browser.newContext({viewport:{width:390,height:844}});const p=await context.newPage();p.on('pageerror',e=>errors.push(e.message));await p.route('**/*',route=>new URL(route.request().url()).origin===base?route.continue():route.abort());

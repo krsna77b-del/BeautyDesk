@@ -1,0 +1,41 @@
+{
+  "createdAt": "2026-10-03",
+  "description": "Reference files copied without modification for reconstruction regression tests",
+  "files": [
+    {
+      "path": "approved/assistant-widget.css",
+      "source": "beautydesk-design-review/source-snapshots/selected-candidate/assistant-widget.css",
+      "sha256": "41b62dd12673b7e60718df175c0fe1c1c454cb77ee345b0e902cd37aec20545e"
+    },
+    {
+      "path": "approved/assistant-widget.js",
+      "source": "beautydesk-design-review/source-snapshots/selected-candidate/assistant-widget.js",
+      "sha256": "4fbcae9d987c9fca7c6d6e769e90f67251f76cf074b0581dca06bbf5b96414d3"
+    },
+    {
+      "path": "approved/marketing.html",
+      "source": "beautydesk-design-review/source-snapshots/selected-candidate/marketing.html",
+      "sha256": "c39a50dbc9fbfe841fb5b0b885a2b8f68cde70a47e706b7b9e6470a4f5b2abbf"
+    },
+    {
+      "path": "approved/ui.css",
+      "source": "beautydesk-design-review/source-snapshots/selected-candidate/ui.css",
+      "sha256": "9f887792e1c2296096a43c9ca3c5534a091f8c57342022354fe180aa38c7040e"
+    },
+    {
+      "path": "approved/ui.html",
+      "source": "beautydesk-design-review/source-snapshots/selected-candidate/ui.html",
+      "sha256": "2e969fe37f6ed9dcd288ec60aed00b7139dbfb4db4cf8d6aa41c1456b99ab30b"
+    },
+    {
+      "path": "approved/ui.js",
+      "source": "beautydesk-design-review/source-snapshots/selected-candidate/ui.js",
+      "sha256": "2d09a846ee305310a08add19b8c8bbf15f9657c541087a0c77a8c4f2d13a0066"
+    },
+    {
+      "path": "production/ui.js",
+      "source": "beautydesk-reconstruction-production/ui.js",
+      "sha256": "b8b5d4ad7b30969b61d1597c4dda5685ff6dc788ba022ed9df87bfe1a94a097e"
+    }
+  ]
+}

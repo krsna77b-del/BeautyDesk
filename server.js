@@ -71,7 +71,7 @@ function publicFields(body, inquiry = false) {
 }
 app.use(cookieParser());
 
-// Serve only the three real front-end assets, explicitly — not a blanket
+// Serve only explicitly listed front-end assets — not a blanket
 // static mount over __dirname, since server.js/ai.js/db.js/package.json also
 // live at the repo root now (flattened so it can be uploaded from a phone
 // without a subfolder) and must never be servable over HTTP.
@@ -88,8 +88,8 @@ app.get('/pilot/admin', (req, res) => {
   if (!data || data.role !== 'admin') return res.redirect(302, '/platform?next=pilot-admin');
   res.sendFile(path.join(__dirname, 'index.html'));
 });
-app.get(['/','/pilot','/login','/signup','/onboarding','/dashboard','/calendar','/appointments','/bookings','/customers','/services','/staff','/payments','/messages','/whatsapp','/subscription','/reports','/settings','/book/:slug','/manage/:token','/platform'], (req,res)=>{res.set('Cache-Control','no-store');res.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'");res.sendFile(path.join(__dirname,'ui.html'));});
-for(const file of ['ui.js','ui.css']) app.get('/'+file,(req,res)=>res.sendFile(path.join(__dirname,file)));
+app.get(['/','/pilot','/login','/signup','/onboarding','/dashboard','/calendar','/appointments','/bookings','/customers','/services','/staff','/payments','/messages','/whatsapp','/subscription','/reports','/settings','/book/:slug','/manage/:token','/platform'], (req,res)=>{res.set('Cache-Control','no-store');res.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'");res.sendFile(path.join(__dirname,req.path==='/'?'marketing.html':'ui.html'));});
+for(const file of ['ui.js','ui.css','assistant-widget.js','assistant-widget.css']) app.get('/'+file,(req,res)=>res.sendFile(path.join(__dirname,file)));
 app.use('/assets',express.static(path.join(__dirname,'assets'),{dotfiles:'deny',index:false}));
 app.get('/app.js', (req, res) => res.sendFile(path.join(__dirname, 'app.js')));
 app.get('/favicon.svg', (req, res) => res.sendFile(path.join(__dirname, 'favicon.svg')));

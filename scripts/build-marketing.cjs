@@ -1,0 +1,20 @@
+'use strict';
+// Render only the shared, static marketing function. No app bootstrap, API or data access.
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const root = path.resolve(__dirname, '..');
+const source = fs.readFileSync(path.join(root, 'ui.js'), 'utf8');
+const start = source.indexOf('const $ =');
+const end = source.indexOf('function authPage(');
+if (start < 0 || end <= start) throw new Error('Marketing renderer boundaries changed');
+const context = vm.createContext({ document: { title: '' } });
+vm.runInContext(source.slice(start, end) + '\nglobalThis.renderedMarketing = marketing();', context, { timeout: 1000 });
+const shell = fs.readFileSync(path.join(root, 'ui.html'), 'utf8');
+const opener = '<div id="app">';
+const closer = '</div><div id="toast"';
+const from = shell.indexOf(opener), to = shell.indexOf(closer, from);
+if (from < 0 || to < 0) throw new Error('Application shell boundaries changed');
+const output = shell.slice(0, from + opener.length) + context.renderedMarketing + shell.slice(to);
+fs.writeFileSync(path.join(root, 'marketing.html'), output);
+console.log('Built static marketing.html from the shipped UI renderer');
