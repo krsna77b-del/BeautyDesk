@@ -49,7 +49,7 @@ body{font-size:14px}.btn:hover{color:var(--ink)}.btn.dark:hover{color:var(--ivor
 @media(max-width:600px){.site-nav #bd-shortcuts-menu{width:270px;max-width:calc(100vw - 36px)}.site-nav #bd-shortcuts-menu a{min-height:46px;font-size:14px}}
 
 .site-nav .bd-shortcuts-toggle{list-style:none}.site-nav .bd-shortcuts-toggle::-webkit-details-marker{display:none}
-.auth-back{display:inline-flex;align-items:center;gap:7px;min-height:44px;margin-bottom:24px;font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:4px;color:var(--gold-hover)}.auth-back svg{width:18px;height:18px}
+.auth-back{display:flex;width:fit-content;align-items:center;gap:7px;min-height:44px;margin-bottom:24px;font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:4px;color:var(--gold-hover)}.auth-back svg{width:18px;height:18px}
 .review-faq{max-width:780px;margin:auto}.review-faq details{border-bottom:1px solid var(--border);padding:16px 0}.review-faq summary{cursor:pointer;font-size:15px;font-weight:500;line-height:1.5;min-height:44px;display:list-item;padding:10px 0}.review-faq p{font-size:13px;line-height:1.8;margin-top:13px}.review-faq a{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font-size:13px}
 
 /* Keep decorative hero artwork from causing horizontal page overflow. */

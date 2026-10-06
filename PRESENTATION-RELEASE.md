@@ -26,3 +26,7 @@ The backend, database schema/migrations, authentication, existing signup handler
 The separate review site's desktop/mobile preview control is not added to the customer application. No review-site sharing or external messages are part of this release.
 
 Rollback can restore the prior presentation tree with a new source commit; no database rollback is needed because this release adds no migration. Preserve any newer unrelated commits when applying a rollback.
+
+## Public desktop verification
+
+After deployment, the public homepage, scripted chat, shortcuts, signup form, both Back links and old/current pilot/admin login routes were checked in the cloud browser without creating an account or booking. A screenshot exposed the upper Back link sharing a line with the auth subtitle; a one-rule CSS correction gives it its own row. The 43 additional UI/HTTP tests were rerun for that correction. Mobile/device geometry and an authenticated live workspace remain unverified.
