@@ -32,14 +32,18 @@ const photo = require('./photo-flow');
 if (!META_APP_SECRET) console.warn('WhatsApp webhooks disabled until META_APP_SECRET is configured.');
 app.disable('x-powered-by');
 app.set('trust proxy', PRODUCTION ? 1 : false);
+// Authenticate the private photo pilot before accepting a larger JSON image body.
+app.use('/api/client/hairstyle-preview', cookieParser(), requireClient);
+app.use('/api/client/hairstyle-preview/generate', express.json({ limit: '5mb' }));
 app.use(express.json({ limit: '256kb', verify(req, res, buffer) { req.rawBody = buffer; } }));
 app.use((req, res, next) => {
   res.set('X-Content-Type-Options', 'nosniff');
   res.set('X-Frame-Options', 'DENY');
   res.set('Referrer-Policy', 'same-origin');
   if (PRODUCTION) res.set('Strict-Transport-Security', 'max-age=31536000');
-  if (req.path.startsWith('/api/')) res.set('Cache-Control', 'no-store');
-  if (req.path.startsWith('/api/') && !['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
+  const isApiPath = req.path.toLowerCase().startsWith('/api/');
+  if (isApiPath) res.set('Cache-Control', 'no-store');
+  if (isApiPath && !['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
     if (!req.is('application/json')) return res.status(415).json({ error: 'json_required' });
     const expected = PUBLIC_ORIGIN || `${req.protocol}://${req.get('host')}`;
     if (req.get('origin') && req.get('origin') !== expected) return res.status(403).json({ error: 'invalid_origin' });
@@ -93,6 +97,15 @@ for(const file of ['ui.js','ui.css','assistant-widget.js','assistant-widget.css'
 app.use('/assets',express.static(path.join(__dirname,'assets'),{dotfiles:'deny',index:false}));
 app.get('/app.js', (req, res) => res.sendFile(path.join(__dirname, 'app.js')));
 app.get('/favicon.svg', (req, res) => res.sendFile(path.join(__dirname, 'favicon.svg')));
+app.get('/hairstyle-preview', (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  if (!clientSession(req)) return res.redirect(302, '/login');
+  res.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'");
+  res.sendFile(path.join(__dirname, 'hairstyle-preview.html'));
+});
+for (const file of ['hairstyle-preview.js', 'hairstyle-preview.css']) app.get('/' + file, (req, res) => res.sendFile(path.join(__dirname, file)));
+const hairstylePreview = require('./hairstyle-routes').mountHairstylePreview(app, { db, requireClient });
+
 
 function uid() { return crypto.randomUUID(); }
 function nowIso() { return new Date().toISOString(); }
@@ -660,6 +673,7 @@ const server = app.listen(PORT, () => console.log(`BeautyDesk server running on 
 async function shutdown() {
   if (stopping) return;
   stopping = true;
+  hairstylePreview.stop();
   clearInterval(queueTimer);
   server.close();
   const deadline = Date.now() + 25000;

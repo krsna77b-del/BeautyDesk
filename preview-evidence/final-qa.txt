@@ -1,0 +1,447 @@
+
+> beautydesk-reconstruction-qa@1.0.0 test
+> node --test *.test.cjs
+
+TAP version 13
+# Subtest: homepage menu/chat/hash history interactions at width setting 320 (no geometry)
+ok 1 - homepage menu/chat/hash history interactions at width setting 320 (no geometry)
+  ---
+  duration_ms: 1235.670906
+  type: 'test'
+  ...
+# Subtest: homepage menu/chat/hash history interactions at width setting 390 (no geometry)
+ok 2 - homepage menu/chat/hash history interactions at width setting 390 (no geometry)
+  ---
+  duration_ms: 982.584986
+  type: 'test'
+  ...
+# Subtest: homepage menu/chat/hash history interactions at width setting 768 (no geometry)
+ok 3 - homepage menu/chat/hash history interactions at width setting 768 (no geometry)
+  ---
+  duration_ms: 817.464992
+  type: 'test'
+  ...
+# Subtest: homepage menu/chat/hash history interactions at width setting 1440 (no geometry)
+ok 4 - homepage menu/chat/hash history interactions at width setting 1440 (no geometry)
+  ---
+  duration_ms: 820.046114
+  type: 'test'
+  ...
+# Subtest: scripted answers are accurate, queued, injection-safe and never submitted as support
+ok 5 - scripted answers are accurate, queued, injection-safe and never submitted as support
+  ---
+  duration_ms: 5076.743381
+  type: 'test'
+  ...
+# Subtest: signed-out route is guarded: /dashboard
+ok 6 - signed-out route is guarded: /dashboard
+  ---
+  duration_ms: 43.330812
+  type: 'test'
+  ...
+# Subtest: signed-out route is guarded: /pilot
+ok 7 - signed-out route is guarded: /pilot
+  ---
+  duration_ms: 36.869376
+  type: 'test'
+  ...
+# Subtest: signed-out route is guarded: /onboarding
+ok 8 - signed-out route is guarded: /onboarding
+  ---
+  duration_ms: 48.223416
+  type: 'test'
+  ...
+# Subtest: signed-out route is guarded: /subscription
+ok 9 - signed-out route is guarded: /subscription
+  ---
+  duration_ms: 51.62121
+  type: 'test'
+  ...
+# Subtest: duplicate login submits are suppressed and errors leave a retryable real form
+ok 10 - duplicate login submits are suppressed and errors leave a retryable real form
+  ---
+  duration_ms: 62.428856
+  type: 'test'
+  ...
+# Subtest: late login result cannot replace newer home navigation
+ok 11 - late login result cannot replace newer home navigation
+  ---
+  duration_ms: 84.232596
+  type: 'test'
+  ...
+# Subtest: late session response cannot restore an abandoned guarded route
+ok 12 - late session response cannot restore an abandoned guarded route
+  ---
+  duration_ms: 109.520893
+  type: 'test'
+  ...
+# Subtest: route changes cancel pending widget replies, release locks and remount once
+ok 13 - route changes cancel pending widget replies, release locks and remount once
+  ---
+  duration_ms: 689.694227
+  type: 'test'
+  ...
+# Subtest: short-height compact style contract at 768x375 (no geometry)
+ok 14 - short-height compact style contract at 768x375 (no geometry)
+  ---
+  duration_ms: 449.337421
+  type: 'test'
+  ...
+# Subtest: short-height compact style contract at 1280x500 (no geometry)
+ok 15 - short-height compact style contract at 1280x500 (no geometry)
+  ---
+  duration_ms: 190.747572
+  type: 'test'
+  ...
+# Subtest: /signup upper Back link opens current home
+ok 16 - /signup upper Back link opens current home
+  ---
+  duration_ms: 76.99171
+  type: 'test'
+  ...
+# Subtest: /signup lower Back link opens current home
+ok 17 - /signup lower Back link opens current home
+  ---
+  duration_ms: 358.095218
+  type: 'test'
+  ...
+# Subtest: /login upper Back link opens current home
+ok 18 - /login upper Back link opens current home
+  ---
+  duration_ms: 207.142086
+  type: 'test'
+  ...
+# Subtest: /login lower Back link opens current home
+ok 19 - /login lower Back link opens current home
+  ---
+  duration_ms: 140.567488
+  type: 'test'
+  ...
+# Subtest: authenticated subscription displays R799 monthly with pending PayFast and no charge action
+ok 20 - authenticated subscription displays R799 monthly with pending PayFast and no charge action
+  ---
+  duration_ms: 132.084408
+  type: 'test'
+  ...
+# Subtest: isolated mobile-first markup has no required style selector, unchecked consent, or live sample previews
+ok 21 - isolated mobile-first markup has no required style selector, unchecked consent, or live sample previews
+  ---
+  duration_ms: 311.93806
+  type: 'test'
+  ...
+# Subtest: setup pending is explicit; selected photo stays local and sending remains disabled
+ok 22 - setup pending is explicit; selected photo stays local and sending remains disabled
+  ---
+  duration_ms: 127.759036
+  type: 'test'
+  ...
+# Subtest: MIME, signature, and 3 MiB limit reject unsupported photos without network transmission
+ok 23 - MIME, signature, and 3 MiB limit reject unsupported photos without network transmission
+  ---
+  duration_ms: 84.568196
+  type: 'test'
+  ...
+# Subtest: photo must decode successfully before generation is enabled
+ok 24 - photo must decode successfully before generation is enabled
+  ---
+  duration_ms: 65.052969
+  type: 'test'
+  ...
+# Subtest: explicit submit binds exact original bytes, preferences, and disclosed version; photo is not sent with consent
+ok 25 - explicit submit binds exact original bytes, preferences, and disclosed version; photo is not sent with consent
+  ---
+  duration_ms: 73.195523
+  type: 'test'
+  ...
+# Subtest: rapid double submit sends exactly one consent and one generation POST
+ok 26 - rapid double submit sends exactly one consent and one generation POST
+  ---
+  duration_ms: 65.808801
+  type: 'test'
+  ...
+# Subtest: changing photo or preferences resets both consents
+ok 27 - changing photo or preferences resets both consents
+  ---
+  duration_ms: 53.121273
+  type: 'test'
+  ...
+# Subtest: completed result renders three safe labels, per-card original comparison, and fresh permission for a new set
+ok 28 - completed result renders three safe labels, per-card original comparison, and fresh permission for a new set
+  ---
+  duration_ms: 82.992804
+  type: 'test'
+  ...
+# Subtest: provider disclosure and links cannot inject HTML or unsafe URLs
+ok 29 - provider disclosure and links cannot inject HTML or unsafe URLs
+  ---
+  duration_ms: 45.652048
+  type: 'test'
+  ...
+# Subtest: consent failure or malformed consent response never sends the image
+ok 30 - consent failure or malformed consent response never sends the image
+  ---
+  duration_ms: 63.352076
+  type: 'test'
+  ...
+# Subtest: lost generation response recovers through GET and never repeats POST
+ok 31 - lost generation response recovers through GET and never repeats POST
+  ---
+  duration_ms: 45.368547
+  type: 'test'
+  ...
+# Subtest: terminal unknown result keeps partial previews, stops polling, and never retries generation
+ok 32 - terminal unknown result keeps partial previews, stops polling, and never retries generation
+  ---
+  duration_ms: 54.589796
+  type: 'test'
+  ...
+# Subtest: expired result stops cleanly and explains expiry without automatic regeneration
+ok 33 - expired result stops cleanly and explains expiry without automatic regeneration
+  ---
+  duration_ms: 67.889701
+  type: 'test'
+  ...
+# Subtest: 401 clears all local image references and provides a normal sign-in link
+ok 34 - 401 clears all local image references and provides a normal sign-in link
+  ---
+  duration_ms: 57.43099
+  type: 'test'
+  ...
+# Subtest: cancel while consent is pending clears locally and prevents image submission when consent resolves
+ok 35 - cancel while consent is pending clears locally and prevents image submission when consent resolves
+  ---
+  duration_ms: 49.48397
+  type: 'test'
+  ...
+# Subtest: cancel during generation POST waits for acknowledgement then stops exactly that set
+ok 36 - cancel during generation POST waits for acknowledgement then stops exactly that set
+  ---
+  duration_ms: 52.772232
+  type: 'test'
+  ...
+# Subtest: late read response cannot restore images after confirmed cancellation
+ok 37 - late read response cannot restore images after confirmed cancellation
+  ---
+  duration_ms: 67.624981
+  type: 'test'
+  ...
+# Subtest: visibility pauses polling; returning reads the same request without another generation
+ok 38 - visibility pauses polling; returning reads the same request without another generation
+  ---
+  duration_ms: 81.023001
+  type: 'test'
+  ...
+# Subtest: page exit clears images and stale completions; back-forward restoration requires fresh photo and consent
+ok 39 - page exit clears images and stale completions; back-forward restoration requires fresh photo and consent
+  ---
+  duration_ms: 57.120793
+  type: 'test'
+  ...
+# Subtest: exhausted authoritative budget prevents a new set even with fresh explicit consent
+ok 40 - exhausted authoritative budget prevents a new set even with fresh explicit consent
+  ---
+  duration_ms: 43.427826
+  type: 'test'
+  ...
+# Subtest: privacy notice refresh resets earlier acceptance and uses only the new disclosed version
+ok 41 - privacy notice refresh resets earlier acceptance and uses only the new disclosed version
+  ---
+  duration_ms: 36.599808
+  type: 'test'
+  ...
+# Subtest: explicit new set receives a fresh request ID only after fresh consent
+ok 42 - explicit new set receives a fresh request ID only after fresh consent
+  ---
+  duration_ms: 74.983952
+  type: 'test'
+  ...
+# Subtest: clear photos removes source and all generated DOM images without modifying bookings
+ok 43 - clear photos removes source and all generated DOM images without modifying bookings
+  ---
+  duration_ms: 44.15777
+  type: 'test'
+  ...
+# Subtest: explicit generation rejection releases the form, resets consent, and refreshes allowance without polling or retry
+ok 44 - explicit generation rejection releases the form, resets consent, and refreshes allowance without polling or retry
+  ---
+  duration_ms: 49.106678
+  type: 'test'
+  ...
+# Subtest: uncertain cancellation keeps new generation locked and supports read-only result checking
+ok 45 - uncertain cancellation keeps new generation locked and supports read-only result checking
+  ---
+  duration_ms: 48.469973
+  type: 'test'
+  ...
+# Subtest: mismatched result ID never renders someone else’s result
+ok 46 - mismatched result ID never renders someone else’s result
+  ---
+  duration_ms: 48.79165
+  type: 'test'
+  ...
+# Subtest: malformed output images and duplicate style IDs cannot claim three completed previews
+ok 47 - malformed output images and duplicate style IDs cannot claim three completed previews
+  ---
+  duration_ms: 41.009751
+  type: 'test'
+  ...
+# Subtest: long exact disclosure is shown without truncation before acceptance
+ok 48 - long exact disclosure is shown without truncation before acceptance
+  ---
+  duration_ms: 26.195651
+  type: 'test'
+  ...
+# Subtest: malformed consent response never triggers generation
+ok 49 - malformed consent response never triggers generation
+  ---
+  duration_ms: 35.138585
+  type: 'test'
+  ...
+# Subtest: fresh isolated server: HTTP/CSP/static boundaries, real signup/session and modern photo routing
+    # Subtest: static marketing, scripts and security headers are served correctly
+    ok 1 - static marketing, scripts and security headers are served correctly
+      ---
+      duration_ms: 380.755121
+      type: 'test'
+      ...
+    # Subtest: private source, database and development files are never exposed
+    ok 2 - private source, database and development files are never exposed
+      ---
+      duration_ms: 17.32195
+      type: 'test'
+      ...
+    # Subtest: owner APIs reject signed-out callers and unsafe origins
+    ok 3 - owner APIs reject signed-out callers and unsafe origins
+      ---
+      duration_ms: 18.951665
+      type: 'test'
+      ...
+    # Subtest: shipped signup UI creates only a real disposable account and uses it for the guarded photo workspace
+    ok 4 - shipped signup UI creates only a real disposable account and uses it for the guarded photo workspace
+      ---
+      duration_ms: 615.14839
+      type: 'test'
+      ...
+    # Subtest: legacy administrator page requires a separate administrator session and has no old landing
+    ok 5 - legacy administrator page requires a separate administrator session and has no old landing
+      ---
+      duration_ms: 7.697154
+      type: 'test'
+      ...
+    1..5
+ok 50 - fresh isolated server: HTTP/CSP/static boundaries, real signup/session and modern photo routing
+  ---
+  duration_ms: 1628.967891
+  type: 'test'
+  ...
+# Subtest: modern presentation cannot enable photo analysis even with host configured_not_live_verified
+ok 51 - modern presentation cannot enable photo analysis even with host configured_not_live_verified
+  ---
+  duration_ms: 354.884343
+  type: 'test'
+  ...
+# Subtest: modern presentation cannot enable photo analysis even with host photo_estimates_disabled
+ok 52 - modern presentation cannot enable photo analysis even with host photo_estimates_disabled
+  ---
+  duration_ms: 121.726748
+  type: 'test'
+  ...
+# Subtest: modern presentation cannot enable photo analysis even with host photo_provider_key_required
+ok 53 - modern presentation cannot enable photo analysis even with host photo_provider_key_required
+  ---
+  duration_ms: 79.858595
+  type: 'test'
+  ...
+# Subtest: modern catalogue remains editable while ON is withheld; new reads cannot enable it
+ok 54 - modern catalogue remains editable while ON is withheld; new reads cannot enable it
+  ---
+  duration_ms: 119.326397
+  type: 'test'
+  ...
+# Subtest: modern catalogue rejects incomplete enabled descriptions before a write
+ok 55 - modern catalogue rejects incomplete enabled descriptions before a write
+  ---
+  duration_ms: 87.268722
+  type: 'test'
+  ...
+# Subtest: modern saved-on accounts can save OFF once, including with unavailable host/catalogue
+ok 56 - modern saved-on accounts can save OFF once, including with unavailable host/catalogue
+  ---
+  duration_ms: 165.431048
+  type: 'test'
+  ...
+# Subtest: modern failed OFF save stays retryable without claiming success
+ok 57 - modern failed OFF save stays retryable without claiming success
+  ---
+  duration_ms: 153.054068
+  type: 'test'
+  ...
+# Subtest: modern a late OFF save cannot replace newer navigation; expired session returns to photo login
+ok 58 - modern a late OFF save cannot replace newer navigation; expired session returns to photo login
+  ---
+  duration_ms: 167.50893
+  type: 'test'
+  ...
+# Subtest: modern pending catalogue save blocks refresh and duplicate writes until confirmed
+ok 59 - modern pending catalogue save blocks refresh and duplicate writes until confirmed
+  ---
+  duration_ms: 95.479947
+  type: 'test'
+  ...
+# Subtest: reviewed shell and widget styles are retained exactly
+ok 60 - reviewed shell and widget styles are retained exactly
+  ---
+  duration_ms: 3.012261
+  type: 'test'
+  ...
+# Subtest: reviewed widget differs only in approved price, payment and photo answer copy
+ok 61 - reviewed widget differs only in approved price, payment and photo answer copy
+  ---
+  duration_ms: 4.145519
+  type: 'test'
+  ...
+# Subtest: original hero is unchanged from approved snapshot and recovered production
+ok 62 - original hero is unchanged from approved snapshot and recovered production
+  ---
+  duration_ms: 6.47672
+  type: 'test'
+  ...
+# Subtest: signup form is preserved, real and separate from marketing demo
+ok 63 - signup form is preserved, real and separate from marketing demo
+  ---
+  duration_ms: 223.591752
+  type: 'test'
+  ...
+# Subtest: upper and original lower home links exist before/after login and signup forms
+ok 64 - upper and original lower home links exist before/after login and signup forms
+  ---
+  duration_ms: 29.980421
+  type: 'test'
+  ...
+# Subtest: marketing is fully readable without JavaScript and equals shared renderer
+ok 65 - marketing is fully readable without JavaScript and equals shared renderer
+  ---
+  duration_ms: 69.533707
+  type: 'test'
+  ...
+# Subtest: production UI includes no preview adapter, fictional salon or fake fetch override
+ok 66 - production UI includes no preview adapter, fictional salon or fake fetch override
+  ---
+  duration_ms: 1.659014
+  type: 'test'
+  ...
+# Subtest: widget is isolated, scripted and local without storage, network or unsafe conversation HTML
+ok 67 - widget is isolated, scripted and local without storage, network or unsafe conversation HTML
+  ---
+  duration_ms: 0.742705
+  type: 'test'
+  ...
+1..67
+# tests 72
+# suites 0
+# pass 72
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12982.410481

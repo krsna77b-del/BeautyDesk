@@ -1,0 +1,682 @@
+TAP version 13
+# Subtest: preview stays off unless all dedicated host settings and allowed salon are configured
+ok 1 - preview stays off unless all dedicated host settings and allowed salon are configured
+  ---
+  duration_ms: 5.376546
+  type: 'test'
+  ...
+# Subtest: analysis uses pinned structured Google Interactions request with no storage, tools, retry or freeform instructions
+ok 2 - analysis uses pinned structured Google Interactions request with no storage, tools, retry or freeform instructions
+  ---
+  duration_ms: 27.255818
+  type: 'test'
+  ...
+# Subtest: each edit starts from original image and fixed trusted style, returns one validated metadata-free JPEG
+ok 3 - each edit starts from original image and fixed trusted style, returns one validated metadata-free JPEG
+  ---
+  duration_ms: 6.21099
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: null
+ok 4 - invalid or untrusted suggestion output fails closed: null
+  ---
+  duration_ms: 0.698053
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {}
+ok 5 - invalid or untrusted suggestion output fails closed: {}
+  ---
+  duration_ms: 0.237515
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves"]}
+ok 6 - invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves"]}
+  ---
+  duration_ms: 0.272594
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","soft-waves","sleek-bob"]}
+ok 7 - invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","soft-waves","sleek-bob"]}
+  ---
+  duration_ms: 0.35439
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","sleek-bob","medical-advice"]}
+ok 8 - invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","sleek-bob","medical-advice"]}
+  ---
+  duration_ms: 0.434161
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","sleek-bob","pixie-cut"],"diagnosis":"not allowed"}
+ok 9 - invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","sleek-bob","pixie-cut"],"diagnosis":"not allowed"}
+  ---
+  duration_ms: 0.494584
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":false,"style_ids":["soft-waves"]}
+ok 10 - invalid or untrusted suggestion output fails closed: {"usable_photo":false,"style_ids":["soft-waves"]}
+  ---
+  duration_ms: 0.263394
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":"yes","style_ids":["soft-waves","sleek-bob","pixie-cut"]}
+ok 11 - invalid or untrusted suggestion output fails closed: {"usable_photo":"yes","style_ids":["soft-waves","sleek-bob","pixie-cut"]}
+  ---
+  duration_ms: 0.175474
+  type: 'test'
+  ...
+# Subtest: unusable photograph stops before image edits; optional preferences constrain every returned ID
+ok 12 - unusable photograph stops before image edits; optional preferences constrain every returned ID
+  ---
+  duration_ms: 0.532663
+  type: 'test'
+  ...
+# Subtest: invalid image response never becomes a usable preview
+ok 13 - invalid image response never becomes a usable preview
+  ---
+  duration_ms: 1.194873
+  type: 'test'
+  ...
+# Subtest: invalid image response never becomes a usable preview
+ok 14 - invalid image response never becomes a usable preview
+  ---
+  duration_ms: 1.256486
+  type: 'test'
+  ...
+# Subtest: invalid image response never becomes a usable preview
+ok 15 - invalid image response never becomes a usable preview
+  ---
+  duration_ms: 1.119581
+  type: 'test'
+  ...
+# Subtest: invalid image response never becomes a usable preview
+ok 16 - invalid image response never becomes a usable preview
+  ---
+  duration_ms: 0.832737
+  type: 'test'
+  ...
+# Subtest: invalid image response never becomes a usable preview
+ok 17 - invalid image response never becomes a usable preview
+  ---
+  duration_ms: 2.69827
+  type: 'test'
+  ...
+# Subtest: HTTP 401 is sanitized and never retried
+ok 18 - HTTP 401 is sanitized and never retried
+  ---
+  duration_ms: 0.861688
+  type: 'test'
+  ...
+# Subtest: HTTP 403 is sanitized and never retried
+ok 19 - HTTP 403 is sanitized and never retried
+  ---
+  duration_ms: 1.225047
+  type: 'test'
+  ...
+# Subtest: HTTP 429 is sanitized and never retried
+ok 20 - HTTP 429 is sanitized and never retried
+  ---
+  duration_ms: 0.520488
+  type: 'test'
+  ...
+# Subtest: HTTP 500 is sanitized and never retried
+ok 21 - HTTP 500 is sanitized and never retried
+  ---
+  duration_ms: 0.208048
+  type: 'test'
+  ...
+# Subtest: timeout and prior cancellation never initiate an automatic retry
+ok 22 - timeout and prior cancellation never initiate an automatic retry
+  ---
+  duration_ms: 10.419573
+  type: 'test'
+  ...
+# Subtest: configuration/cost check at dispatch boundary can stop all network transmission
+ok 23 - configuration/cost check at dispatch boundary can stop all network transmission
+  ---
+  duration_ms: 0.673786
+  type: 'test'
+  ...
+# Subtest: redirects and oversized JSON are rejected without exposing raw response text
+ok 24 - redirects and oversized JSON are rejected without exposing raw response text
+  ---
+  duration_ms: 0.981947
+  type: 'test'
+  ...
+# Subtest: input normalization rejects malformed, unsupported or noncanonical payloads before provider use
+ok 25 - input normalization rejects malformed, unsupported or noncanonical payloads before provider use
+  ---
+  duration_ms: 17.587718
+  type: 'test'
+  ...
+# Subtest: invalid key, style and preference inputs fail before network
+ok 26 - invalid key, style and preference inputs fail before network
+  ---
+  duration_ms: 0.400348
+  type: 'test'
+  ...
+# Subtest: review: every generated image expires within ten minutes of its own creation
+ok 27 - review: every generated image expires within ten minutes of its own creation
+  ---
+  duration_ms: 83.279612
+  type: 'test'
+  ...
+# Subtest: review: cancellation clears source and partial results, discards late output, and never sends another call
+ok 28 - review: cancellation clears source and partial results, discards late output, and never sends another call
+  ---
+  duration_ms: 30.964349
+  type: 'test'
+  ...
+# Subtest: review: server catalogue replaces all injected provider style prose before image generation
+ok 29 - review: server catalogue replaces all injected provider style prose before image generation
+  ---
+  duration_ms: 57.605373
+  type: 'test'
+  ...
+# Subtest: isolated mobile-first markup has no required style selector, unchecked consent, or live sample previews
+ok 30 - isolated mobile-first markup has no required style selector, unchecked consent, or live sample previews
+  ---
+  duration_ms: 133.524421
+  type: 'test'
+  ...
+# Subtest: setup pending is explicit; selected photo stays local and sending remains disabled
+ok 31 - setup pending is explicit; selected photo stays local and sending remains disabled
+  ---
+  duration_ms: 74.921773
+  type: 'test'
+  ...
+# Subtest: MIME, signature, and 3 MiB limit reject unsupported photos without network transmission
+ok 32 - MIME, signature, and 3 MiB limit reject unsupported photos without network transmission
+  ---
+  duration_ms: 55.395071
+  type: 'test'
+  ...
+# Subtest: photo must decode successfully before generation is enabled
+ok 33 - photo must decode successfully before generation is enabled
+  ---
+  duration_ms: 46.835427
+  type: 'test'
+  ...
+# Subtest: explicit submit binds exact original bytes, preferences, and disclosed version; photo is not sent with consent
+ok 34 - explicit submit binds exact original bytes, preferences, and disclosed version; photo is not sent with consent
+  ---
+  duration_ms: 42.511379
+  type: 'test'
+  ...
+# Subtest: rapid double submit sends exactly one consent and one generation POST
+ok 35 - rapid double submit sends exactly one consent and one generation POST
+  ---
+  duration_ms: 42.650627
+  type: 'test'
+  ...
+# Subtest: changing photo or preferences resets both consents
+ok 36 - changing photo or preferences resets both consents
+  ---
+  duration_ms: 53.66022
+  type: 'test'
+  ...
+# Subtest: completed result renders three safe labels, per-card original comparison, and fresh permission for a new set
+ok 37 - completed result renders three safe labels, per-card original comparison, and fresh permission for a new set
+  ---
+  duration_ms: 73.575289
+  type: 'test'
+  ...
+# Subtest: provider disclosure and links cannot inject HTML or unsafe URLs
+ok 38 - provider disclosure and links cannot inject HTML or unsafe URLs
+  ---
+  duration_ms: 30.228192
+  type: 'test'
+  ...
+# Subtest: consent failure or malformed consent response never sends the image
+ok 39 - consent failure or malformed consent response never sends the image
+  ---
+  duration_ms: 58.693421
+  type: 'test'
+  ...
+# Subtest: lost generation response recovers through GET and never repeats POST
+ok 40 - lost generation response recovers through GET and never repeats POST
+  ---
+  duration_ms: 48.294605
+  type: 'test'
+  ...
+# Subtest: terminal unknown result keeps partial previews, stops polling, and never retries generation
+ok 41 - terminal unknown result keeps partial previews, stops polling, and never retries generation
+  ---
+  duration_ms: 52.244243
+  type: 'test'
+  ...
+# Subtest: expired result stops cleanly and explains expiry without automatic regeneration
+ok 42 - expired result stops cleanly and explains expiry without automatic regeneration
+  ---
+  duration_ms: 66.80551
+  type: 'test'
+  ...
+# Subtest: 401 clears all local image references and provides a normal sign-in link
+ok 43 - 401 clears all local image references and provides a normal sign-in link
+  ---
+  duration_ms: 60.796503
+  type: 'test'
+  ...
+# Subtest: cancel while consent is pending clears locally and prevents image submission when consent resolves
+ok 44 - cancel while consent is pending clears locally and prevents image submission when consent resolves
+  ---
+  duration_ms: 38.081618
+  type: 'test'
+  ...
+# Subtest: cancel during generation POST waits for acknowledgement then stops exactly that set
+ok 45 - cancel during generation POST waits for acknowledgement then stops exactly that set
+  ---
+  duration_ms: 51.97117
+  type: 'test'
+  ...
+# Subtest: late read response cannot restore images after confirmed cancellation
+ok 46 - late read response cannot restore images after confirmed cancellation
+  ---
+  duration_ms: 58.798816
+  type: 'test'
+  ...
+# Subtest: visibility pauses polling; returning reads the same request without another generation
+ok 47 - visibility pauses polling; returning reads the same request without another generation
+  ---
+  duration_ms: 59.963243
+  type: 'test'
+  ...
+# Subtest: page exit clears images and stale completions; back-forward restoration requires fresh photo and consent
+ok 48 - page exit clears images and stale completions; back-forward restoration requires fresh photo and consent
+  ---
+  duration_ms: 51.580635
+  type: 'test'
+  ...
+# Subtest: exhausted authoritative budget prevents a new set even with fresh explicit consent
+ok 49 - exhausted authoritative budget prevents a new set even with fresh explicit consent
+  ---
+  duration_ms: 41.951408
+  type: 'test'
+  ...
+# Subtest: privacy notice refresh resets earlier acceptance and uses only the new disclosed version
+ok 50 - privacy notice refresh resets earlier acceptance and uses only the new disclosed version
+  ---
+  duration_ms: 35.064988
+  type: 'test'
+  ...
+# Subtest: explicit new set receives a fresh request ID only after fresh consent
+ok 51 - explicit new set receives a fresh request ID only after fresh consent
+  ---
+  duration_ms: 67.161904
+  type: 'test'
+  ...
+# Subtest: clear photos removes source and all generated DOM images without modifying bookings
+ok 52 - clear photos removes source and all generated DOM images without modifying bookings
+  ---
+  duration_ms: 42.165985
+  type: 'test'
+  ...
+# Subtest: explicit generation rejection releases the form, resets consent, and refreshes allowance without polling or retry
+ok 53 - explicit generation rejection releases the form, resets consent, and refreshes allowance without polling or retry
+  ---
+  duration_ms: 40.149065
+  type: 'test'
+  ...
+# Subtest: uncertain cancellation keeps new generation locked and supports read-only result checking
+ok 54 - uncertain cancellation keeps new generation locked and supports read-only result checking
+  ---
+  duration_ms: 50.388161
+  type: 'test'
+  ...
+# Subtest: mismatched result ID never renders someone else’s result
+ok 55 - mismatched result ID never renders someone else’s result
+  ---
+  duration_ms: 99.498321
+  type: 'test'
+  ...
+# Subtest: malformed output images and duplicate style IDs cannot claim three completed previews
+ok 56 - malformed output images and duplicate style IDs cannot claim three completed previews
+  ---
+  duration_ms: 54.475259
+  type: 'test'
+  ...
+# Subtest: long exact disclosure is shown without truncation before acceptance
+ok 57 - long exact disclosure is shown without truncation before acceptance
+  ---
+  duration_ms: 27.236581
+  type: 'test'
+  ...
+# Subtest: malformed consent response never triggers generation
+ok 58 - malformed consent response never triggers generation
+  ---
+  duration_ms: 36.401703
+  type: 'test'
+  ...
+# Subtest: authenticated pilot returns actual configured status without exposing key; others cannot start it
+ok 59 - authenticated pilot returns actual configured status without exposing key; others cannot start it
+  ---
+  duration_ms: 334.111135
+  type: 'test'
+  ...
+# Subtest: one consented original photo produces three fixed-label previews with exactly four reserved calls
+ok 60 - one consented original photo produces three fixed-label previews with exactly four reserved calls
+  ---
+  duration_ms: 356.220626
+  type: 'test'
+  ...
+# Subtest: repeat and concurrent same-ID submissions never repeat a paid set; third new set is refused
+ok 61 - repeat and concurrent same-ID submissions never repeat a paid set; third new set is refused
+  ---
+  duration_ms: 613.419192
+  type: 'test'
+  ...
+# Subtest: changed photo or preferences cannot reuse consent; negative permissions make no reservation
+ok 62 - changed photo or preferences cannot reuse consent; negative permissions make no reservation
+  ---
+  duration_ms: 298.104665
+  type: 'test'
+  ...
+# Subtest: foreign owner cannot read, cancel or retry another owner's previews
+ok 63 - foreign owner cannot read, cancel or retry another owner's previews
+  ---
+  duration_ms: 746.962995
+  type: 'test'
+  ...
+# Subtest: cancel stops remaining calls, clears images and never refunds or silently replays the set
+ok 64 - cancel stops remaining calls, clears images and never refunds or silently replays the set
+  ---
+  duration_ms: 509.5006
+  type: 'test'
+  ...
+# Subtest: provider analysis failure ends the set without further calls or retry
+ok 65 - provider analysis failure ends the set without further calls or retry
+  ---
+  duration_ms: 332.202047
+  type: 'test'
+  ...
+# Subtest: provider edit failure ends the set without further calls or retry
+ok 66 - provider edit failure ends the set without further calls or retry
+  ---
+  duration_ms: 379.525713
+  type: 'test'
+  ...
+# Subtest: provider suggestions failure ends the set without further calls or retry
+ok 67 - provider suggestions failure ends the set without further calls or retry
+  ---
+  duration_ms: 312.889023
+  type: 'test'
+  ...
+# Subtest: host-off and cross-origin requests cannot start work; private backend files are never static assets
+ok 68 - host-off and cross-origin requests cannot start work; private backend files are never static assets
+  ---
+  duration_ms: 246.027473
+  type: 'test'
+  ...
+# Subtest: mixed-case API paths keep JSON, origin and cache protections before cancellation
+ok 69 - mixed-case API paths keep JSON, origin and cache protections before cancellation
+  ---
+  duration_ms: 618.020787
+  type: 'test'
+  ...
+# Subtest: disabled source rollout does not create preview tables or consume any allowance
+ok 70 - disabled source rollout does not create preview tables or consume any allowance
+  ---
+  duration_ms: 224.640829
+  type: 'test'
+  ...
+# Subtest: initialization is additive, isolated, repeatable and fixes a two-set/$3.20 pilot ceiling
+ok 71 - initialization is additive, isolated, repeatable and fixes a two-set/$3.20 pilot ceiling
+  ---
+  duration_ms: 12.085725
+  type: 'test'
+  ...
+# Subtest: consent creates random opaque IDs and exact combined-model/preferences binding with ISO expiry
+ok 72 - consent creates random opaque IDs and exact combined-model/preferences binding with ISO expiry
+  ---
+  duration_ms: 4.085951
+  type: 'test'
+  ...
+# Subtest: consent requires literal true for adult
+ok 73 - consent requires literal true for adult
+  ---
+  duration_ms: 2.524123
+  type: 'test'
+  ...
+# Subtest: consent requires literal true for ownsPhoto
+ok 74 - consent requires literal true for ownsPhoto
+  ---
+  duration_ms: 2.300458
+  type: 'test'
+  ...
+# Subtest: consent requires literal true for googleProcessing
+ok 75 - consent requires literal true for googleProcessing
+  ---
+  duration_ms: 2.221233
+  type: 'test'
+  ...
+# Subtest: invalid binding identifiers, SHA256 values and malformed/freeform preferences never enter the ledger
+ok 76 - invalid binding identifiers, SHA256 values and malformed/freeform preferences never enter the ledger
+  ---
+  duration_ms: 2.148778
+  type: 'test'
+  ...
+# Subtest: one atomic reservation consumes consent and reserves analysis plus three stable preview IDs
+ok 77 - one atomic reservation consumes consent and reserves analysis plus three stable preview IDs
+  ---
+  duration_ms: 4.68536
+  type: 'test'
+  ...
+# Subtest: exact duplicate set returns original four IDs before busy/expiry and never spends again
+ok 78 - exact duplicate set returns original four IDs before busy/expiry and never spends again
+  ---
+  duration_ms: 2.328033
+  type: 'test'
+  ...
+# Subtest: duplicate key with changed image/preferences/model/version/consent conflicts without mutation
+ok 79 - duplicate key with changed image/preferences/model/version/consent conflicts without mutation
+  ---
+  duration_ms: 3.088683
+  type: 'test'
+  ...
+# Subtest: consent binds {"imageDigest":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"} and mismatch does not consume it
+ok 80 - consent binds {"imageDigest":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"} and mismatch does not consume it
+  ---
+  duration_ms: 2.827065
+  type: 'test'
+  ...
+# Subtest: consent binds {"model":"other-model"} and mismatch does not consume it
+ok 81 - consent binds {"model":"other-model"} and mismatch does not consume it
+  ---
+  duration_ms: 2.026015
+  type: 'test'
+  ...
+# Subtest: consent binds {"noticeVersion":"notice-v2"} and mismatch does not consume it
+ok 82 - consent binds {"noticeVersion":"notice-v2"} and mismatch does not consume it
+  ---
+  duration_ms: 2.566517
+  type: 'test'
+  ...
+# Subtest: consent binds {"preferences":{"keepLength":true,"easyMaintenance":false}} and mismatch does not consume it
+ok 83 - consent binds {"preferences":{"keepLength":true,"easyMaintenance":false}} and mismatch does not consume it
+  ---
+  duration_ms: 2.270381
+  type: 'test'
+  ...
+# Subtest: consent binds {"preferences":{"keepLength":false,"easyMaintenance":true}} and mismatch does not consume it
+ok 84 - consent binds {"preferences":{"keepLength":false,"easyMaintenance":true}} and mismatch does not consume it
+  ---
+  duration_ms: 2.586023
+  type: 'test'
+  ...
+# Subtest: consent expires exactly at ten minutes and fails before issuance
+ok 85 - consent expires exactly at ten minutes and fails before issuance
+  ---
+  duration_ms: 2.878626
+  type: 'test'
+  ...
+# Subtest: consent works immediately before expiry
+ok 86 - consent works immediately before expiry
+  ---
+  duration_ms: 2.032955
+  type: 'test'
+  ...
+# Subtest: consent is single use even after failure/cancellation
+ok 87 - consent is single use even after failure/cancellation
+  ---
+  duration_ms: 3.5532
+  type: 'test'
+  ...
+# Subtest: foreign owners cannot read or mutate sets, child calls or consent
+ok 88 - foreign owners cannot read or mutate sets, child calls or consent
+  ---
+  duration_ms: 2.627506
+  type: 'test'
+  ...
+# Subtest: one globally active set blocks another owner without consuming their consent
+ok 89 - one globally active set blocks another owner without consuming their consent
+  ---
+  duration_ms: 2.582542
+  type: 'test'
+  ...
+# Subtest: analysis must complete before edits; dispatch is a single compare-and-set
+ok 90 - analysis must complete before edits; dispatch is a single compare-and-set
+  ---
+  duration_ms: 2.790797
+  type: 'test'
+  ...
+# Subtest: child states prevent premature success and post-dispatch cancellation or terminal overwrite
+ok 91 - child states prevent premature success and post-dispatch cancellation or terminal overwrite
+  ---
+  duration_ms: 2.942173
+  type: 'test'
+  ...
+# Subtest: set completion requires all four successful calls and terminal metadata cannot be rewritten
+ok 92 - set completion requires all four successful calls and terminal metadata cannot be rewritten
+  ---
+  duration_ms: 4.238551
+  type: 'test'
+  ...
+# Subtest: failed set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+ok 93 - failed set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+  ---
+  duration_ms: 3.156554
+  type: 'test'
+  ...
+# Subtest: unknown set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+ok 94 - unknown set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+  ---
+  duration_ms: 3.389013
+  type: 'test'
+  ...
+# Subtest: cancelled set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+ok 95 - cancelled set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+  ---
+  duration_ms: 4.431793
+  type: 'test'
+  ...
+# Subtest: two full reservations exhaust the budget, including cancelled or failed sets; duplicates remain free
+ok 96 - two full reservations exhaust the budget, including cancelled or failed sets; duplicates remain free
+  ---
+  duration_ms: 3.448044
+  type: 'test'
+  ...
+# Subtest: startup recovery atomically marks interrupted sets/children unknown with no replay or refund
+ok 97 - startup recovery atomically marks interrupted sets/children unknown with no replay or refund
+  ---
+  duration_ms: 3.381235
+  type: 'test'
+  ...
+# Subtest: recovery preserves completed children and their numeric usage metadata
+ok 98 - recovery preserves completed children and their numeric usage metadata
+  ---
+  duration_ms: 2.095252
+  type: 'test'
+  ...
+# Subtest: sets/consent/budget survive reopening without implicit recovery or reset
+ok 99 - sets/consent/budget survive reopening without implicit recovery or reset
+  ---
+  duration_ms: 5.703132
+  type: 'test'
+  ...
+# Subtest: independent SQLite connections share exact set/child state and cannot duplicate a dispatch
+ok 100 - independent SQLite connections share exact set/child state and cannot duplicate a dispatch
+  ---
+  duration_ms: 6.503548
+  type: 'test'
+  ...
+# Subtest: simultaneous first initialization on two SQLite connections is safe
+ok 101 - simultaneous first initialization on two SQLite connections is safe
+  ---
+  duration_ms: 96.755841
+  type: 'test'
+  ...
+# Subtest: simultaneous identical sets reserve exactly four calls once across two connections
+ok 102 - simultaneous identical sets reserve exactly four calls once across two connections
+  ---
+  duration_ms: 126.285419
+  type: 'test'
+  ...
+# Subtest: simultaneous new sets allow only one global active reservation
+ok 103 - simultaneous new sets allow only one global active reservation
+  ---
+  duration_ms: 128.065369
+  type: 'test'
+  ...
+# Subtest: racing for the final set cannot overrun two sets/eight calls/$3.20
+ok 104 - racing for the final set cannot overrun two sets/eight calls/$3.20
+  ---
+  duration_ms: 122.159101
+  type: 'test'
+  ...
+# Subtest: failure inserting the fourth call rolls back the whole set, prior calls and consent consumption
+ok 105 - failure inserting the fourth call rolls back the whole set, prior calls and consent consumption
+  ---
+  duration_ms: 2.884068
+  type: 'test'
+  ...
+# Subtest: held SQLite write lock maps to preview_busy without consuming consent or budget
+ok 106 - held SQLite write lock maps to preview_busy without consuming consent or budget
+  ---
+  duration_ms: 4.215088
+  type: 'test'
+  ...
+# Subtest: only allowlisted numeric result/usage metadata and safe error codes are retained
+ok 107 - only allowlisted numeric result/usage metadata and safe error codes are retained
+  ---
+  duration_ms: 2.349383
+  type: 'test'
+  ...
+# Subtest: missing/invalid identifiers cannot manufacture calls or sets
+ok 108 - missing/invalid identifiers cannot manufacture calls or sets
+  ---
+  duration_ms: 2.171647
+  type: 'test'
+  ...
+# Subtest: configuration change preview_model_required can close a reserved/running set without retaining a busy lock
+ok 109 - configuration change preview_model_required can close a reserved/running set without retaining a busy lock
+  ---
+  duration_ms: 1.833177
+  type: 'test'
+  ...
+# Subtest: configuration change preview_notice_required can close a reserved/running set without retaining a busy lock
+ok 110 - configuration change preview_notice_required can close a reserved/running set without retaining a busy lock
+  ---
+  duration_ms: 1.591702
+  type: 'test'
+  ...
+# Subtest: configuration change preview_pilot_required can close a reserved/running set without retaining a busy lock
+ok 111 - configuration change preview_pilot_required can close a reserved/running set without retaining a busy lock
+  ---
+  duration_ms: 1.492449
+  type: 'test'
+  ...
+# Subtest: configuration change preview_provider_key_required can close a reserved/running set without retaining a busy lock
+ok 112 - configuration change preview_provider_key_required can close a reserved/running set without retaining a busy lock
+  ---
+  duration_ms: 1.196405
+  type: 'test'
+  ...
+1..112
+# tests 112
+# suites 0
+# pass 112
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5147.061186

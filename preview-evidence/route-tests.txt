@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: authenticated pilot returns actual configured status without exposing key; others cannot start it
+ok 1 - authenticated pilot returns actual configured status without exposing key; others cannot start it
+  ---
+  duration_ms: 312.962775
+  type: 'test'
+  ...
+# Subtest: one consented original photo produces three fixed-label previews with exactly four reserved calls
+ok 2 - one consented original photo produces three fixed-label previews with exactly four reserved calls
+  ---
+  duration_ms: 542.90038
+  type: 'test'
+  ...
+# Subtest: repeat and concurrent same-ID submissions never repeat a paid set; third new set is refused
+ok 3 - repeat and concurrent same-ID submissions never repeat a paid set; third new set is refused
+  ---
+  duration_ms: 584.410463
+  type: 'test'
+  ...
+# Subtest: changed photo or preferences cannot reuse consent; negative permissions make no reservation
+ok 4 - changed photo or preferences cannot reuse consent; negative permissions make no reservation
+  ---
+  duration_ms: 378.800297
+  type: 'test'
+  ...
+# Subtest: foreign owner cannot read, cancel or retry another owner's previews
+ok 5 - foreign owner cannot read, cancel or retry another owner's previews
+  ---
+  duration_ms: 444.417539
+  type: 'test'
+  ...
+# Subtest: cancel stops remaining calls, clears images and never refunds or silently replays the set
+ok 6 - cancel stops remaining calls, clears images and never refunds or silently replays the set
+  ---
+  duration_ms: 676.079365
+  type: 'test'
+  ...
+# Subtest: provider analysis failure ends the set without further calls or retry
+ok 7 - provider analysis failure ends the set without further calls or retry
+  ---
+  duration_ms: 501.057405
+  type: 'test'
+  ...
+# Subtest: provider edit failure ends the set without further calls or retry
+ok 8 - provider edit failure ends the set without further calls or retry
+  ---
+  duration_ms: 339.79748
+  type: 'test'
+  ...
+# Subtest: provider suggestions failure ends the set without further calls or retry
+ok 9 - provider suggestions failure ends the set without further calls or retry
+  ---
+  duration_ms: 477.165022
+  type: 'test'
+  ...
+# Subtest: host-off and cross-origin requests cannot start work; private backend files are never static assets
+ok 10 - host-off and cross-origin requests cannot start work; private backend files are never static assets
+  ---
+  duration_ms: 313.096233
+  type: 'test'
+  ...
+# Subtest: mixed-case API paths keep JSON, origin and cache protections before cancellation
+ok 11 - mixed-case API paths keep JSON, origin and cache protections before cancellation
+  ---
+  duration_ms: 727.082255
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5505.480682

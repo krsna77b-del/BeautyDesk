@@ -8,7 +8,7 @@
     "start": "node server.js",
     "dev": "node server.js",
     "test": "node --test tests/*.test.cjs",
-    "check": "node --check auth-email.js && node --check server.js && node --check db.js && node --check ai.js && node --check booking.js && node --check app.js && node --check photo-flow.js && node --check photo-media.js && node --check photo-vision.js && node --check modules/migrations.js && node --check modules/salon.js && node --check modules/routes.js && node --check ui.js && node --check assistant-widget.js && node --check scripts/build-marketing.cjs",
+    "check": "node --check auth-email.js && node --check server.js && node --check db.js && node --check ai.js && node --check booking.js && node --check app.js && node --check photo-flow.js && node --check photo-media.js && node --check photo-vision.js && node --check modules/migrations.js && node --check modules/salon.js && node --check modules/routes.js && node --check ui.js && node --check assistant-widget.js && node --check scripts/build-marketing.cjs && node --check hairstyle-config.js && node --check hairstyle-google.js && node --check hairstyle-store.js && node --check hairstyle-routes.js && node --check hairstyle-preview.js",
     "backup": "node scripts/backup.cjs",
     "build": "node scripts/build-marketing.cjs"
   },

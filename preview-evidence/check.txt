@@ -1,0 +1,4 @@
+
+> beautydesk-app@0.2.0 check
+> node --check auth-email.js && node --check server.js && node --check db.js && node --check ai.js && node --check booking.js && node --check app.js && node --check photo-flow.js && node --check photo-media.js && node --check photo-vision.js && node --check modules/migrations.js && node --check modules/salon.js && node --check modules/routes.js && node --check ui.js && node --check assistant-widget.js && node --check scripts/build-marketing.cjs && node --check hairstyle-config.js && node --check hairstyle-google.js && node --check hairstyle-store.js && node --check hairstyle-routes.js && node --check hairstyle-preview.js
+

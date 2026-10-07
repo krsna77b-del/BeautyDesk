@@ -1,0 +1,5 @@
+
+> beautydesk-app@0.2.0 build
+> node scripts/build-marketing.cjs
+
+Built static marketing.html from the shipped UI renderer

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F8F6EF">
+  <meta name="description" content="Explore three hairstyle ideas using your own photo in BeautyDesk’s private preview pilot.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Your hairstyle preview · BeautyDesk</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/hairstyle-preview.css">
+  <script defer src="/hairstyle-preview.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to hairstyle preview</a>
+  <header class="preview-header">
+    <a class="wordmark" href="/pilot" aria-label="BeautyDesk salon workspace">BeautyDesk<span>YOUR SALON, BEAUTIFULLY CONNECTED</span></a>
+    <a class="back-link" href="/pilot"><span aria-hidden="true">←</span> <span>Back to salon</span></a>
+  </header>
+  <main id="main" class="preview-main">
+    <section class="intro" aria-labelledby="page-title">
+      <div class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> THE HAIRSTYLE STUDIO <span class="pilot-tag">Private pilot</span></div>
+      <h1 id="page-title">Your photo.<br>Three fresh <em>possibilities.</em></h1>
+      <p class="intro-copy">Add your own photo. We’ll suggest three hairstyles and create a preview of each, so you can explore a new look before your salon visit.</p>
+      <ol class="steps" aria-label="How it works">
+        <li><span>01</span> Your photo</li>
+        <li><span>02</span> Three ideas</li>
+        <li><span>03</span> See them on you</li>
+      </ol>
+    </section>
+
+    <section id="availability" class="availability" aria-labelledby="availability-title" aria-live="polite">
+      <span class="status-light" aria-hidden="true"></span>
+      <div><h2 id="availability-title">Checking preview availability</h2><p id="availability-message">Your photo stays on this device until you choose to send it.</p><a id="signin-link" href="/login" hidden>Sign in to BeautyDesk</a></div>
+      <button id="refresh-status" type="button" class="text-button" hidden>Check again</button>
+    </section>
+
+    <div class="studio-layout">
+      <section class="photo-panel" aria-labelledby="photo-title">
+        <div class="section-top"><span class="eyebrow">START WITH YOU</span><span class="privacy-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3M5 10h14v11H5z"/></svg>Local until you send</span></div>
+        <h2 id="photo-title">One photo. That’s all.</h2>
+        <p class="section-copy" id="photo-help">Use a clear, front-facing photo of just yourself, in good light, with your hair visible. Adults only.</p>
+        <form id="preview-form" novalidate>
+          <div id="upload-empty" class="upload-zone">
+            <svg class="upload-art" viewBox="0 0 96 96" aria-hidden="true"><rect x="14" y="10" width="68" height="76" rx="30"/><path d="M30 66c0-12 7-17 18-17s18 5 18 17M37 30c0-8 22-8 22 0v9c0 14-22 14-22 0zM31 43V31c0-22 34-22 34 0v12"/><path d="M71 71h14m-7-7v14"/></svg>
+            <strong>Let’s find your next look</strong>
+            <span>Choose a photo from your device</span>
+            <label class="button dark file-label" for="photo-file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h4l2-3h4l2 3h4v15H4z"/><circle cx="12" cy="13" r="4"/></svg>Choose my photo</label>
+            <span class="file-note">JPEG or PNG · up to 3 MiB</span>
+          </div>
+          <input id="photo-file" class="visually-hidden" type="file" accept="image/jpeg,image/png" aria-describedby="photo-help photo-error">
+          <div id="photo-selected" class="photo-selected" hidden>
+            <div class="original-frame"><img id="original-image" alt="Your selected original photo"><span class="image-badge">Your original</span></div>
+            <div class="selected-caption"><span id="photo-name"></span><button id="remove-photo" type="button" class="text-button">Remove photo</button></div>
+            <label class="button secondary file-label change-photo" for="photo-file">Choose a different photo</label>
+          </div>
+          <p id="photo-error" class="inline-error" role="alert" hidden></p>
+          <fieldset id="preferences" class="preferences">
+            <legend>A little direction <span>(optional)</span></legend>
+            <label class="choice"><input id="keep-length" type="checkbox"><span>Keep my current length</span></label>
+            <label class="choice"><input id="easy-maintenance" type="checkbox"><span>Prefer easy-to-maintain styles</span></label>
+          </fieldset>
+
+          <section id="consent-panel" class="consent-panel" aria-labelledby="consent-title">
+            <h3 id="consent-title">Before your photo leaves this device</h3>
+            <p class="consent-intro">Google will process your photo to suggest three styles and create previews. Please read the notice and confirm both choices.</p>
+            <details id="privacy-notice" open>
+              <summary>How your photo is used <span id="notice-version"></span></summary>
+              <p id="provider-disclosure">Loading the provider and privacy notice. Sending is unavailable until this notice is ready.</p>
+              <div id="privacy-links" class="privacy-links"></div>
+            </details>
+            <label class="choice consent-choice"><input id="adult-consent" type="checkbox"><span>I’m the adult in this photo, or the pictured adult has specifically allowed this use. Everyone shown is 18 or older.</span></label>
+            <label class="choice consent-choice"><input id="google-consent" type="checkbox"><span>I agree to send this photo to Google to suggest three hairstyles and generate a preview of each, under the notice above.</span></label>
+          </section>
+          <p id="action-error" class="inline-error" role="alert" hidden></p>
+          <div class="generate-actions">
+            <button id="generate-button" type="submit" class="button dark generate-button" disabled><span id="generate-label">Suggest 3 styles</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button>
+            <p id="generate-help" class="action-hint">Choose a photo to get started.</p>
+            <p id="budget-message" class="budget-message"></p>
+          </div>
+        </form>
+      </section>
+
+      <section id="results-panel" class="results-panel" aria-labelledby="results-title">
+        <div class="section-top"><span class="eyebrow">A LITTLE INSPIRATION</span><span id="results-count" class="results-count" aria-live="polite">3 looks, chosen for you</span></div>
+        <h2 id="results-title" tabindex="-1">Meet your possibilities</h2>
+        <p id="results-description" class="section-copy">Your three suggested looks will appear here. No need to choose a hairstyle first.</p>
+        <div id="progress-panel" class="progress-panel" role="status" aria-live="polite" hidden>
+          <div class="progress-heading"><span id="progress-spinner" class="spinner" aria-hidden="true"></span><strong id="progress-label">Finding ideas</strong></div>
+          <progress id="generation-progress" max="3" value="0" aria-label="Hairstyle previews completed"></progress>
+          <p id="progress-detail">Keep this page open while your previews are created.</p>
+          <div class="progress-actions"><button id="check-results" type="button" class="button secondary" hidden>Check for results</button><button id="cancel-generation" type="button" class="text-button">Stop and clear</button></div>
+        </div>
+        <div id="preview-grid" class="preview-grid" aria-label="Your three hairstyle ideas">
+          <article class="idea-card empty-card"><div class="empty-portrait"><span class="idea-number">01</span><svg viewBox="0 0 120 140" aria-hidden="true"><path d="M36 81V55c0-38 48-38 48 0v26M39 59c0-12 9-20 21-20s21 8 21 20v17c0 29-42 29-42 0zM24 131c0-22 13-34 36-34s36 12 36 34"/><path d="M38 49c11 0 23-9 25-14 3 9 11 15 19 17"/></svg><span>Your photo, reimagined</span></div><div class="idea-caption"><span class="eyebrow">YOUR FIRST IDEA</span><h3>A fresh perspective</h3><p>A suggested style will appear here</p></div></article>
+          <article class="idea-card empty-card"><div class="empty-portrait tone-two"><span class="idea-number">02</span><svg viewBox="0 0 120 140" aria-hidden="true"><path d="M34 92c-9-28-6-65 26-65s35 37 26 65M40 57v18c0 29 40 29 40 0V57M24 131c0-22 13-34 36-34s36 12 36 34M33 60c12 0 19-13 20-21 4 9 17 17 31 19"/></svg><span>Your photo, reimagined</span></div><div class="idea-caption"><span class="eyebrow">YOUR SECOND IDEA</span><h3>Something different</h3><p>A suggested style will appear here</p></div></article>
+          <article class="idea-card empty-card"><div class="empty-portrait tone-three"><span class="idea-number">03</span><svg viewBox="0 0 120 140" aria-hidden="true"><path d="M31 94V58c0-41 58-41 58 0v36M40 55v20c0 29 40 29 40 0V55M24 131c0-22 13-34 36-34s36 12 36 34M31 62c13-2 25-15 29-28 4 13 16 26 29 28"/></svg><span>Your photo, reimagined</span></div><div class="idea-caption"><span class="eyebrow">YOUR THIRD IDEA</span><h3>A new favourite?</h3><p>A suggested style will appear here</p></div></article>
+        </div>
+        <p id="empty-explanation" class="empty-explanation">Illustrations only. These aren’t generated previews or recommendations yet.</p>
+        <div id="results-actions" class="results-actions" hidden><button id="clear-results" type="button" class="button secondary">Clear photos from this page</button></div>
+        <aside class="salon-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.6 5.5L21 9.4l-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.4l6.4-.9z"/></svg><p id="result-disclaimer">A starting point for your salon conversation. AI previews can change your face or other details. Results may differ in real life; they aren’t a promised salon result or a booking.</p></aside>
+      </section>
+    </div>
+    <footer class="preview-footer"><span>BeautyDesk · A little confidence before your next cut</span><p>Keep this page open while a set is running. Leaving clears photos from this page, but cannot recall information already sent to Google.</p></footer>
+  </main>
+  <noscript><div class="noscript-notice">This private preview needs JavaScript. No photo has been sent. <a href="/pilot">Return to your salon workspace</a>.</div></noscript>
+</body>
+</html>

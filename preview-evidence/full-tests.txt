@@ -1,0 +1,2810 @@
+
+> beautydesk-app@0.2.0 test
+> node --test tests/*.test.cjs
+
+TAP version 13
+# Subtest: Bookings prompts a service and never creates an appointment
+ok 1 - Bookings prompts a service and never creates an appointment
+  ---
+  duration_ms: 16.734479
+  type: 'test'
+  ...
+# Subtest: full split-message booking preserves chosen service, date, time, name and phone; requires final confirmation
+ok 2 - full split-message booking preserves chosen service, date, time, name and phone; requires final confirmation
+  ---
+  duration_ms: 19.079238
+  type: 'test'
+  ...
+# Subtest: service/day never silently books first slot
+ok 3 - service/day never silently books first slot
+  ---
+  duration_ms: 1.758383
+  type: 'test'
+  ...
+# Subtest: one-message details still need summary and explicit confirmation
+ok 4 - one-message details still need summary and explicit confirmation
+  ---
+  duration_ms: 4.459843
+  type: 'test'
+  ...
+# Subtest: changing a proposed time causes fresh confirmation
+ok 5 - changing a proposed time causes fresh confirmation
+  ---
+  duration_ms: 7.092139
+  type: 'test'
+  ...
+# Subtest: simulator full conversation never creates real appointments
+ok 6 - simulator full conversation never creates real appointments
+  ---
+  duration_ms: 6.380654
+  type: 'test'
+  ...
+# Subtest: simulator marker forces dry run even when caller omitted dryRun
+ok 7 - simulator marker forces dry run even when caller omitted dryRun
+  ---
+  duration_ms: 9.137408
+  type: 'test'
+  ...
+# Subtest: dry run with real phone never writes
+ok 8 - dry run with real phone never writes
+  ---
+  duration_ms: 0.826296
+  type: 'test'
+  ...
+# Subtest: profile name is included for customer to explicitly confirm
+ok 9 - profile name is included for customer to explicitly confirm
+  ---
+  duration_ms: 4.517395
+  type: 'test'
+  ...
+# Subtest: generic profile placeholder is not accepted as a booking name
+ok 10 - generic profile placeholder is not accepted as a booking name
+  ---
+  duration_ms: 8.461534
+  type: 'test'
+  ...
+# Subtest: invalid and past dates cannot be booked
+ok 11 - invalid and past dates cannot be booked
+  ---
+  duration_ms: 2.239937
+  type: 'test'
+  ...
+# Subtest: past slots today are excluded using South Africa time
+ok 12 - past slots today are excluded using South Africa time
+  ---
+  duration_ms: 1.839703
+  type: 'test'
+  ...
+# Subtest: relative today/tomorrow use salon date across UTC midnight
+ok 13 - relative today/tomorrow use salon date across UTC midnight
+  ---
+  duration_ms: 2.265155
+  type: 'test'
+  ...
+# Subtest: invalid duration, unknown service, and service duration mismatch rejected
+ok 14 - invalid duration, unknown service, and service duration mismatch rejected
+  ---
+  duration_ms: 1.463696
+  type: 'test'
+  ...
+# Subtest: missing or placeholder phone cannot create live appointments
+ok 15 - missing or placeholder phone cannot create live appointments
+  ---
+  duration_ms: 1.151483
+  type: 'test'
+  ...
+# Subtest: closed days and appointments extending beyond close rejected
+ok 16 - closed days and appointments extending beyond close rejected
+  ---
+  duration_ms: 1.334323
+  type: 'test'
+  ...
+# Subtest: hours validator rejects missing days, invalid times, backwards/overnight ranges and arrays
+ok 17 - hours validator rejects missing days, invalid times, backwards/overnight ranges and arrays
+  ---
+  duration_ms: 1.106657
+  type: 'test'
+  ...
+# Subtest: malformed saved hours fail closed rather than use defaults
+ok 18 - malformed saved hours fail closed rather than use defaults
+  ---
+  duration_ms: 2.000045
+  type: 'test'
+  ...
+# Subtest: conflicts compare instants across offsets and honor legacy salon-local records
+ok 19 - conflicts compare instants across offsets and honor legacy salon-local records
+  ---
+  duration_ms: 2.321726
+  type: 'test'
+  ...
+# Subtest: cross-day appointments block overlapping morning slots
+ok 20 - cross-day appointments block overlapping morning slots
+  ---
+  duration_ms: 1.540439
+  type: 'test'
+  ...
+# Subtest: cancelled appointments and another salon do not block slots
+ok 21 - cancelled appointments and another salon do not block slots
+  ---
+  duration_ms: 1.810359
+  type: 'test'
+  ...
+# Subtest: transaction prevents two bookings for one slot
+ok 22 - transaction prevents two bookings for one slot
+  ---
+  duration_ms: 3.907021
+  type: 'test'
+  ...
+# Subtest: availability is rechecked after confirmation, not trusted from offered list
+ok 23 - availability is rechecked after confirmation, not trusted from offered list
+  ---
+  duration_ms: 3.897299
+  type: 'test'
+  ...
+# Subtest: informational detour does not treat yes as confirmation until summary is shown again
+ok 24 - informational detour does not treat yes as confirmation until summary is shown again
+  ---
+  duration_ms: 6.573742
+  type: 'test'
+  ...
+# Subtest: unknown service is never substituted with first service
+ok 25 - unknown service is never substituted with first service
+  ---
+  duration_ms: 1.11415
+  type: 'test'
+  ...
+# Subtest: cancel draft does not create or claim cancellation of an existing appointment
+ok 26 - cancel draft does not create or claim cancellation of an existing appointment
+  ---
+  duration_ms: 2.505842
+  type: 'test'
+  ...
+# Subtest: AI key cannot bypass deterministic confirmation or introduce external side effects
+ok 27 - AI key cannot bypass deterministic confirmation or introduce external side effects
+  ---
+  duration_ms: 10.451588
+  type: 'test'
+  ...
+# Subtest: changed service price or duration requires a fresh summary before confirming
+ok 28 - changed service price or duration requires a fresh summary before confirming
+  ---
+  duration_ms: 5.462595
+  type: 'test'
+  ...
+# Subtest: weekday after for is not mistaken for a customer name
+ok 29 - weekday after for is not mistaken for a customer name
+  ---
+  duration_ms: 1.756725
+  type: 'test'
+  ...
+# Subtest: request to change to unknown service asks user to choose rather than keeping old service
+ok 30 - request to change to unknown service asks user to choose rather than keeping old service
+  ---
+  duration_ms: 12.633922
+  type: 'test'
+  ...
+# Subtest: two separate database connections cannot commit overlapping appointments
+ok 31 - two separate database connections cannot commit overlapping appointments
+  ---
+  duration_ms: 326.074527
+  type: 'test'
+  ...
+# Subtest: provider failure and unsafe provider confirmation fail safely without writes or network
+ok 32 - provider failure and unsafe provider confirmation fail safely without writes or network
+  ---
+  duration_ms: 10.407819
+  type: 'test'
+  ...
+# Subtest: exact pilot greeting Hey it’s Alan then Bookings preserves name throughout
+ok 33 - exact pilot greeting Hey it’s Alan then Bookings preserves name throughout
+  ---
+  duration_ms: 10.589272
+  type: 'test'
+  ...
+# Subtest: curly I’m and straight it's greetings also preserve name
+ok 34 - curly I’m and straight it's greetings also preserve name
+  ---
+  duration_ms: 2.723432
+  type: 'test'
+  ...
+# Subtest: no explicitly declines proposed booking and cannot later accidentally confirm it
+ok 35 - no explicitly declines proposed booking and cannot later accidentally confirm it
+  ---
+  duration_ms: 17.918488
+  type: 'test'
+  ...
+# Subtest: control characters in historical names and service names cannot authorize bookings
+ok 36 - control characters in historical names and service names cannot authorize bookings
+  ---
+  duration_ms: 1.805739
+  type: 'test'
+  ...
+# Subtest: transaction rejects price changed after request service snapshot
+ok 37 - transaction rejects price changed after request service snapshot
+  ---
+  duration_ms: 9.147073
+  type: 'test'
+  ...
+# Subtest: delayed midnight message anchors tomorrow to sent time while validating against processing time
+ok 38 - delayed midnight message anchors tomorrow to sent time while validating against processing time
+  ---
+  duration_ms: 6.154411
+  type: 'test'
+  ...
+# Subtest: delayed past time still rejected using actual processing time
+ok 39 - delayed past time still rejected using actual processing time
+  ---
+  duration_ms: 1.933517
+  type: 'test'
+  ...
+# Subtest: batched YES predating generated confirmation cannot commit booking
+ok 40 - batched YES predating generated confirmation cannot commit booking
+  ---
+  duration_ms: 6.672177
+  type: 'test'
+  ...
+# Subtest: failed reply to a correction cannot make later YES book the stale earlier summary
+ok 41 - failed reply to a correction cannot make later YES book the stale earlier summary
+  ---
+  duration_ms: 3.339365
+  type: 'test'
+  ...
+# Subtest: same-second real reply received after acceptance is conservatively re-prompted
+ok 42 - same-second real reply received after acceptance is conservatively re-prompted
+  ---
+  duration_ms: 2.284202
+  type: 'test'
+  ...
+# Subtest: same-second batched YES is rejected when server received it before summary existed
+ok 43 - same-second batched YES is rejected when server received it before summary existed
+  ---
+  duration_ms: 11.249465
+  type: 'test'
+  ...
+# Subtest: opening-hours question with a date is answered without starting a booking
+ok 44 - opening-hours question with a date is answered without starting a booking
+  ---
+  duration_ms: 1.134755
+  type: 'test'
+  ...
+# Subtest: real YES must follow actual Meta acceptance rather than summary creation
+ok 45 - real YES must follow actual Meta acceptance rather than summary creation
+  ---
+  duration_ms: 6.845823
+  type: 'test'
+  ...
+# Subtest: legacy summary without acceptance timestamp cannot authorize a real booking
+ok 46 - legacy summary without acceptance timestamp cannot authorize a real booking
+  ---
+  duration_ms: 2.0786
+  type: 'test'
+  ...
+# Subtest: immutable arrival context rejects null, old or mismatched summary IDs, even at same millisecond
+ok 47 - immutable arrival context rejects null, old or mismatched summary IDs, even at same millisecond
+  ---
+  duration_ms: 7.29744
+  type: 'test'
+  ...
+# Subtest: durable origin makes repeated same booking idempotent and changed details fail closed
+ok 48 - durable origin makes repeated same booking idempotent and changed details fail closed
+  ---
+  duration_ms: 1.171624
+  type: 'test'
+  ...
+# Subtest: missing real WhatsApp origin cannot create an untraceable booking
+ok 49 - missing real WhatsApp origin cannot create an untraceable booking
+  ---
+  duration_ms: 0.527266
+  type: 'test'
+  ...
+# Subtest: failed final confirmation cannot leave old draft usable for a second appointment
+ok 50 - failed final confirmation cannot leave old draft usable for a second appointment
+  ---
+  duration_ms: 22.851419
+  type: 'test'
+  ...
+# Subtest: unresolved committed booking blocks even explicit separate booking; information stays available
+ok 51 - unresolved committed booking blocks even explicit separate booking; information stays available
+  ---
+  duration_ms: 1.931682
+  type: 'test'
+  ...
+# Subtest: explicit separate appointment after resolved commit starts a clean draft and still requires accepted summary
+ok 52 - explicit separate appointment after resolved commit starts a clean draft and still requires accepted summary
+  ---
+  duration_ms: 3.612162
+  type: 'test'
+  ...
+# Subtest: cancelled latest booking cannot resurrect an old draft or its origin
+ok 53 - cancelled latest booking cannot resurrect an old draft or its origin
+  ---
+  duration_ms: 1.696589
+  type: 'test'
+  ...
+# Subtest: cross-tenant committed booking context is neither exposed nor used to authorize a write
+ok 54 - cross-tenant committed booking context is neither exposed nor used to authorize a write
+  ---
+  duration_ms: 1.187031
+  type: 'test'
+  ...
+# Subtest: additional booking intent is explicit, tri-state and safely revocable
+ok 55 - additional booking intent is explicit, tri-state and safely revocable
+  ---
+  duration_ms: 0.471603
+  type: 'test'
+  ...
+# Subtest: local separate-booking intent is revoked by a later no or negation
+ok 56 - local separate-booking intent is revoked by a later no or negation
+  ---
+  duration_ms: 2.970545
+  type: 'test'
+  ...
+# Subtest: idempotent origin preserves committed price and rejects changed expected price
+ok 57 - idempotent origin preserves committed price and rejects changed expected price
+  ---
+  duration_ms: 1.255885
+  type: 'test'
+  ...
+# Subtest: same-second delayed pre-acceptance YES cannot authorize despite matching receipt snapshot
+ok 58 - same-second delayed pre-acceptance YES cannot authorize despite matching receipt snapshot
+  ---
+  duration_ms: 3.331638
+  type: 'test'
+  ...
+# Subtest: real next-second confirmation succeeds when original timestamp, receipt and snapshot all agree
+ok 59 - real next-second confirmation succeeds when original timestamp, receipt and snapshot all agree
+  ---
+  duration_ms: 3.074884
+  type: 'test'
+  ...
+# Subtest: simulator retains same-second preview confirmation without a real appointment write
+ok 60 - simulator retains same-second preview confirmation without a real appointment write
+  ---
+  duration_ms: 1.847071
+  type: 'test'
+  ...
+# Subtest: timing retry explains the wait; repeated fast replies never write and later reply books once
+ok 61 - timing retry explains the wait; repeated fast replies never write and later reply books once
+  ---
+  duration_ms: 6.947278
+  type: 'test'
+  ...
+# POST /api/client/login 200
+# GET /api/client/me 200
+# GET /api/client/services 200
+# GET /api/client/appointments 200
+# GET /api/client/recent-messages 200
+# GET /api/client/simulator/messages 200
+# GET /api/client/whatsapp-reviews 200
+# Login feedback: 
+# PASS backend-backed login, dashboard, appointments and review queue
+# POST /api/whatsapp/simulate 200
+# GET /api/client/simulator/messages 200
+# POST /api/client/simulator/reset 200
+# PASS backend-backed simulator and JSON reset
+# POST /api/client/appointments/qa-appointment/cancel 200
+# GET /api/client/me 200
+# GET /api/client/appointments 200
+# GET /api/client/recent-messages 200
+# GET /api/client/whatsapp-reviews 200
+# PASS backend-backed cancellation updates appointment count
+# POST /api/client/whatsapp-reviews/qa-review/acknowledge 200
+# GET /api/client/me 200
+# GET /api/client/appointments 200
+# GET /api/client/recent-messages 200
+# GET /api/client/whatsapp-reviews 200
+# PASS backend-backed review acknowledgement clears queue without sending
+# POST /api/client/logout 200
+# GET /api/client/me 401
+# PASS backend-backed logout clears session
+# 5 HTTP-backed frontend checks passed; only disposable fixture data was changed
+# Subtest: HTTP-backed frontend login, simulator/reset, cancellation, review acknowledgement and logout
+ok 62 - HTTP-backed frontend login, simulator/reset, cancellation, review acknowledgement and logout
+  ---
+  duration_ms: 1194.461373
+  type: 'test'
+  ...
+# PASS hours format and ordering
+# PASS invalid hours blocked and unrelated drafts preserved
+# PASS duplicate service clicks submit once and restore controls
+# PASS retired public marketing and signup form removed
+# PASS invalid login reports credential problem
+# PASS login distinguishes generic credentials, throttling, server and network failures
+# PASS simulator duplicate send and overlapping reset blocked
+# PASS legacy bookings retained with verification warnings, South Africa timezone and escaping
+# PASS simulator messages excluded and text escaped
+# PASS actual mode and webhook signature blockers displayed
+# PASS password mismatch and byte bounds blocked; correct payload
+# PASS cancel and review dismissal make no mutation
+# PASS manual review queue escapes messages and preserves saved-booking warning
+# PASS late refresh cannot overwrite newer navigation
+# PASS bodyless mutations use required JSON contract
+# PASS unverified marketing and payment claims removed
+# 16 frontend checks passed
+# Subtest: frontend pilot flows: validation, duplicate requests, honest status and safe rendering
+ok 63 - frontend pilot flows: validation, duplicate requests, honest status and safe rendering
+  ---
+  duration_ms: 175.573964
+  type: 'test'
+  ...
+# Subtest: photo toggle enforces host/catalog gates, preserves failed drafts and prevents duplicate saves
+ok 64 - photo toggle enforces host/catalog gates, preserves failed drafts and prevents duplicate saves
+  ---
+  duration_ms: 2.261124
+  type: 'test'
+  ...
+# Subtest: owner appointment list labels photo prices as estimates and escapes customer content
+ok 65 - owner appointment list labels photo prices as estimates and escapes customer content
+  ---
+  duration_ms: 4.549299
+  type: 'test'
+  ...
+# Subtest: preview stays off unless all dedicated host settings and allowed salon are configured
+ok 66 - preview stays off unless all dedicated host settings and allowed salon are configured
+  ---
+  duration_ms: 12.38405
+  type: 'test'
+  ...
+# Subtest: analysis uses pinned structured Google Interactions request with no storage, tools, retry or freeform instructions
+ok 67 - analysis uses pinned structured Google Interactions request with no storage, tools, retry or freeform instructions
+  ---
+  duration_ms: 88.186629
+  type: 'test'
+  ...
+# Subtest: each edit starts from original image and fixed trusted style, returns one validated metadata-free JPEG
+ok 68 - each edit starts from original image and fixed trusted style, returns one validated metadata-free JPEG
+  ---
+  duration_ms: 23.024406
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: null
+ok 69 - invalid or untrusted suggestion output fails closed: null
+  ---
+  duration_ms: 1.115606
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {}
+ok 70 - invalid or untrusted suggestion output fails closed: {}
+  ---
+  duration_ms: 0.345034
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves"]}
+ok 71 - invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves"]}
+  ---
+  duration_ms: 1.864143
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","soft-waves","sleek-bob"]}
+ok 72 - invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","soft-waves","sleek-bob"]}
+  ---
+  duration_ms: 0.569919
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","sleek-bob","medical-advice"]}
+ok 73 - invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","sleek-bob","medical-advice"]}
+  ---
+  duration_ms: 0.30687
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","sleek-bob","pixie-cut"],"diagnosis":"not allowed"}
+ok 74 - invalid or untrusted suggestion output fails closed: {"usable_photo":true,"style_ids":["soft-waves","sleek-bob","pixie-cut"],"diagnosis":"not allowed"}
+  ---
+  duration_ms: 0.786065
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":false,"style_ids":["soft-waves"]}
+ok 75 - invalid or untrusted suggestion output fails closed: {"usable_photo":false,"style_ids":["soft-waves"]}
+  ---
+  duration_ms: 0.342195
+  type: 'test'
+  ...
+# Subtest: invalid or untrusted suggestion output fails closed: {"usable_photo":"yes","style_ids":["soft-waves","sleek-bob","pixie-cut"]}
+ok 76 - invalid or untrusted suggestion output fails closed: {"usable_photo":"yes","style_ids":["soft-waves","sleek-bob","pixie-cut"]}
+  ---
+  duration_ms: 0.139456
+  type: 'test'
+  ...
+# Subtest: unusable photograph stops before image edits; optional preferences constrain every returned ID
+ok 77 - unusable photograph stops before image edits; optional preferences constrain every returned ID
+  ---
+  duration_ms: 0.39644
+  type: 'test'
+  ...
+# Subtest: invalid image response never becomes a usable preview
+ok 78 - invalid image response never becomes a usable preview
+  ---
+  duration_ms: 1.054287
+  type: 'test'
+  ...
+# Subtest: invalid image response never becomes a usable preview
+ok 79 - invalid image response never becomes a usable preview
+  ---
+  duration_ms: 0.551828
+  type: 'test'
+  ...
+# Subtest: invalid image response never becomes a usable preview
+ok 80 - invalid image response never becomes a usable preview
+  ---
+  duration_ms: 0.679638
+  type: 'test'
+  ...
+# Subtest: invalid image response never becomes a usable preview
+ok 81 - invalid image response never becomes a usable preview
+  ---
+  duration_ms: 0.455366
+  type: 'test'
+  ...
+# Subtest: invalid image response never becomes a usable preview
+ok 82 - invalid image response never becomes a usable preview
+  ---
+  duration_ms: 1.558156
+  type: 'test'
+  ...
+# Subtest: HTTP 401 is sanitized and never retried
+ok 83 - HTTP 401 is sanitized and never retried
+  ---
+  duration_ms: 0.844104
+  type: 'test'
+  ...
+# Subtest: HTTP 403 is sanitized and never retried
+ok 84 - HTTP 403 is sanitized and never retried
+  ---
+  duration_ms: 0.705585
+  type: 'test'
+  ...
+# Subtest: HTTP 429 is sanitized and never retried
+ok 85 - HTTP 429 is sanitized and never retried
+  ---
+  duration_ms: 0.56846
+  type: 'test'
+  ...
+# Subtest: HTTP 500 is sanitized and never retried
+ok 86 - HTTP 500 is sanitized and never retried
+  ---
+  duration_ms: 0.342339
+  type: 'test'
+  ...
+# Subtest: timeout and prior cancellation never initiate an automatic retry
+ok 87 - timeout and prior cancellation never initiate an automatic retry
+  ---
+  duration_ms: 16.532538
+  type: 'test'
+  ...
+# Subtest: configuration/cost check at dispatch boundary can stop all network transmission
+ok 88 - configuration/cost check at dispatch boundary can stop all network transmission
+  ---
+  duration_ms: 0.825097
+  type: 'test'
+  ...
+# Subtest: redirects and oversized JSON are rejected without exposing raw response text
+ok 89 - redirects and oversized JSON are rejected without exposing raw response text
+  ---
+  duration_ms: 1.72742
+  type: 'test'
+  ...
+# Subtest: input normalization rejects malformed, unsupported or noncanonical payloads before provider use
+ok 90 - input normalization rejects malformed, unsupported or noncanonical payloads before provider use
+  ---
+  duration_ms: 33.119081
+  type: 'test'
+  ...
+# Subtest: invalid key, style and preference inputs fail before network
+ok 91 - invalid key, style and preference inputs fail before network
+  ---
+  duration_ms: 0.295941
+  type: 'test'
+  ...
+# Subtest: review: every generated image expires within ten minutes of its own creation
+ok 92 - review: every generated image expires within ten minutes of its own creation
+  ---
+  duration_ms: 74.007288
+  type: 'test'
+  ...
+# Subtest: review: cancellation clears source and partial results, discards late output, and never sends another call
+ok 93 - review: cancellation clears source and partial results, discards late output, and never sends another call
+  ---
+  duration_ms: 98.960418
+  type: 'test'
+  ...
+# Subtest: review: server catalogue replaces all injected provider style prose before image generation
+ok 94 - review: server catalogue replaces all injected provider style prose before image generation
+  ---
+  duration_ms: 36.106655
+  type: 'test'
+  ...
+# Subtest: authenticated pilot returns actual configured status without exposing key; others cannot start it
+ok 95 - authenticated pilot returns actual configured status without exposing key; others cannot start it
+  ---
+  duration_ms: 520.197739
+  type: 'test'
+  ...
+# Subtest: one consented original photo produces three fixed-label previews with exactly four reserved calls
+ok 96 - one consented original photo produces three fixed-label previews with exactly four reserved calls
+  ---
+  duration_ms: 674.975547
+  type: 'test'
+  ...
+# Subtest: repeat and concurrent same-ID submissions never repeat a paid set; third new set is refused
+ok 97 - repeat and concurrent same-ID submissions never repeat a paid set; third new set is refused
+  ---
+  duration_ms: 1445.190463
+  type: 'test'
+  ...
+# Subtest: changed photo or preferences cannot reuse consent; negative permissions make no reservation
+ok 98 - changed photo or preferences cannot reuse consent; negative permissions make no reservation
+  ---
+  duration_ms: 374.811695
+  type: 'test'
+  ...
+# Subtest: foreign owner cannot read, cancel or retry another owner's previews
+ok 99 - foreign owner cannot read, cancel or retry another owner's previews
+  ---
+  duration_ms: 385.360924
+  type: 'test'
+  ...
+# Subtest: cancel stops remaining calls, clears images and never refunds or silently replays the set
+ok 100 - cancel stops remaining calls, clears images and never refunds or silently replays the set
+  ---
+  duration_ms: 517.870744
+  type: 'test'
+  ...
+# Subtest: provider analysis failure ends the set without further calls or retry
+ok 101 - provider analysis failure ends the set without further calls or retry
+  ---
+  duration_ms: 2681.113281
+  type: 'test'
+  ...
+# Subtest: provider edit failure ends the set without further calls or retry
+ok 102 - provider edit failure ends the set without further calls or retry
+  ---
+  duration_ms: 2501.606127
+  type: 'test'
+  ...
+# Subtest: provider suggestions failure ends the set without further calls or retry
+ok 103 - provider suggestions failure ends the set without further calls or retry
+  ---
+  duration_ms: 2485.722195
+  type: 'test'
+  ...
+# Subtest: host-off and cross-origin requests cannot start work; private backend files are never static assets
+ok 104 - host-off and cross-origin requests cannot start work; private backend files are never static assets
+  ---
+  duration_ms: 3663.379709
+  type: 'test'
+  ...
+# Subtest: mixed-case API paths keep JSON, origin and cache protections before cancellation
+ok 105 - mixed-case API paths keep JSON, origin and cache protections before cancellation
+  ---
+  duration_ms: 4058.565793
+  type: 'test'
+  ...
+# Subtest: disabled source rollout does not create preview tables or consume any allowance
+ok 106 - disabled source rollout does not create preview tables or consume any allowance
+  ---
+  duration_ms: 1670.514077
+  type: 'test'
+  ...
+# Subtest: initialization is additive, isolated, repeatable and fixes a two-set/$3.20 pilot ceiling
+ok 107 - initialization is additive, isolated, repeatable and fixes a two-set/$3.20 pilot ceiling
+  ---
+  duration_ms: 15.824459
+  type: 'test'
+  ...
+# Subtest: consent creates random opaque IDs and exact combined-model/preferences binding with ISO expiry
+ok 108 - consent creates random opaque IDs and exact combined-model/preferences binding with ISO expiry
+  ---
+  duration_ms: 5.262759
+  type: 'test'
+  ...
+# Subtest: consent requires literal true for adult
+ok 109 - consent requires literal true for adult
+  ---
+  duration_ms: 3.950414
+  type: 'test'
+  ...
+# Subtest: consent requires literal true for ownsPhoto
+ok 110 - consent requires literal true for ownsPhoto
+  ---
+  duration_ms: 2.27963
+  type: 'test'
+  ...
+# Subtest: consent requires literal true for googleProcessing
+ok 111 - consent requires literal true for googleProcessing
+  ---
+  duration_ms: 2.799361
+  type: 'test'
+  ...
+# Subtest: invalid binding identifiers, SHA256 values and malformed/freeform preferences never enter the ledger
+ok 112 - invalid binding identifiers, SHA256 values and malformed/freeform preferences never enter the ledger
+  ---
+  duration_ms: 2.570414
+  type: 'test'
+  ...
+# Subtest: one atomic reservation consumes consent and reserves analysis plus three stable preview IDs
+ok 113 - one atomic reservation consumes consent and reserves analysis plus three stable preview IDs
+  ---
+  duration_ms: 4.268893
+  type: 'test'
+  ...
+# Subtest: exact duplicate set returns original four IDs before busy/expiry and never spends again
+ok 114 - exact duplicate set returns original four IDs before busy/expiry and never spends again
+  ---
+  duration_ms: 2.285483
+  type: 'test'
+  ...
+# Subtest: duplicate key with changed image/preferences/model/version/consent conflicts without mutation
+ok 115 - duplicate key with changed image/preferences/model/version/consent conflicts without mutation
+  ---
+  duration_ms: 2.790171
+  type: 'test'
+  ...
+# Subtest: consent binds {"imageDigest":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"} and mismatch does not consume it
+ok 116 - consent binds {"imageDigest":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"} and mismatch does not consume it
+  ---
+  duration_ms: 2.2774
+  type: 'test'
+  ...
+# Subtest: consent binds {"model":"other-model"} and mismatch does not consume it
+ok 117 - consent binds {"model":"other-model"} and mismatch does not consume it
+  ---
+  duration_ms: 1.774845
+  type: 'test'
+  ...
+# Subtest: consent binds {"noticeVersion":"notice-v2"} and mismatch does not consume it
+ok 118 - consent binds {"noticeVersion":"notice-v2"} and mismatch does not consume it
+  ---
+  duration_ms: 1.761466
+  type: 'test'
+  ...
+# Subtest: consent binds {"preferences":{"keepLength":true,"easyMaintenance":false}} and mismatch does not consume it
+ok 119 - consent binds {"preferences":{"keepLength":true,"easyMaintenance":false}} and mismatch does not consume it
+  ---
+  duration_ms: 1.882224
+  type: 'test'
+  ...
+# Subtest: consent binds {"preferences":{"keepLength":false,"easyMaintenance":true}} and mismatch does not consume it
+ok 120 - consent binds {"preferences":{"keepLength":false,"easyMaintenance":true}} and mismatch does not consume it
+  ---
+  duration_ms: 2.124669
+  type: 'test'
+  ...
+# Subtest: consent expires exactly at ten minutes and fails before issuance
+ok 121 - consent expires exactly at ten minutes and fails before issuance
+  ---
+  duration_ms: 2.333158
+  type: 'test'
+  ...
+# Subtest: consent works immediately before expiry
+ok 122 - consent works immediately before expiry
+  ---
+  duration_ms: 1.854032
+  type: 'test'
+  ...
+# Subtest: consent is single use even after failure/cancellation
+ok 123 - consent is single use even after failure/cancellation
+  ---
+  duration_ms: 2.818629
+  type: 'test'
+  ...
+# Subtest: foreign owners cannot read or mutate sets, child calls or consent
+ok 124 - foreign owners cannot read or mutate sets, child calls or consent
+  ---
+  duration_ms: 2.599582
+  type: 'test'
+  ...
+# Subtest: one globally active set blocks another owner without consuming their consent
+ok 125 - one globally active set blocks another owner without consuming their consent
+  ---
+  duration_ms: 2.403994
+  type: 'test'
+  ...
+# Subtest: analysis must complete before edits; dispatch is a single compare-and-set
+ok 126 - analysis must complete before edits; dispatch is a single compare-and-set
+  ---
+  duration_ms: 2.528154
+  type: 'test'
+  ...
+# Subtest: child states prevent premature success and post-dispatch cancellation or terminal overwrite
+ok 127 - child states prevent premature success and post-dispatch cancellation or terminal overwrite
+  ---
+  duration_ms: 2.258863
+  type: 'test'
+  ...
+# Subtest: set completion requires all four successful calls and terminal metadata cannot be rewritten
+ok 128 - set completion requires all four successful calls and terminal metadata cannot be rewritten
+  ---
+  duration_ms: 4.615903
+  type: 'test'
+  ...
+# Subtest: failed set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+ok 129 - failed set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+  ---
+  duration_ms: 2.907438
+  type: 'test'
+  ...
+# Subtest: unknown set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+ok 130 - unknown set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+  ---
+  duration_ms: 3.015649
+  type: 'test'
+  ...
+# Subtest: cancelled set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+ok 131 - cancelled set closes pending children, preserves completed/uncertain calls and keeps all $1.60
+  ---
+  duration_ms: 4.037623
+  type: 'test'
+  ...
+# Subtest: two full reservations exhaust the budget, including cancelled or failed sets; duplicates remain free
+ok 132 - two full reservations exhaust the budget, including cancelled or failed sets; duplicates remain free
+  ---
+  duration_ms: 2.14412
+  type: 'test'
+  ...
+# Subtest: startup recovery atomically marks interrupted sets/children unknown with no replay or refund
+ok 133 - startup recovery atomically marks interrupted sets/children unknown with no replay or refund
+  ---
+  duration_ms: 3.058976
+  type: 'test'
+  ...
+# Subtest: recovery preserves completed children and their numeric usage metadata
+ok 134 - recovery preserves completed children and their numeric usage metadata
+  ---
+  duration_ms: 1.384622
+  type: 'test'
+  ...
+# Subtest: sets/consent/budget survive reopening without implicit recovery or reset
+ok 135 - sets/consent/budget survive reopening without implicit recovery or reset
+  ---
+  duration_ms: 3.806581
+  type: 'test'
+  ...
+# Subtest: independent SQLite connections share exact set/child state and cannot duplicate a dispatch
+ok 136 - independent SQLite connections share exact set/child state and cannot duplicate a dispatch
+  ---
+  duration_ms: 2.81686
+  type: 'test'
+  ...
+# Subtest: simultaneous first initialization on two SQLite connections is safe
+ok 137 - simultaneous first initialization on two SQLite connections is safe
+  ---
+  duration_ms: 397.540283
+  type: 'test'
+  ...
+# Subtest: simultaneous identical sets reserve exactly four calls once across two connections
+ok 138 - simultaneous identical sets reserve exactly four calls once across two connections
+  ---
+  duration_ms: 332.99721
+  type: 'test'
+  ...
+# Subtest: simultaneous new sets allow only one global active reservation
+ok 139 - simultaneous new sets allow only one global active reservation
+  ---
+  duration_ms: 157.546952
+  type: 'test'
+  ...
+# Subtest: racing for the final set cannot overrun two sets/eight calls/$3.20
+ok 140 - racing for the final set cannot overrun two sets/eight calls/$3.20
+  ---
+  duration_ms: 121.037048
+  type: 'test'
+  ...
+# Subtest: failure inserting the fourth call rolls back the whole set, prior calls and consent consumption
+ok 141 - failure inserting the fourth call rolls back the whole set, prior calls and consent consumption
+  ---
+  duration_ms: 3.402209
+  type: 'test'
+  ...
+# Subtest: held SQLite write lock maps to preview_busy without consuming consent or budget
+ok 142 - held SQLite write lock maps to preview_busy without consuming consent or budget
+  ---
+  duration_ms: 19.601201
+  type: 'test'
+  ...
+# Subtest: only allowlisted numeric result/usage metadata and safe error codes are retained
+ok 143 - only allowlisted numeric result/usage metadata and safe error codes are retained
+  ---
+  duration_ms: 7.073345
+  type: 'test'
+  ...
+# Subtest: missing/invalid identifiers cannot manufacture calls or sets
+ok 144 - missing/invalid identifiers cannot manufacture calls or sets
+  ---
+  duration_ms: 2.056053
+  type: 'test'
+  ...
+# Subtest: configuration change preview_model_required can close a reserved/running set without retaining a busy lock
+ok 145 - configuration change preview_model_required can close a reserved/running set without retaining a busy lock
+  ---
+  duration_ms: 4.155697
+  type: 'test'
+  ...
+# Subtest: configuration change preview_notice_required can close a reserved/running set without retaining a busy lock
+ok 146 - configuration change preview_notice_required can close a reserved/running set without retaining a busy lock
+  ---
+  duration_ms: 2.39757
+  type: 'test'
+  ...
+# Subtest: configuration change preview_pilot_required can close a reserved/running set without retaining a busy lock
+ok 147 - configuration change preview_pilot_required can close a reserved/running set without retaining a busy lock
+  ---
+  duration_ms: 2.439439
+  type: 'test'
+  ...
+# Subtest: configuration change preview_provider_key_required can close a reserved/running set without retaining a busy lock
+ok 148 - configuration change preview_provider_key_required can close a reserved/running set without retaining a busy lock
+  ---
+  duration_ms: 2.433382
+  type: 'test'
+  ...
+# Subtest: modular login feedback distinguishes generic 401, throttling, server errors and network failures
+ok 149 - modular login feedback distinguishes generic 401, throttling, server errors and network failures
+  ---
+  duration_ms: 5.976408
+  type: 'test'
+  ...
+# Subtest: modern photo links use guarded workspace while legacy support avoids SPA interception
+ok 150 - modern photo links use guarded workspace while legacy support avoids SPA interception
+  ---
+  duration_ms: 3.909258
+  type: 'test'
+  ...
+# Subtest: authenticated pilot controls survive anchors, reload and history restore without marketing
+ok 151 - authenticated pilot controls survive anchors, reload and history restore without marketing
+  ---
+  duration_ms: 15.328218
+  type: 'test'
+  ...
+# Subtest: expired salon sessions redirect to current login; Back to site always uses current home
+ok 152 - expired salon sessions redirect to current login; Back to site always uses current home
+  ---
+  duration_ms: 2.554976
+  type: 'test'
+  ...
+# Subtest: old bookmarks resolve safely and login continuation is allowlisted
+ok 153 - old bookmarks resolve safely and login continuation is allowlisted
+  ---
+  duration_ms: 2.120875
+  type: 'test'
+  ...
+# Subtest: modern photo login return path is explicitly allowlisted
+ok 154 - modern photo login return path is explicitly allowlisted
+  ---
+  duration_ms: 1.572776
+  type: 'test'
+  ...
+# Subtest: all historical pilot hashes preserve production destination before owner routing
+ok 155 - all historical pilot hashes preserve production destination before owner routing
+  ---
+  duration_ms: 10.486114
+  type: 'test'
+  ...
+# Subtest: visible pages and pilot status labels contain no promotional AI wording
+ok 156 - visible pages and pilot status labels contain no promotional AI wording
+  ---
+  duration_ms: 1.434032
+  type: 'test'
+  ...
+# Subtest: homepage renders an accessible WhatsApp example with honest setup and photo limits
+ok 157 - homepage renders an accessible WhatsApp example with honest setup and photo limits
+  ---
+  duration_ms: 3.061146
+  type: 'test'
+  ...
+# Subtest: preview card and badge stay upright, while the WhatsApp demo has bounded responsive layout
+ok 158 - preview card and badge stay upright, while the WhatsApp demo has bounded responsive layout
+  ---
+  duration_ms: 1.069971
+  type: 'test'
+  ...
+# Subtest: additive migration runs once and leaves legacy records intact
+ok 159 - additive migration runs once and leaves legacy records intact
+  ---
+  duration_ms: 7.567044
+  type: 'test'
+  ...
+# Subtest: tenant relationships reject foreign service/staff IDs and mutations
+ok 160 - tenant relationships reject foreign service/staff IDs and mutations
+  ---
+  duration_ms: 7.363398
+  type: 'test'
+  ...
+# Subtest: availability respects service duration, salon/staff hours, breaks, time off and qualification
+ok 161 - availability respects service duration, salon/staff hours, breaks, time off and qualification
+  ---
+  duration_ms: 19.764531
+  type: 'test'
+  ...
+# Subtest: explicit confirmation, phone normalization and transactionally idempotent booking
+ok 162 - explicit confirmation, phone normalization and transactionally idempotent booking
+  ---
+  duration_ms: 6.713505
+  type: 'test'
+  ...
+# Subtest: any staff uses qualified free capacity, never unrelated free technician
+ok 163 - any staff uses qualified free capacity, never unrelated free technician
+  ---
+  duration_ms: 6.919862
+  type: 'test'
+  ...
+# Subtest: null-staff legacy appointments conservatively block all qualified staff
+ok 164 - null-staff legacy appointments conservatively block all qualified staff
+  ---
+  duration_ms: 2.919325
+  type: 'test'
+  ...
+# Subtest: reschedule atomically releases old capacity, increments version, supersedes reminder and rejects stale mutation
+ok 165 - reschedule atomically releases old capacity, increments version, supersedes reminder and rejects stale mutation
+  ---
+  duration_ms: 5.893679
+  type: 'test'
+  ...
+# Subtest: pending consumes capacity, cancelled frees it; repeat cancel emits no duplicate
+ok 166 - pending consumes capacity, cancelled frees it; repeat cancel emits no duplicate
+  ---
+  duration_ms: 6.950945
+  type: 'test'
+  ...
+# Subtest: public change policy rejects late reschedule/cancel and terminal status
+ok 167 - public change policy rejects late reschedule/cancel and terminal status
+  ---
+  duration_ms: 4.818471
+  type: 'test'
+  ...
+# Subtest: management bearer tokens are appointment scoped, authenticated and not guessable
+ok 168 - management bearer tokens are appointment scoped, authenticated and not guessable
+  ---
+  duration_ms: 6.498837
+  type: 'test'
+  ...
+# Subtest: manual payments count receipts and refunds without fabricated billing or duplicate receipt
+ok 169 - manual payments count receipts and refunds without fabricated billing or duplicate receipt
+  ---
+  duration_ms: 6.183379
+  type: 'test'
+  ...
+# Subtest: notification mock never claims delivery and honors opt-out at processing time
+ok 170 - notification mock never claims delivery and honors opt-out at processing time
+  ---
+  duration_ms: 5.14754
+  type: 'test'
+  ...
+# Subtest: customer recognition is normalized and tenant scoped
+ok 171 - customer recognition is normalized and tenant scoped
+  ---
+  duration_ms: 3.215756
+  type: 'test'
+  ...
+# Subtest: signup/login creates trial, keeps public booking closed until configured, isolates auth roles
+ok 172 - signup/login creates trial, keeps public booking closed until configured, isolates auth roles
+  ---
+  duration_ms: 2628.501499
+  type: 'test'
+  ...
+# Subtest: owner configures qualified services and staff; tenant foreign mutations rejected
+ok 173 - owner configures qualified services and staff; tenant foreign mutations rejected
+  ---
+  duration_ms: 28.356831
+  type: 'test'
+  ...
+# Subtest: public availability and quote require explicit confirmation and are idempotent
+ok 174 - public availability and quote require explicit confirmation and are idempotent
+  ---
+  duration_ms: 45.458512
+  type: 'test'
+  ...
+# Subtest: owner reschedule availability excludes only a tenant-owned existing appointment
+ok 175 - owner reschedule availability excludes only a tenant-owned existing appointment
+  ---
+  duration_ms: 54.026622
+  type: 'test'
+  ...
+# Subtest: token management, atomic reschedule retry, owner receipts, customer history, mock notifications
+ok 176 - token management, atomic reschedule retry, owner receipts, customer history, mock notifications
+  ---
+  duration_ms: 52.68507
+  type: 'test'
+  ...
+# Subtest: legacy modular cancellation participates in event outbox and service archive preserves history
+ok 177 - legacy modular cancellation participates in event outbox and service archive preserves history
+  ---
+  duration_ms: 22.376438
+  type: 'test'
+  ...
+# Subtest: platform admin has separate session and changes are auditable without owner impersonation
+ok 178 - platform admin has separate session and changes are auditable without owner impersonation
+  ---
+  duration_ms: 18.218832
+  type: 'test'
+  ...
+# Subtest: retired public URLs never serve old markup; pilot documents require the correct session
+ok 179 - retired public URLs never serve old markup; pilot documents require the correct session
+  ---
+  duration_ms: 116.866752
+  type: 'test'
+  ...
+# Subtest: revoked client sessions cannot read private pilot markup
+ok 180 - revoked client sessions cannot read private pilot markup
+  ---
+  duration_ms: 4.758161
+  type: 'test'
+  ...
+# Subtest: pre-pilot database upgrade is additive, repeatable, retains records and does not silently enable modular booking
+ok 181 - pre-pilot database upgrade is additive, repeatable, retains records and does not silently enable modular booking
+  ---
+  duration_ms: 344.391874
+  type: 'test'
+  ...
+# Subtest: public booking without email does not disclose or overwrite a matching private CRM contact
+ok 182 - public booking without email does not disclose or overwrite a matching private CRM contact
+  ---
+  duration_ms: 20.283898
+  type: 'test'
+  ...
+# Subtest: public booking retains its supplied email without changing an existing CRM identity or consent
+ok 183 - public booking retains its supplied email without changing an existing CRM identity or consent
+  ---
+  duration_ms: 4.331438
+  type: 'test'
+  ...
+# Subtest: a public quote cannot confirm a silently renamed service or technician
+ok 184 - a public quote cannot confirm a silently renamed service or technician
+  ---
+  duration_ms: 9.379042
+  type: 'test'
+  ...
+# Subtest: invalid legacy service durations fail closed before advertising or booking capacity
+ok 185 - invalid legacy service durations fail closed before advertising or booking capacity
+  ---
+  duration_ms: 8.090072
+  type: 'test'
+  ...
+# Subtest: quotes are tenant scoped, expire, and retain immutable price/duration/deposit snapshots
+ok 186 - quotes are tenant scoped, expire, and retain immutable price/duration/deposit snapshots
+  ---
+  duration_ms: 13.928196
+  type: 'test'
+  ...
+# Subtest: cancellation atomically supersedes queued notifications and never processes an old reminder
+ok 187 - cancellation atomically supersedes queued notifications and never processes an old reminder
+  ---
+  duration_ms: 4.369993
+  type: 'test'
+  ...
+# Subtest: independent SQLite connections cannot double-book one technician or duplicate a retry
+ok 188 - independent SQLite connections cannot double-book one technician or duplicate a retry
+  ---
+  duration_ms: 1282.691073
+  type: 'test'
+  ...
+# Subtest: concurrent manual receipts and refunds cannot exceed the booking value or paid balance
+ok 189 - concurrent manual receipts and refunds cannot exceed the booking value or paid balance
+  ---
+  duration_ms: 785.259283
+  type: 'test'
+  ...
+# Subtest: production rejects empty and unrelated existing database files before writing schema
+ok 190 - production rejects empty and unrelated existing database files before writing schema
+  ---
+  duration_ms: 203.258865
+  type: 'test'
+  ...
+# Subtest: modular browser flows, mobile layout and stale-request safeguards
+ok 191 - modular browser flows, mobile layout and stale-request safeguards # SKIP
+  ---
+  duration_ms: 3.123699
+  type: 'test'
+  ...
+# Subtest: public booking renders enabled server response without private bookingEnabled flag
+ok 192 - public booking renders enabled server response without private bookingEnabled flag
+  ---
+  duration_ms: 91.30785
+  type: 'test'
+  ...
+# Subtest: availability response cannot overwrite a route reached while request was pending
+ok 193 - availability response cannot overwrite a route reached while request was pending
+  ---
+  duration_ms: 7.873045
+  type: 'test'
+  ...
+# Subtest: customer profile response cannot replace a newer modal, nor reopen after Close
+ok 194 - customer profile response cannot replace a newer modal, nor reopen after Close
+  ---
+  duration_ms: 9.912476
+  type: 'test'
+  ...
+# Subtest: form request is single-flight and response cannot update a disconnected form
+ok 195 - form request is single-flight and response cannot update a disconnected form
+  ---
+  duration_ms: 6.985089
+  type: 'test'
+  ...
+# Subtest: form response cannot redirect after navigation; connected successful form finishes once
+ok 196 - form response cannot redirect after navigation; connected successful form finishes once
+  ---
+  duration_ms: 6.032533
+  type: 'test'
+  ...
+# Subtest: refresh after a save cannot discard a newer modal or navigation
+ok 197 - refresh after a save cannot discard a newer modal or navigation
+  ---
+  duration_ms: 6.198807
+  type: 'test'
+  ...
+# Subtest: owner reschedule availability excludes the edited appointment only
+ok 198 - owner reschedule availability excludes the edited appointment only
+  ---
+  duration_ms: 8.281645
+  type: 'test'
+  ...
+# Subtest: front door and numbered service selection expose only qualified technicians
+ok 199 - front door and numbered service selection expose only qualified technicians
+  ---
+  duration_ms: 69.076187
+  type: 'test'
+  ...
+# Subtest: full staff booking keeps chosen technician, deposit and explicit accepted-summary confirmation
+ok 200 - full staff booking keeps chosen technician, deposit and explicit accepted-summary confirmation
+  ---
+  duration_ms: 110.747516
+  type: 'test'
+  ...
+# Subtest: one-message booking still asks technician unless explicitly chosen
+ok 201 - one-message booking still asks technician unless explicitly chosen
+  ---
+  duration_ms: 42.556085
+  type: 'test'
+  ...
+# Subtest: any qualified technician selects an actual free technician before confirmation
+ok 202 - any qualified technician selects an actual free technician before confirmation
+  ---
+  duration_ms: 46.596779
+  type: 'test'
+  ...
+# Subtest: same time may book different qualified staff, never overlap the same technician
+ok 203 - same time may book different qualified staff, never overlap the same technician
+  ---
+  duration_ms: 6.884201
+  type: 'test'
+  ...
+# Subtest: staff breaks, time off and qualifications are enforced in offered slots and final booking
+ok 204 - staff breaks, time off and qualifications are enforced in offered slots and final booking
+  ---
+  duration_ms: 71.044456
+  type: 'test'
+  ...
+# Subtest: a selected technician becoming busy cannot silently switch to another technician on YES
+ok 205 - a selected technician becoming busy cannot silently switch to another technician on YES
+  ---
+  duration_ms: 84.34266
+  type: 'test'
+  ...
+# Subtest: qualification removed after summary requires selection again and cannot book
+ok 206 - qualification removed after summary requires selection again and cannot book
+  ---
+  duration_ms: 48.344231
+  type: 'test'
+  ...
+# Subtest: changing service clears an incompatible technician selection
+ok 207 - changing service clears an incompatible technician selection
+  ---
+  duration_ms: 95.244459
+  type: 'test'
+  ...
+# Subtest: deposit changed after summary requires a new summary and explicit confirmation
+ok 208 - deposit changed after summary requires a new summary and explicit confirmation
+  ---
+  duration_ms: 112.905783
+  type: 'test'
+  ...
+# Subtest: transaction checks current deposit and technician name even for stale caller snapshots
+ok 209 - transaction checks current deposit and technician name even for stale caller snapshots
+  ---
+  duration_ms: 5.14919
+  type: 'test'
+  ...
+# Subtest: origin replay preserves selected staff and deposit with no duplicated events
+ok 210 - origin replay preserves selected staff and deposit with no duplicated events
+  ---
+  duration_ms: 11.59889
+  type: 'test'
+  ...
+# Subtest: same-second or mismatched acceptance context cannot confirm modular summary
+ok 211 - same-second or mismatched acceptance context cannot confirm modular summary
+  ---
+  duration_ms: 47.182537
+  type: 'test'
+  ...
+# Subtest: informational detour cannot authorize a modular booking until summary is shown again
+ok 212 - informational detour cannot authorize a modular booking until summary is shown again
+  ---
+  duration_ms: 41.922208
+  type: 'test'
+  ...
+# Subtest: modular simulator creates no appointments, customers, events or notifications
+ok 213 - modular simulator creates no appointments, customers, events or notifications
+  ---
+  duration_ms: 21.871835
+  type: 'test'
+  ...
+# Subtest: saved customer name is found only for this salon and verified sender
+ok 214 - saved customer name is found only for this salon and verified sender
+  ---
+  duration_ms: 39.707014
+  type: 'test'
+  ...
+# Subtest: My Appointment is sender scoped and offers verified private management links only when configured
+ok 215 - My Appointment is sender scoped and offers verified private management links only when configured
+  ---
+  duration_ms: 52.526098
+  type: 'test'
+  ...
+# Subtest: unsafe or incomplete public base URL never becomes a management link
+ok 216 - unsafe or incomplete public base URL never becomes a management link
+  ---
+  duration_ms: 20.646809
+  type: 'test'
+  ...
+# Subtest: photo booking keeps consent snapshot checks and uses the same qualified staff availability
+ok 217 - photo booking keeps consent snapshot checks and uses the same qualified staff availability
+  ---
+  duration_ms: 7.294181
+  type: 'test'
+  ...
+# Subtest: legacy salons remain on original one-capacity booking flow until initialized
+ok 218 - legacy salons remain on original one-capacity booking flow until initialized
+  ---
+  duration_ms: 14.749873
+  type: 'test'
+  ...
+# Subtest: technician corrections retain the service and require a new accepted summary
+ok 219 - technician corrections retain the service and require a new accepted summary
+  ---
+  duration_ms: 38.29119
+  type: 'test'
+  ...
+# Subtest: numbered technician choices refer to the displayed roster even after roster changes
+ok 220 - numbered technician choices refer to the displayed roster even after roster changes
+  ---
+  duration_ms: 27.37109
+  type: 'test'
+  ...
+# Subtest: a replacement technician with the same name cannot reuse another technician accepted summary
+ok 221 - a replacement technician with the same name cannot reuse another technician accepted summary
+  ---
+  duration_ms: 38.104375
+  type: 'test'
+  ...
+# Subtest: duplicate technician names require the displayed unique choice rather than ambiguous name matching
+ok 222 - duplicate technician names require the displayed unique choice rather than ambiguous name matching
+  ---
+  duration_ms: 24.294775
+  type: 'test'
+  ...
+# Subtest: a fourth technician choice is not confused with the front door contact option
+ok 223 - a fourth technician choice is not confused with the front door contact option
+  ---
+  duration_ms: 31.567182
+  type: 'test'
+  ...
+# Subtest: separate SQLite connections serialize bookings for the same modular technician
+ok 224 - separate SQLite connections serialize bookings for the same modular technician
+  ---
+  duration_ms: 258.439463
+  type: 'test'
+  ...
+# Subtest: photo-guided chat proceeds through staff selection and shares exact accepted summary booking
+ok 225 - photo-guided chat proceeds through staff selection and shares exact accepted summary booking
+  ---
+  duration_ms: 47.521413
+  type: 'test'
+  ...
+# Subtest: exact modular STOP, STOP REMINDERS and UNSUBSCRIBE opt out the recognized sender
+ok 226 - exact modular STOP, STOP REMINDERS and UNSUBSCRIBE opt out the recognized sender
+  ---
+  duration_ms: 2.569279
+  type: 'test'
+  ...
+# Subtest: reminder opt-out is tenant scoped even when another salon has the same phone
+ok 227 - reminder opt-out is tenant scoped even when another salon has the same phone
+  ---
+  duration_ms: 2.014567
+  type: 'test'
+  ...
+# Subtest: dry-run reminder commands never mutate saved preferences or create customer records
+ok 228 - dry-run reminder commands never mutate saved preferences or create customer records
+  ---
+  duration_ms: 3.512828
+  type: 'test'
+  ...
+# Subtest: opt-out blocks queued mock reminders without changing the existing appointment
+ok 229 - opt-out blocks queued mock reminders without changing the existing appointment
+  ---
+  duration_ms: 4.713576
+  type: 'test'
+  ...
+# Subtest: only explicit START REMINDERS opts a recognized customer in, with truthful delivery qualification
+ok 230 - only explicit START REMINDERS opts a recognized customer in, with truthful delivery qualification
+  ---
+  duration_ms: 4.080877
+  type: 'test'
+  ...
+# Subtest: unrecognized or unverified sender cannot create or alter reminder preferences
+ok 231 - unrecognized or unverified sender cannot create or alter reminder preferences
+  ---
+  duration_ms: 3.491873
+  type: 'test'
+  ...
+# Subtest: STOP turns reminders off and retains draft cancellation rather than allowing later YES to book
+ok 232 - STOP turns reminders off and retains draft cancellation rather than allowing later YES to book
+  ---
+  duration_ms: 16.766378
+  type: 'test'
+  ...
+# Subtest: active photo prompt cannot swallow STOP and temporary photo state is cleaned
+ok 233 - active photo prompt cannot swallow STOP and temporary photo state is cleaned
+  ---
+  duration_ms: 3.950932
+  type: 'test'
+  ...
+# Subtest: reminder-only opt-out preserves and tags photo context without analysing or booking
+ok 234 - reminder-only opt-out preserves and tags photo context without analysing or booking
+  ---
+  duration_ms: 3.052604
+  type: 'test'
+  ...
+# Subtest: delayed or same-second START REMINDERS cannot undo a newer opt-out
+ok 235 - delayed or same-second START REMINDERS cannot undo a newer opt-out
+  ---
+  duration_ms: 3.131439
+  type: 'test'
+  ...
+# Subtest: unrelated text without a photo session falls through without provider calls
+ok 236 - unrelated text without a photo session falls through without provider calls
+  ---
+  duration_ms: 10.071342
+  type: 'test'
+  ...
+# Subtest: photo prompt discloses provider, privacy link, expiry and exact consent without retrieving bytes
+ok 237 - photo prompt discloses provider, privacy link, expiry and exact consent without retrieving bytes
+  ---
+  duration_ms: 8.507998
+  type: 'test'
+  ...
+# Subtest: consent rejects an ambiguous or compound answer: "yes"
+ok 238 - consent rejects an ambiguous or compound answer: "yes"
+  ---
+  duration_ms: 4.233325
+  type: 'test'
+  ...
+# Subtest: consent rejects an ambiguous or compound answer: "ok"
+ok 239 - consent rejects an ambiguous or compound answer: "ok"
+  ---
+  duration_ms: 5.362613
+  type: 'test'
+  ...
+# Subtest: consent rejects an ambiguous or compound answer: "agree"
+ok 240 - consent rejects an ambiguous or compound answer: "agree"
+  ---
+  duration_ms: 6.998479
+  type: 'test'
+  ...
+# Subtest: consent rejects an ambiguous or compound answer: "I consent"
+ok 241 - consent rejects an ambiguous or compound answer: "I consent"
+  ---
+  duration_ms: 6.747378
+  type: 'test'
+  ...
+# Subtest: consent rejects an ambiguous or compound answer: "I AGREE to everything"
+ok 242 - consent rejects an ambiguous or compound answer: "I AGREE to everything"
+  ---
+  duration_ms: 7.915805
+  type: 'test'
+  ...
+# Subtest: consent rejects an ambiguous or compound answer: "I AGREE\\nBOOK 1"
+ok 243 - consent rejects an ambiguous or compound answer: "I AGREE\\nBOOK 1"
+  ---
+  duration_ms: 2.135427
+  type: 'test'
+  ...
+# Subtest: separate explicit consent, role and details gates: REFERENCE
+ok 244 - separate explicit consent, role and details gates: REFERENCE
+  ---
+  duration_ms: 226.85032
+  type: 'test'
+  ...
+# Subtest: separate explicit consent, role and details gates: current.
+ok 245 - separate explicit consent, role and details gates: current.
+  ---
+  duration_ms: 13.249687
+  type: 'test'
+  ...
+# Subtest: role gate rejects "my hair"
+ok 246 - role gate rejects "my hair"
+  ---
+  duration_ms: 3.970081
+  type: 'test'
+  ...
+# Subtest: role gate rejects "both"
+ok 247 - role gate rejects "both"
+  ---
+  duration_ms: 10.723865
+  type: 'test'
+  ...
+# Subtest: role gate rejects "reference and current"
+ok 248 - role gate rejects "reference and current"
+  ---
+  duration_ms: 2.186492
+  type: 'test'
+  ...
+# Subtest: role gate rejects "REFERENCE\\nBOOK 1"
+ok 249 - role gate rejects "REFERENCE\\nBOOK 1"
+  ---
+  duration_ms: 2.510764
+  type: 'test'
+  ...
+# Subtest: role gate rejects "yes"
+ok 250 - role gate rejects "yes"
+  ---
+  duration_ms: 2.502241
+  type: 'test'
+  ...
+# Subtest: details gate rejects invalid length/control data (0 chars)
+ok 251 - details gate rejects invalid length/control data (0 chars)
+  ---
+  duration_ms: 2.876405
+  type: 'test'
+  ...
+# Subtest: details gate rejects invalid length/control data (5 chars)
+ok 252 - details gate rejects invalid length/control data (5 chars)
+  ---
+  duration_ms: 2.737105
+  type: 'test'
+  ...
+# Subtest: details gate rejects invalid length/control data (1001 chars)
+ok 253 - details gate rejects invalid length/control data (1001 chars)
+  ---
+  duration_ms: 3.46517
+  type: 'test'
+  ...
+# Subtest: details gate rejects invalid length/control data (93 chars)
+ok 254 - details gate rejects invalid length/control data (93 chars)
+  ---
+  duration_ms: 2.616447
+  type: 'test'
+  ...
+# Subtest: details gate rejects invalid length/control data (89 chars)
+ok 255 - details gate rejects invalid length/control data (89 chars)
+  ---
+  duration_ms: 2.715464
+  type: 'test'
+  ...
+# Subtest: consent requires a fresh accepted-prompt snapshot: missing snapshot
+ok 256 - consent requires a fresh accepted-prompt snapshot: missing snapshot
+  ---
+  duration_ms: 1.934071
+  type: 'test'
+  ...
+# Subtest: consent requires a fresh accepted-prompt snapshot: wrong snapshot
+ok 257 - consent requires a fresh accepted-prompt snapshot: wrong snapshot
+  ---
+  duration_ms: 1.561413
+  type: 'test'
+  ...
+# Subtest: consent requires a fresh accepted-prompt snapshot: same second
+ok 258 - consent requires a fresh accepted-prompt snapshot: same second
+  ---
+  duration_ms: 1.651555
+  type: 'test'
+  ...
+# Subtest: consent requires a fresh accepted-prompt snapshot: received before prompt
+ok 259 - consent requires a fresh accepted-prompt snapshot: received before prompt
+  ---
+  duration_ms: 1.477473
+  type: 'test'
+  ...
+# Subtest: consent requires a fresh accepted-prompt snapshot: invalid sent time
+ok 260 - consent requires a fresh accepted-prompt snapshot: invalid sent time
+  ---
+  duration_ms: 2.015857
+  type: 'test'
+  ...
+# Subtest: consent requires a fresh accepted-prompt snapshot: failed prompt
+ok 261 - consent requires a fresh accepted-prompt snapshot: failed prompt
+  ---
+  duration_ms: 1.661996
+  type: 'test'
+  ...
+# Subtest: role requires a fresh accepted-prompt snapshot: missing snapshot
+ok 262 - role requires a fresh accepted-prompt snapshot: missing snapshot
+  ---
+  duration_ms: 2.582493
+  type: 'test'
+  ...
+# Subtest: role requires a fresh accepted-prompt snapshot: wrong snapshot
+ok 263 - role requires a fresh accepted-prompt snapshot: wrong snapshot
+  ---
+  duration_ms: 8.50425
+  type: 'test'
+  ...
+# Subtest: role requires a fresh accepted-prompt snapshot: same second
+ok 264 - role requires a fresh accepted-prompt snapshot: same second
+  ---
+  duration_ms: 2.02555
+  type: 'test'
+  ...
+# Subtest: role requires a fresh accepted-prompt snapshot: received before prompt
+ok 265 - role requires a fresh accepted-prompt snapshot: received before prompt
+  ---
+  duration_ms: 5.575297
+  type: 'test'
+  ...
+# Subtest: role requires a fresh accepted-prompt snapshot: invalid sent time
+ok 266 - role requires a fresh accepted-prompt snapshot: invalid sent time
+  ---
+  duration_ms: 1.85153
+  type: 'test'
+  ...
+# Subtest: role requires a fresh accepted-prompt snapshot: failed prompt
+ok 267 - role requires a fresh accepted-prompt snapshot: failed prompt
+  ---
+  duration_ms: 29.018258
+  type: 'test'
+  ...
+# Subtest: details requires a fresh accepted-prompt snapshot: missing snapshot
+ok 268 - details requires a fresh accepted-prompt snapshot: missing snapshot
+  ---
+  duration_ms: 2.902896
+  type: 'test'
+  ...
+# Subtest: details requires a fresh accepted-prompt snapshot: wrong snapshot
+ok 269 - details requires a fresh accepted-prompt snapshot: wrong snapshot
+  ---
+  duration_ms: 8.260719
+  type: 'test'
+  ...
+# Subtest: details requires a fresh accepted-prompt snapshot: same second
+ok 270 - details requires a fresh accepted-prompt snapshot: same second
+  ---
+  duration_ms: 6.666536
+  type: 'test'
+  ...
+# Subtest: details requires a fresh accepted-prompt snapshot: received before prompt
+ok 271 - details requires a fresh accepted-prompt snapshot: received before prompt
+  ---
+  duration_ms: 6.074867
+  type: 'test'
+  ...
+# Subtest: details requires a fresh accepted-prompt snapshot: invalid sent time
+ok 272 - details requires a fresh accepted-prompt snapshot: invalid sent time
+  ---
+  duration_ms: 2.180737
+  type: 'test'
+  ...
+# Subtest: details requires a fresh accepted-prompt snapshot: failed prompt
+ok 273 - details requires a fresh accepted-prompt snapshot: failed prompt
+  ---
+  duration_ms: 12.910578
+  type: 'test'
+  ...
+# Subtest: choose requires a fresh accepted-prompt snapshot: missing snapshot
+ok 274 - choose requires a fresh accepted-prompt snapshot: missing snapshot
+  ---
+  duration_ms: 3.659609
+  type: 'test'
+  ...
+# Subtest: choose requires a fresh accepted-prompt snapshot: wrong snapshot
+ok 275 - choose requires a fresh accepted-prompt snapshot: wrong snapshot
+  ---
+  duration_ms: 4.543528
+  type: 'test'
+  ...
+# Subtest: choose requires a fresh accepted-prompt snapshot: same second
+ok 276 - choose requires a fresh accepted-prompt snapshot: same second
+  ---
+  duration_ms: 3.406395
+  type: 'test'
+  ...
+# Subtest: choose requires a fresh accepted-prompt snapshot: received before prompt
+ok 277 - choose requires a fresh accepted-prompt snapshot: received before prompt
+  ---
+  duration_ms: 6.649834
+  type: 'test'
+  ...
+# Subtest: choose requires a fresh accepted-prompt snapshot: invalid sent time
+ok 278 - choose requires a fresh accepted-prompt snapshot: invalid sent time
+  ---
+  duration_ms: 3.218886
+  type: 'test'
+  ...
+# Subtest: choose requires a fresh accepted-prompt snapshot: failed prompt
+ok 279 - choose requires a fresh accepted-prompt snapshot: failed prompt
+  ---
+  duration_ms: 3.095439
+  type: 'test'
+  ...
+# Subtest: fresh response accepts accepted prompt delivery state
+ok 280 - fresh response accepts accepted prompt delivery state
+  ---
+  duration_ms: 2.182373
+  type: 'test'
+  ...
+# Subtest: fresh response accepts sent prompt delivery state
+ok 281 - fresh response accepts sent prompt delivery state
+  ---
+  duration_ms: 2.264161
+  type: 'test'
+  ...
+# Subtest: fresh response accepts delivered prompt delivery state
+ok 282 - fresh response accepts delivered prompt delivery state
+  ---
+  duration_ms: 1.759549
+  type: 'test'
+  ...
+# Subtest: fresh response accepts read prompt delivery state
+ok 283 - fresh response accepts read prompt delivery state
+  ---
+  duration_ms: 1.892315
+  type: 'test'
+  ...
+# Subtest: the previous prompt snapshot cannot advance the next stage
+ok 284 - the previous prompt snapshot cannot advance the next stage
+  ---
+  duration_ms: 2.291188
+  type: 'test'
+  ...
+# Subtest: reply evidence is scoped to the same salon, customer and outbound direction
+ok 285 - reply evidence is scoped to the same salon, customer and outbound direction
+  ---
+  duration_ms: 4.00128
+  type: 'test'
+  ...
+# Subtest: bindReply refuses a mismatched tenant/customer or session ID
+ok 286 - bindReply refuses a mismatched tenant/customer or session ID
+  ---
+  duration_ms: 1.363952
+  type: 'test'
+  ...
+# Subtest: only the current tenant approved catalog is sent; output prices/durations come only from that catalog
+ok 287 - only the current tenant approved catalog is sent; output prices/durations come only from that catalog
+  ---
+  duration_ms: 60.692173
+  type: 'test'
+  ...
+# Subtest: eligibleServices excludes other tenants, unapproved categories, invalid prices, durations and names
+ok 288 - eligibleServices excludes other tenants, unapproved categories, invalid prices, durations and names
+  ---
+  duration_ms: 1.545914
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: low confidence
+ok 289 - uncertain/invalid model result goes to consultation: low confidence
+  ---
+  duration_ms: 4.167441
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: missing confidence
+ok 290 - uncertain/invalid model result goes to consultation: missing confidence
+  ---
+  duration_ms: 3.506047
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: NaN confidence
+ok 291 - uncertain/invalid model result goes to consultation: NaN confidence
+  ---
+  duration_ms: 3.577574
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: infinite confidence
+ok 292 - uncertain/invalid model result goes to consultation: infinite confidence
+  ---
+  duration_ms: 3.579322
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: string confidence
+ok 293 - uncertain/invalid model result goes to consultation: string confidence
+  ---
+  duration_ms: 3.976166
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: missing IDs
+ok 294 - uncertain/invalid model result goes to consultation: missing IDs
+  ---
+  duration_ms: 3.608498
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: nonarray IDs
+ok 295 - uncertain/invalid model result goes to consultation: nonarray IDs
+  ---
+  duration_ms: 3.745861
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: empty IDs
+ok 296 - uncertain/invalid model result goes to consultation: empty IDs
+  ---
+  duration_ms: 3.592464
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: duplicate IDs
+ok 297 - uncertain/invalid model result goes to consultation: duplicate IDs
+  ---
+  duration_ms: 4.289299
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: too many IDs
+ok 298 - uncertain/invalid model result goes to consultation: too many IDs
+  ---
+  duration_ms: 4.16277
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: unknown service
+ok 299 - uncertain/invalid model result goes to consultation: unknown service
+  ---
+  duration_ms: 3.625565
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: unapproved service
+ok 300 - uncertain/invalid model result goes to consultation: unapproved service
+  ---
+  duration_ms: 3.375342
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: foreign service
+ok 301 - uncertain/invalid model result goes to consultation: foreign service
+  ---
+  duration_ms: 5.113402
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: category mismatch
+ok 302 - uncertain/invalid model result goes to consultation: category mismatch
+  ---
+  duration_ms: 4.652195
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: unknown category
+ok 303 - uncertain/invalid model result goes to consultation: unknown category
+  ---
+  duration_ms: 3.476294
+  type: 'test'
+  ...
+# Subtest: uncertain/invalid model result goes to consultation: mixed categories
+ok 304 - uncertain/invalid model result goes to consultation: mixed categories
+  ---
+  duration_ms: 8.098603
+  type: 'test'
+  ...
+# Subtest: malformed model result fails safely (null)
+ok 305 - malformed model result fails safely (null)
+  ---
+  duration_ms: 4.937428
+  type: 'test'
+  ...
+# Subtest: malformed model result fails safely (undefined)
+ok 306 - malformed model result fails safely (undefined)
+  ---
+  duration_ms: 53.466858
+  type: 'test'
+  ...
+# Subtest: malformed model result fails safely (not structured)
+ok 307 - malformed model result fails safely (not structured)
+  ---
+  duration_ms: 81.661734
+  type: 'test'
+  ...
+# Subtest: malformed model result fails safely ([object Object])
+ok 308 - malformed model result fails safely ([object Object])
+  ---
+  duration_ms: 116.049998
+  type: 'test'
+  ...
+# Subtest: confidence exactly 0.8 and three approved same-category candidates are accepted
+ok 309 - confidence exactly 0.8 and three approved same-category candidates are accepted
+  ---
+  duration_ms: 8.257532
+  type: 'test'
+  ...
+# Subtest: selection requires an explicit listed BOOK number and does not create an appointment
+ok 310 - selection requires an explicit listed BOOK number and does not create an appointment
+  ---
+  duration_ms: 26.295373
+  type: 'test'
+  ...
+# Subtest: details are redacted after success while unrelated messages and tenants are untouched
+ok 311 - details are redacted after success while unrelated messages and tenants are untouched
+  ---
+  duration_ms: 7.743917
+  type: 'test'
+  ...
+# Subtest: retrieve failure produces safe consultation and redacts supplied details
+ok 312 - retrieve failure produces safe consultation and redacts supplied details
+  ---
+  duration_ms: 9.268785
+  type: 'test'
+  ...
+# Subtest: analyze failure produces safe consultation and redacts supplied details
+ok 313 - analyze failure produces safe consultation and redacts supplied details
+  ---
+  duration_ms: 2.986384
+  type: 'test'
+  ...
+# Subtest: catalog price change during retrieve invalidates the estimate
+ok 314 - catalog price change during retrieve invalidates the estimate
+  ---
+  duration_ms: 9.154455
+  type: 'test'
+  ...
+# Subtest: catalog duration change during retrieve invalidates the estimate
+ok 315 - catalog duration change during retrieve invalidates the estimate
+  ---
+  duration_ms: 4.758625
+  type: 'test'
+  ...
+# Subtest: catalog description change during retrieve invalidates the estimate
+ok 316 - catalog description change during retrieve invalidates the estimate
+  ---
+  duration_ms: 2.868326
+  type: 'test'
+  ...
+# Subtest: catalog category change during retrieve invalidates the estimate
+ok 317 - catalog category change during retrieve invalidates the estimate
+  ---
+  duration_ms: 3.285071
+  type: 'test'
+  ...
+# Subtest: catalog unapproved change during retrieve invalidates the estimate
+ok 318 - catalog unapproved change during retrieve invalidates the estimate
+  ---
+  duration_ms: 2.348168
+  type: 'test'
+  ...
+# Subtest: catalog deleted change during retrieve invalidates the estimate
+ok 319 - catalog deleted change during retrieve invalidates the estimate
+  ---
+  duration_ms: 25.755601
+  type: 'test'
+  ...
+# Subtest: catalog new service change during retrieve invalidates the estimate
+ok 320 - catalog new service change during retrieve invalidates the estimate
+  ---
+  duration_ms: 7.087853
+  type: 'test'
+  ...
+# Subtest: catalog name change during retrieve invalidates the estimate
+ok 321 - catalog name change during retrieve invalidates the estimate
+  ---
+  duration_ms: 2.348784
+  type: 'test'
+  ...
+# Subtest: catalog price change during analyze invalidates the estimate
+ok 322 - catalog price change during analyze invalidates the estimate
+  ---
+  duration_ms: 7.320849
+  type: 'test'
+  ...
+# Subtest: catalog duration change during analyze invalidates the estimate
+ok 323 - catalog duration change during analyze invalidates the estimate
+  ---
+  duration_ms: 9.718276
+  type: 'test'
+  ...
+# Subtest: catalog description change during analyze invalidates the estimate
+ok 324 - catalog description change during analyze invalidates the estimate
+  ---
+  duration_ms: 2.300998
+  type: 'test'
+  ...
+# Subtest: catalog category change during analyze invalidates the estimate
+ok 325 - catalog category change during analyze invalidates the estimate
+  ---
+  duration_ms: 11.30098
+  type: 'test'
+  ...
+# Subtest: catalog unapproved change during analyze invalidates the estimate
+ok 326 - catalog unapproved change during analyze invalidates the estimate
+  ---
+  duration_ms: 8.045838
+  type: 'test'
+  ...
+# Subtest: catalog deleted change during analyze invalidates the estimate
+ok 327 - catalog deleted change during analyze invalidates the estimate
+  ---
+  duration_ms: 6.946308
+  type: 'test'
+  ...
+# Subtest: catalog new service change during analyze invalidates the estimate
+ok 328 - catalog new service change during analyze invalidates the estimate
+  ---
+  duration_ms: 8.813529
+  type: 'test'
+  ...
+# Subtest: catalog name change during analyze invalidates the estimate
+ok 329 - catalog name change during analyze invalidates the estimate
+  ---
+  duration_ms: 8.211405
+  type: 'test'
+  ...
+# Subtest: choose rejects a changed selected-service snapshot (price)
+ok 330 - choose rejects a changed selected-service snapshot (price)
+  ---
+  duration_ms: 12.60039
+  type: 'test'
+  ...
+# Subtest: choose rejects a changed selected-service snapshot (duration)
+ok 331 - choose rejects a changed selected-service snapshot (duration)
+  ---
+  duration_ms: 15.248797
+  type: 'test'
+  ...
+# Subtest: choose rejects a changed selected-service snapshot (description)
+ok 332 - choose rejects a changed selected-service snapshot (description)
+  ---
+  duration_ms: 4.421861
+  type: 'test'
+  ...
+# Subtest: choose rejects a changed selected-service snapshot (name)
+ok 333 - choose rejects a changed selected-service snapshot (name)
+  ---
+  duration_ms: 11.941263
+  type: 'test'
+  ...
+# Subtest: choose rejects a changed selected-service snapshot (unapproved)
+ok 334 - choose rejects a changed selected-service snapshot (unapproved)
+  ---
+  duration_ms: 10.840358
+  type: 'test'
+  ...
+# Subtest: choose rejects a changed selected-service snapshot (deleted)
+ok 335 - choose rejects a changed selected-service snapshot (deleted)
+  ---
+  duration_ms: 4.831051
+  type: 'test'
+  ...
+# Subtest: booking rejects a changed selected-service snapshot (price)
+ok 336 - booking rejects a changed selected-service snapshot (price)
+  ---
+  duration_ms: 13.787703
+  type: 'test'
+  ...
+# Subtest: booking rejects a changed selected-service snapshot (duration)
+ok 337 - booking rejects a changed selected-service snapshot (duration)
+  ---
+  duration_ms: 9.257246
+  type: 'test'
+  ...
+# Subtest: booking rejects a changed selected-service snapshot (description)
+ok 338 - booking rejects a changed selected-service snapshot (description)
+  ---
+  duration_ms: 11.143595
+  type: 'test'
+  ...
+# Subtest: booking rejects a changed selected-service snapshot (name)
+ok 339 - booking rejects a changed selected-service snapshot (name)
+  ---
+  duration_ms: 7.559195
+  type: 'test'
+  ...
+# Subtest: booking rejects a changed selected-service snapshot (unapproved)
+ok 340 - booking rejects a changed selected-service snapshot (unapproved)
+  ---
+  duration_ms: 6.035593
+  type: 'test'
+  ...
+# Subtest: booking rejects a changed selected-service snapshot (deleted)
+ok 341 - booking rejects a changed selected-service snapshot (deleted)
+  ---
+  duration_ms: 5.150654
+  type: 'test'
+  ...
+# Subtest: other tenant catalog changes do not invalidate a local estimate
+ok 342 - other tenant catalog changes do not invalidate a local estimate
+  ---
+  duration_ms: 3.131171
+  type: 'test'
+  ...
+# Subtest: new image fails closed with salon disabled
+ok 343 - new image fails closed with salon disabled
+  ---
+  duration_ms: 1.332816
+  type: 'test'
+  ...
+# Subtest: new image fails closed with provider unavailable
+ok 344 - new image fails closed with provider unavailable
+  ---
+  duration_ms: 1.982483
+  type: 'test'
+  ...
+# Subtest: new image fails closed with no approved catalog
+ok 345 - new image fails closed with no approved catalog
+  ---
+  duration_ms: 1.957392
+  type: 'test'
+  ...
+# Subtest: missing, foreign-tenant and foreign-customer uploads are never retrieved
+ok 346 - missing, foreign-tenant and foreign-customer uploads are never retrieved
+  ---
+  duration_ms: 2.639344
+  type: 'test'
+  ...
+# Subtest: photo input preserves an existing appointment when bookingNeedsReview is set
+ok 347 - photo input preserves an existing appointment when bookingNeedsReview is set
+  ---
+  duration_ms: 1.793896
+  type: 'test'
+  ...
+# Subtest: photo input preserves an existing appointment when latestBooking is set
+ok 348 - photo input preserves an existing appointment when latestBooking is set
+  ---
+  duration_ms: 1.302258
+  type: 'test'
+  ...
+# Subtest: explicit additional-booking context allows a new photo while an appointment exists
+ok 349 - explicit additional-booking context allows a new photo while an appointment exists
+  ---
+  duration_ms: 1.707232
+  type: 'test'
+  ...
+# Subtest: photo disabled during retrieve invalidates analysis
+ok 350 - photo disabled during retrieve invalidates analysis
+  ---
+  duration_ms: 7.971817
+  type: 'test'
+  ...
+# Subtest: status unavailable during retrieve invalidates analysis
+ok 351 - status unavailable during retrieve invalidates analysis
+  ---
+  duration_ms: 8.546516
+  type: 'test'
+  ...
+# Subtest: photo disabled during analyze invalidates analysis
+ok 352 - photo disabled during analyze invalidates analysis
+  ---
+  duration_ms: 6.979531
+  type: 'test'
+  ...
+# Subtest: status unavailable during analyze invalidates analysis
+ok 353 - status unavailable during analyze invalidates analysis
+  ---
+  duration_ms: 8.013831
+  type: 'test'
+  ...
+# Subtest: sender configuration change during retrieval fails closed (whatsapp_enabled=0)
+ok 354 - sender configuration change during retrieval fails closed (whatsapp_enabled=0)
+  ---
+  duration_ms: 7.801568
+  type: 'test'
+  ...
+# Subtest: sender configuration change during retrieval fails closed (wa_phone_number_id='changed-phone')
+ok 355 - sender configuration change during retrieval fails closed (wa_phone_number_id='changed-phone')
+  ---
+  duration_ms: 3.14333
+  type: 'test'
+  ...
+# Subtest: NO ends consent without requiring reply freshness
+ok 356 - NO ends consent without requiring reply freshness
+  ---
+  duration_ms: 2.407925
+  type: 'test'
+  ...
+# Subtest: CANCEL ends consent without requiring reply freshness
+ok 357 - CANCEL ends consent without requiring reply freshness
+  ---
+  duration_ms: 2.209824
+  type: 'test'
+  ...
+# Subtest: CONSULTATION ends consent without requiring reply freshness
+ok 358 - CONSULTATION ends consent without requiring reply freshness
+  ---
+  duration_ms: 2.746247
+  type: 'test'
+  ...
+# Subtest: NO ends role without requiring reply freshness
+ok 359 - NO ends role without requiring reply freshness
+  ---
+  duration_ms: 3.777945
+  type: 'test'
+  ...
+# Subtest: CANCEL ends role without requiring reply freshness
+ok 360 - CANCEL ends role without requiring reply freshness
+  ---
+  duration_ms: 34.626483
+  type: 'test'
+  ...
+# Subtest: CONSULTATION ends role without requiring reply freshness
+ok 361 - CONSULTATION ends role without requiring reply freshness
+  ---
+  duration_ms: 7.10376
+  type: 'test'
+  ...
+# Subtest: NO ends details without requiring reply freshness
+ok 362 - NO ends details without requiring reply freshness
+  ---
+  duration_ms: 7.827101
+  type: 'test'
+  ...
+# Subtest: CANCEL ends details without requiring reply freshness
+ok 363 - CANCEL ends details without requiring reply freshness
+  ---
+  duration_ms: 1.585805
+  type: 'test'
+  ...
+# Subtest: CONSULTATION ends details without requiring reply freshness
+ok 364 - CONSULTATION ends details without requiring reply freshness
+  ---
+  duration_ms: 5.288334
+  type: 'test'
+  ...
+# Subtest: NO ends choose without requiring reply freshness
+ok 365 - NO ends choose without requiring reply freshness
+  ---
+  duration_ms: 2.347474
+  type: 'test'
+  ...
+# Subtest: CANCEL ends choose without requiring reply freshness
+ok 366 - CANCEL ends choose without requiring reply freshness
+  ---
+  duration_ms: 3.247261
+  type: 'test'
+  ...
+# Subtest: CONSULTATION ends choose without requiring reply freshness
+ok 367 - CONSULTATION ends choose without requiring reply freshness
+  ---
+  duration_ms: 4.112541
+  type: 'test'
+  ...
+# Subtest: NO ends booking without requiring reply freshness
+ok 368 - NO ends booking without requiring reply freshness
+  ---
+  duration_ms: 5.101632
+  type: 'test'
+  ...
+# Subtest: CANCEL ends booking without requiring reply freshness
+ok 369 - CANCEL ends booking without requiring reply freshness
+  ---
+  duration_ms: 5.052499
+  type: 'test'
+  ...
+# Subtest: CONSULTATION ends booking without requiring reply freshness
+ok 370 - CONSULTATION ends booking without requiring reply freshness
+  ---
+  duration_ms: 6.926189
+  type: 'test'
+  ...
+# Subtest: cancel and redaction do not remove another tenant or another customer session/upload
+ok 371 - cancel and redaction do not remove another tenant or another customer session/upload
+  ---
+  duration_ms: 3.596844
+  type: 'test'
+  ...
+# Subtest: cleanup expires only records at or before the cutoff and never contacts a provider
+ok 372 - cleanup expires only records at or before the cutoff and never contacts a provider
+  ---
+  duration_ms: 2.809748
+  type: 'test'
+  ...
+# Subtest: expired session cannot process a late consent or detail response
+ok 373 - expired session cannot process a late consent or detail response
+  ---
+  duration_ms: 2.749828
+  type: 'test'
+  ...
+# Subtest: missing or expired upload after consent leads to fresh-photo instructions without retrieval
+ok 374 - missing or expired upload after consent leads to fresh-photo instructions without retrieval
+  ---
+  duration_ms: 3.260571
+  type: 'test'
+  ...
+# Subtest: details stage without recorded consent cannot retrieve bytes
+ok 375 - details stage without recorded consent cannot retrieve bytes
+  ---
+  duration_ms: 2.84937
+  type: 'test'
+  ...
+# Subtest: expiry while analysis is outstanding invalidates its result and clears bytes
+ok 376 - expiry while analysis is outstanding invalidates its result and clears bytes
+  ---
+  duration_ms: 4.028167
+  type: 'test'
+  ...
+# Subtest: analysis-start is durable before retrieval and a recovered analysing stage never repeats a paid call
+ok 377 - analysis-start is durable before retrieval and a recovered analysing stage never repeats a paid call
+  ---
+  duration_ms: 4.544957
+  type: 'test'
+  ...
+# Subtest: a replacement image starts a fresh consent flow and preserves only its new upload
+ok 378 - a replacement image starts a fresh consent flow and preserves only its new upload
+  ---
+  duration_ms: 3.545328
+  type: 'test'
+  ...
+# Subtest: catalog removed before details never retrieves or analyzes the image
+ok 379 - catalog removed before details never retrieves or analyzes the image
+  ---
+  duration_ms: 3.041051
+  type: 'test'
+  ...
+# Subtest: expiry during retrieval prevents transmission to the vision provider
+ok 380 - expiry during retrieval prevents transmission to the vision provider
+  ---
+  duration_ms: 3.366108
+  type: 'test'
+  ...
+# Subtest: sender configuration change during analysis fails closed (whatsapp_enabled=0)
+ok 381 - sender configuration change during analysis fails closed (whatsapp_enabled=0)
+  ---
+  duration_ms: 3.534459
+  type: 'test'
+  ...
+# Subtest: sender configuration change during analysis fails closed (wa_phone_number_id='changed-phone')
+ok 382 - sender configuration change during analysis fails closed (wa_phone_number_id='changed-phone')
+  ---
+  duration_ms: 3.065788
+  type: 'test'
+  ...
+# Subtest: older image never replaces the current consent/details request
+ok 383 - older image never replaces the current consent/details request
+  ---
+  duration_ms: 3.64103
+  type: 'test'
+  ...
+# Subtest: same timestamp image never replaces the current consent/details request
+ok 384 - same timestamp image never replaces the current consent/details request
+  ---
+  duration_ms: 6.136989
+  type: 'test'
+  ...
+# Subtest: an unavailable newer image preserves the current consent request
+ok 385 - an unavailable newer image preserves the current consent request
+  ---
+  duration_ms: 1.801709
+  type: 'test'
+  ...
+# Subtest: an unavailable newer image preserves the current details request
+ok 386 - an unavailable newer image preserves the current details request
+  ---
+  duration_ms: 5.144993
+  type: 'test'
+  ...
+# Subtest: an unavailable newer image preserves the current choose request
+ok 387 - an unavailable newer image preserves the current choose request
+  ---
+  duration_ms: 3.416661
+  type: 'test'
+  ...
+# Subtest: an unavailable newer image preserves the current booking request
+ok 388 - an unavailable newer image preserves the current booking request
+  ---
+  duration_ms: 3.83855
+  type: 'test'
+  ...
+# Subtest: two image references staged together survive processing A then B, and B requires fresh consent
+ok 389 - two image references staged together survive processing A then B, and B requires fresh consent
+  ---
+  duration_ms: 2.537527
+  type: 'test'
+  ...
+# Subtest: a future queued upload survives cleanup of the active photo (success)
+ok 390 - a future queued upload survives cleanup of the active photo (success)
+  ---
+  duration_ms: 2.881249
+  type: 'test'
+  ...
+# Subtest: a future queued upload survives cleanup of the active photo (retrieve failure)
+ok 391 - a future queued upload survives cleanup of the active photo (retrieve failure)
+  ---
+  duration_ms: 3.239813
+  type: 'test'
+  ...
+# Subtest: a future queued upload survives cleanup of the active photo (analyze failure)
+ok 392 - a future queued upload survives cleanup of the active photo (analyze failure)
+  ---
+  duration_ms: 2.397456
+  type: 'test'
+  ...
+# Subtest: a future queued upload survives cleanup of the active photo (cancel)
+ok 393 - a future queued upload survives cleanup of the active photo (cancel)
+  ---
+  duration_ms: 2.036689
+  type: 'test'
+  ...
+# Subtest: cancellation during retrieve prevents a stale estimate and zeroes retrieved bytes
+ok 394 - cancellation during retrieve prevents a stale estimate and zeroes retrieved bytes
+  ---
+  duration_ms: 3.555077
+  type: 'test'
+  ...
+# Subtest: cancellation during analyze prevents a stale estimate and zeroes retrieved bytes
+ok 395 - cancellation during analyze prevents a stale estimate and zeroes retrieved bytes
+  ---
+  duration_ms: 3.280159
+  type: 'test'
+  ...
+# Subtest: late photo reply with photo history returns explicit expired-flow guidance
+ok 396 - late photo reply with photo history returns explicit expired-flow guidance
+  ---
+  duration_ms: 2.105951
+  type: 'test'
+  ...
+# Subtest: explicit "Bookings" exits expired-photo guidance into ordinary text booking
+ok 397 - explicit "Bookings" exits expired-photo guidance into ordinary text booking
+  ---
+  duration_ms: 2.006089
+  type: 'test'
+  ...
+# Subtest: explicit "Booking" exits expired-photo guidance into ordinary text booking
+ok 398 - explicit "Booking" exits expired-photo guidance into ordinary text booking
+  ---
+  duration_ms: 0.785542
+  type: 'test'
+  ...
+# Subtest: explicit "new booking" exits expired-photo guidance into ordinary text booking
+ok 399 - explicit "new booking" exits expired-photo guidance into ordinary text booking
+  ---
+  duration_ms: 1.093474
+  type: 'test'
+  ...
+# Subtest: explicit "another booking." exits expired-photo guidance into ordinary text booking
+ok 400 - explicit "another booking." exits expired-photo guidance into ordinary text booking
+  ---
+  duration_ms: 1.235526
+  type: 'test'
+  ...
+# Subtest: older photo history does not trap an already resumed ordinary conversation
+ok 401 - older photo history does not trap an already resumed ordinary conversation
+  ---
+  duration_ms: 10.236059
+  type: 'test'
+  ...
+# Subtest: repeated replies to an expired request remain tagged and redacted until explicit text booking
+ok 402 - repeated replies to an expired request remain tagged and redacted until explicit text booking
+  ---
+  duration_ms: 2.362351
+  type: 'test'
+  ...
+# Subtest: exact Meta download URL is allowed; off-origin, redirect and ambiguous URLs are rejected
+ok 403 - exact Meta download URL is allowed; off-origin, redirect and ambiguous URLs are rejected
+  ---
+  duration_ms: 31.380973
+  type: 'test'
+  ...
+# Subtest: JPEG normalization strips camera metadata without enlarging
+ok 404 - JPEG normalization strips camera metadata without enlarging
+  ---
+  duration_ms: 43.807593
+  type: 'test'
+  ...
+# Subtest: PNG normalization flattens transparency onto white and converts to JPEG
+ok 405 - PNG normalization flattens transparency onto white and converts to JPEG
+  ---
+  duration_ms: 112.915961
+  type: 'test'
+  ...
+# Subtest: large but allowed images are resized to a bounded aspect ratio
+ok 406 - large but allowed images are resized to a bounded aspect ratio
+  ---
+  duration_ms: 428.264997
+  type: 'test'
+  ...
+# Subtest: empty, oversized, MIME-mismatched and truncated images fail closed
+ok 407 - empty, oversized, MIME-mismatched and truncated images fail closed
+  ---
+  duration_ms: 184.631499
+  type: 'test'
+  ...
+# Subtest: PNG CRC corruption, unknown critical chunks and animation chunks are rejected
+ok 408 - PNG CRC corruption, unknown critical chunks and animation chunks are rejected
+  ---
+  duration_ms: 1.93634
+  type: 'test'
+  ...
+# Subtest: dimension and pixel bombs are rejected before output
+ok 409 - dimension and pixel bombs are rejected before output
+  ---
+  duration_ms: 486.229534
+  type: 'test'
+  ...
+# Subtest: retrieval scopes metadata to salon phone, authenticates exact hosts, verifies hash, and normalizes in memory
+ok 410 - retrieval scopes metadata to salon phone, authenticates exact hosts, verifies hash, and normalizes in memory
+  ---
+  duration_ms: 163.835963
+  type: 'test'
+  ...
+# Subtest: canonical base64 and hexadecimal hashes are accepted and mismatched inbound hashes block download
+ok 411 - canonical base64 and hexadecimal hashes are accepted and mismatched inbound hashes block download
+  ---
+  duration_ms: 7.489621
+  type: 'test'
+  ...
+# Subtest: invalid IDs and bearer token input cause no network calls
+ok 412 - invalid IDs and bearer token input cause no network calls
+  ---
+  duration_ms: 0.957581
+  type: 'test'
+  ...
+# Subtest: foreign metadata, unsupported media and metadata sizes are rejected before downloading
+ok 413 - foreign metadata, unsupported media and metadata sizes are rejected before downloading
+  ---
+  duration_ms: 6.450609
+  type: 'test'
+  ...
+# Subtest: untrusted metadata JSON and oversized metadata responses fail safely
+ok 414 - untrusted metadata JSON and oversized metadata responses fail safely
+  ---
+  duration_ms: 3.637243
+  type: 'test'
+  ...
+# Subtest: wrong status, content type, compression, redirect and returned URL are rejected
+ok 415 - wrong status, content type, compression, redirect and returned URL are rejected
+  ---
+  duration_ms: 2.074291
+  type: 'test'
+  ...
+# Subtest: download length, hash and streaming byte limits are enforced
+ok 416 - download length, hash and streaming byte limits are enforced
+  ---
+  duration_ms: 12.395433
+  type: 'test'
+  ...
+# Subtest: transport errors never expose URL, token or provider response text
+ok 417 - transport errors never expose URL, token or provider response text
+  ---
+  duration_ms: 0.324047
+  type: 'test'
+  ...
+# Subtest: hung transport is bounded and aborted without retry
+ok 418 - hung transport is bounded and aborted without retry
+  ---
+  duration_ms: 1.4583
+  type: 'test'
+  ...
+# (node:458) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: vision requires an exact operator opt-in, valid key and explicit supported model
+ok 419 - vision requires an exact operator opt-in, valid key and explicit supported model
+  ---
+  duration_ms: 23.496829
+  type: 'test'
+  ...
+# Subtest: disabled configuration makes no provider call, even with an injected client
+ok 420 - disabled configuration makes no provider call, even with an injected client
+  ---
+  duration_ms: 2.048857
+  type: 'test'
+  ...
+# Subtest: valid catalogue match is bounded, structured, data-minimized, and has no model prose
+ok 421 - valid catalogue match is bounded, structured, data-minimized, and has no model prose
+  ---
+  duration_ms: 3.831073
+  type: 'test'
+  ...
+# Subtest: client construction pins Anthropic origin, disables retry/logging/redirects and clears transient request fields
+ok 422 - client construction pins Anthropic origin, disables retry/logging/redirects and clears transient request fields
+  ---
+  duration_ms: 1.833669
+  type: 'test'
+  ...
+# Subtest: one to three same-category IDs and confidence boundary are accepted
+ok 423 - one to three same-category IDs and confidence boundary are accepted
+  ---
+  duration_ms: 0.566073
+  type: 'test'
+  ...
+# Subtest: ambiguous or nonmatching results require consultation
+ok 424 - ambiguous or nonmatching results require consultation
+  ---
+  duration_ms: 1.871643
+  type: 'test'
+  ...
+# Subtest: malformed, excessive, fabricated or cross-category outputs fail closed
+ok 425 - malformed, excessive, fabricated or cross-category outputs fail closed
+  ---
+  duration_ms: 40.534924
+  type: 'test'
+  ...
+# Subtest: ineligible, cross-tenant, duplicate, malformed and oversized catalogues make no provider calls
+ok 426 - ineligible, cross-tenant, duplicate, malformed and oversized catalogues make no provider calls
+  ---
+  duration_ms: 1.489872
+  type: 'test'
+  ...
+# Subtest: unnormalized, empty, malformed and oversized images make no provider calls
+ok 427 - unnormalized, empty, malformed and oversized images make no provider calls
+  ---
+  duration_ms: 0.887471
+  type: 'test'
+  ...
+# Subtest: invalid context and obvious sensitive details stay local
+ok 428 - invalid context and obvious sensitive details stay local
+  ---
+  duration_ms: 1.142646
+  type: 'test'
+  ...
+# Subtest: provider failures are sanitized, not retried, and clear photo request references
+ok 429 - provider failures are sanitized, not retried, and clear photo request references
+  ---
+  duration_ms: 0.338346
+  type: 'test'
+  ...
+# Subtest: timeout aborts a hung provider without waiting for it or retrying
+ok 430 - timeout aborts a hung provider without waiting for it or retrying
+  ---
+  duration_ms: 115.175579
+  type: 'test'
+  ...
+# Subtest: operator opt-out or model change during a call discards the result
+ok 431 - operator opt-out or model change during a call discards the result
+  ---
+  duration_ms: 0.819043
+  type: 'test'
+  ...
+# Subtest: caller cannot expand the timeout beyond the hard bound
+ok 432 - caller cannot expand the timeout beyond the hard bound
+  ---
+  duration_ms: 4.706787
+  type: 'test'
+  ...
+# Subtest: HTTP startup/auth, normalized signup, safe assets, security headers and HTTPS callback
+ok 433 - HTTP startup/auth, normalized signup, safe assets, security headers and HTTPS callback
+  ---
+  duration_ms: 952.553999
+  type: 'test'
+  ...
+# Subtest: tenant isolation, strict service/settings validation and idempotent cancellation
+ok 434 - tenant isolation, strict service/settings validation and idempotent cancellation
+  ---
+  duration_ms: 1716.877734
+  type: 'test'
+  ...
+# Subtest: password change validates current password, revokes old sessions and admits new credentials
+ok 435 - password change validates current password, revokes old sessions and admits new credentials
+  ---
+  duration_ms: 3835.690736
+  type: 'test'
+  ...
+# Subtest: signed webhook durable queue, batches, deduplication, real contact context and receipt ordering
+ok 436 - signed webhook durable queue, batches, deduplication, real contact context and receipt ordering
+  ---
+  duration_ms: 1339.9192
+  type: 'test'
+  ...
+# Subtest: webhooks fail closed without app secret and login throttles repeated attempts
+ok 437 - webhooks fail closed without app secret and login throttles repeated attempts
+  ---
+  duration_ms: 499.823349
+  type: 'test'
+  ...
+# Subtest: startup refuses missing security settings and production deployment misconfiguration
+ok 438 - startup refuses missing security settings and production deployment misconfiguration
+  ---
+  duration_ms: 947.913616
+  type: 'test'
+  ...
+# Subtest: consistent SQLite backup preserves WAL data and refuses overwrite
+ok 439 - consistent SQLite backup preserves WAL data and refuses overwrite
+  ---
+  duration_ms: 537.331931
+  type: 'test'
+  ...
+# Subtest: a batch cannot pre-confirm unseen details; later explicit confirmation makes one real booking
+ok 440 - a batch cannot pre-confirm unseen details; later explicit confirmation makes one real booking
+  ---
+  duration_ms: 1692.370963
+  type: 'test'
+  ...
+# Subtest: stale signed input is quarantined before any booking or reply; review is tenant-scoped
+ok 441 - stale signed input is quarantined before any booking or reply; review is tenant-scoped
+  ---
+  duration_ms: 697.823947
+  type: 'test'
+  ...
+# Subtest: restart resumes queued/prepared work and quarantines processing/sending ambiguities
+ok 442 - restart resumes queued/prepared work and quarantines processing/sending ambiguities
+  ---
+  duration_ms: 306.606741
+  type: 'test'
+  ...
+# Subtest: legacy deployed database migrates additively without changing client/message/appointment data
+ok 443 - legacy deployed database migrates additively without changing client/message/appointment data
+  ---
+  duration_ms: 92.789441
+  type: 'test'
+  ...
+# Subtest: production refuses missing existing database and Railway volume mismatch without creating files
+ok 444 - production refuses missing existing database and Railway volume mismatch without creating files
+  ---
+  duration_ms: 122.999975
+  type: 'test'
+  ...
+# Subtest: a late successful receipt clears failed review without downgrading delivery
+ok 445 - a late successful receipt clears failed review without downgrading delivery
+  ---
+  duration_ms: 566.379901
+  type: 'test'
+  ...
+# Subtest: valid production setup keeps existing volume data and sets secure session cookies
+ok 446 - valid production setup keeps existing volume data and sets secure session cookies
+  ---
+  duration_ms: 277.877414
+  type: 'test'
+  ...
+# Subtest: provider rejections/unknown sends stay visible without retries; early receipts survive send response
+ok 447 - provider rejections/unknown sends stay visible without retries; early receipts survive send response
+  ---
+  duration_ms: 851.275391
+  type: 'test'
+  ...
+# Subtest: actual Anthropic SDK import uses mocked provider successfully while booking stays guided
+ok 448 - actual Anthropic SDK import uses mocked provider successfully while booking stays guided
+  ---
+  duration_ms: 551.23713
+  type: 'test'
+  ...
+# Subtest: YES received while summary send is unaccepted cannot book even when acceptance occurs before processing
+ok 449 - YES received while summary send is unaccepted cannot book even when acceptance occurs before processing
+  ---
+  duration_ms: 2357.767314
+  type: 'test'
+  ...
+# Subtest: a unknown final confirmation cannot erase committed booking state or turn corrections into a second booking
+ok 450 - a unknown final confirmation cannot erase committed booking state or turn corrections into a second booking
+  ---
+  duration_ms: 1738.567757
+  type: 'test'
+  ...
+# Subtest: a failed final confirmation cannot erase committed booking state or turn corrections into a second booking
+ok 451 - a failed final confirmation cannot erase committed booking state or turn corrections into a second booking
+  ---
+  duration_ms: 1758.057275
+  type: 'test'
+  ...
+# Subtest: restart after appointment commit but before reply persistence retains booking and blocks stale continuation
+ok 452 - restart after appointment commit but before reply persistence retains booking and blocks stale continuation
+  ---
+  duration_ms: 418.449884
+  type: 'test'
+  ...
+# Subtest: a delayed same-second YES cannot confirm an already accepted summary
+ok 453 - a delayed same-second YES cannot confirm an already accepted summary
+  ---
+  duration_ms: 1630.339584
+  type: 'test'
+  ...
+# Subtest: legacy duplicate number links retain token rotation without allowing new cross-account claims
+ok 454 - legacy duplicate number links retain token rotation without allowing new cross-account claims
+  ---
+  duration_ms: 649.132972
+  type: 'test'
+  ...
+# Subtest: photo settings are scoped, opt-in, validated, and never expose provider secrets
+ok 455 - photo settings are scoped, opt-in, validated, and never expose provider secrets
+  ---
+  duration_ms: 662.228686
+  type: 'test'
+  ...
+# Subtest: signed WhatsApp photo progresses through consent and catalog estimate to explicit confirmed booking
+ok 456 - signed WhatsApp photo progresses through consent and catalog estimate to explicit confirmed booking
+  ---
+  duration_ms: 663.282864
+  type: 'test'
+  ...
+# Subtest: both login routes preserve migrated case/whitespace accounts without credential or identity changes
+ok 457 - both login routes preserve migrated case/whitespace accounts without credential or identity changes
+  ---
+  duration_ms: 836.078949
+  type: 'test'
+  ...
+# Subtest: normalized email collisions fail closed for both logins and activation without merging accounts
+ok 458 - normalized email collisions fail closed for both logins and activation without merging accounts
+  ---
+  duration_ms: 643.049105
+  type: 'test'
+  ...
+1..458
+# tests 458
+# suites 0
+# pass 457
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 28586.411495
