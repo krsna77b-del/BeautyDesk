@@ -5,7 +5,7 @@ globalThis.fetch = async (input, options = {}) => {
   const url = new URL(typeof input === 'string' ? input : input.url);
   if (url.hostname === 'graph.facebook.com') {
     const body = JSON.parse(options.body);
-    if (body.text.body.startsWith("You're booked!")) {
+    if (["You're booked!","Jou afspraak is bespreek!","Ukubhukha kwakho kuqinisekisiwe!","Ubhukisho lwakho luqinisekisiwe!"].some(prefix=>body.text.body.startsWith(prefix))) {
       if (process.env.TEST_FINAL_REPLY_MODE === 'unknown') throw Error('Test final confirmation outcome unknown');
       if (process.env.TEST_FINAL_REPLY_MODE === 'failed') return new Response(JSON.stringify({error:{code:190}}), {status:401});
     }

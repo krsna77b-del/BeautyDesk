@@ -1,7 +1,8 @@
+const { m, s, join, finish } = require('./customer-copy');
 const booking = require('./booking');
 const { TIME_ZONE, DAY_ORDER, parseHours, hoursForDate, salonDate, addDays, validDate, getAvailableSlots, checkRequestedSlot, bookAppointment } = booking;
 const DAY_NAMES = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-const CONFIRM_HEADER = 'Please confirm your booking:';
+const CONFIRM_HEADER = s('Please confirm your booking:');
 const YES = /^(?:yes(?: please)?|confirm(?: booking)?|yes,? (?:book it|confirm)|book it|go ahead|sure|okay|ok)[.!\s]*$/i;
 const NEW_BOOKING = /\b(?:new|another|separate)\s+(?:booking|appointment)\b/i;
 const CANCEL = /^(?:cancel|stop|never mind|nevermind|no thanks|no)[.!\s]*$/i;
@@ -17,20 +18,20 @@ function additionalBookingIntent(message) {
 }
 
 function describeHours(hours) {
-  if (!hours) return 'The salon needs to check its opening hours. Please contact the salon directly before booking.';
+  if (!hours) return s('The salon needs to check its opening hours. Please contact the salon directly before booking.');
   const labels = { mon: 'Mon', tue: 'Tue', wed: 'Wed', thu: 'Thu', fri: 'Fri', sat: 'Sat', sun: 'Sun' };
-  const open = DAY_ORDER.filter(day => hours[day] !== 'closed').map(day => `${labels[day]} ${hours[day]}`);
-  return open.length ? `We're open ${open.join(', ')} (South Africa time).` : 'Online booking is currently closed. Please contact the salon directly.';
+  const open = DAY_ORDER.filter(day => hours[day] !== 'closed').map(day => m`${s(labels[day])} ${hours[day]}`);
+  return open.length ? m`We're open ${join(open, ', ')} (South Africa time).` : s('Online booking is currently closed. Please contact the salon directly.');
 }
 function describeServices(services) {
-  return services.length ? `Here's what we offer: ${services.map(s => `${s.name} (R${s.price}, ${s.duration_mins} min)`).join(', ')}.`
-    : "The salon hasn't loaded its services yet. Please contact the salon directly to book.";
+  return services.length ? m`Here's what we offer: ${services.map(s => m`${s.name} (R${s.price}, ${s.duration_mins} min)`).join(', ')}.`
+    : s("The salon hasn't loaded its services yet. Please contact the salon directly to book.");
 }
 function serviceQuestion(services) {
-  return services.length ? `Which service would you like to book? ${services.map(s => `${s.name} (R${s.price})`).join(', ')}.` : describeServices(services);
+  return services.length ? m`Which service would you like to book? ${services.map(s => m`${s.name} (R${s.price})`).join(', ')}.` : describeServices(services);
 }
 function frontDoor(client) {
-  return `Hi! Welcome to ${client.salon}.\n1. Book Appointment\n2. View Services\n3. My Appointment\n4. Contact Salon\nReply with an option.`;
+  return m`Hi! Welcome to ${client.salon}.\n1. Book Appointment\n2. View Services\n3. My Appointment\n4. Contact Salon\nReply with an option.`;
 }
 function isFrontDoor(text) { return /1\. Book Appointment\n2\. View Services/.test(text || ''); }
 function modularMessage(message, previousReply, services) {
@@ -43,7 +44,7 @@ function modularMessage(message, previousReply, services) {
   return message;
 }
 function modularServiceQuestion(services) {
-  return services.length ? `Which service would you like to book?\n${services.map((s, i) => `${i + 1}. ${s.name} (R${s.price}, ${s.duration_mins} min)`).join('\n')}\nReply with a service name or number.` : describeServices(services);
+  return services.length ? m`Which service would you like to book?\n${services.map((s, i) => m`${i + 1}. ${s.name} (R${s.price}, ${s.duration_mins} min)`).join('\n')}\nReply with a service name or number.` : describeServices(services);
 }
 function qualifiedTechnicians(salon, clientId, serviceId) {
   return salon.qualifiedStaff(clientId, serviceId).filter(s => typeof s.name === 'string' && s.name.trim() && !/[\p{Cc}\p{Cf}]/u.test(s.name));
@@ -54,8 +55,8 @@ function technicianLabel(staff, roster) {
 }
 function technicianQuestion(salon, clientId, service) {
   const roster = qualifiedTechnicians(salon, clientId, service.id);
-  if (!roster.length) return `There are no qualified technicians available to book ${service.name} online. Please contact the salon directly.`;
-  return `Which technician would you prefer for ${service.name}?\n${roster.map((s, i) => `${i + 1}. ${technicianLabel(s, roster)}`).join('\n')}\n${roster.length + 1}. Any qualified technician\nReply with a name, number, or \"any\".`;
+  if (!roster.length) return m`There are no qualified technicians available to book ${service.name} online. Please contact the salon directly.`;
+  return m`Which technician would you prefer for ${service.name}?\n${roster.map((s, i) => m`${i + 1}. ${technicianLabel(s, roster)}`).join('\n')}\n${roster.length + 1}. Any qualified technician\nReply with a name, number, or \"any\".`;
 }
 function applyBookingInput(state, message, previousReply, services, now, salon, clientId) {
   if (!salon) return applyInput(state, message, previousReply, services, now);
@@ -96,8 +97,8 @@ function applyBookingInput(state, message, previousReply, services, now, salon, 
   return state;
 }
 function contactSalon(client) {
-  const phone = typeof client.phone === 'string' && /^\+?[\d ()-]{7,24}$/.test(client.phone) ? ` on ${client.phone}` : '';
-  return `Please contact ${client.salon} directly${phone} for help.`;
+  const phone = typeof client.phone === 'string' && /^\+?[\d ()-]{7,24}$/.test(client.phone) ? m` on ${client.phone}` : '';
+  return m`Please contact ${client.salon} directly${phone} for help.`;
 }
 function reminderPreference(input) {
   const command = String(input.incomingMessage || '').trim().replace(/[.!]+$/, '').trim().toUpperCase();
@@ -105,24 +106,24 @@ function reminderPreference(input) {
   const salon = booking.modularSalon(input.client.id);
   if (!salon) return null;
   const enable = command === 'START REMINDERS', stopDraft = command === 'STOP';
-  if (input.dryRun === true || input.customerPhone === 'simulator') return { handled: true, mode: 'rules', text: `Simulator preview: reminders would be turned ${enable ? 'on' : 'off'} for a recognized customer. No reminder preferences or appointments were changed.` };
+  if (input.dryRun === true || input.customerPhone === 'simulator') return { handled: true, mode: 'rules', text: m`Simulator preview: reminders would be turned ${enable ? s('on') : s('off')} for a recognized customer. No reminder preferences or appointments were changed.` };
   if (typeof input.customerPhone !== 'string' || !/^\+?[1-9]\d{6,14}$/.test(input.customerPhone)) {
-    return { handled: true, mode: 'rules', text: `I can't verify your WhatsApp number, so I haven't changed reminder preferences. ${contactSalon(input.client)}` };
+    return { handled: true, mode: 'rules', text: m`I can't verify your WhatsApp number, so I haven't changed reminder preferences. ${contactSalon(input.client)}` };
   }
   const sender = input.customerPhone.replace(/^\+/, '');
   const customer = require('./db').prepare('SELECT id, opt_out_at FROM customers WHERE client_id=? AND phone=?').get(input.client.id, sender);
-  if (!customer) return { handled: true, mode: 'rules', text: `${stopDraft ? "I've stopped this booking request. " : ''}${enable ? `I couldn't find a customer record for this WhatsApp number. Please book an appointment or contact the salon before enabling reminders.` : 'No reminders are enabled for this WhatsApp number.'} Existing appointments are unchanged.` };
+  if (!customer) return { handled: true, mode: 'rules', text: m`${stopDraft ? s("I've stopped this booking request. ") : ''}${enable ? m`I couldn't find a customer record for this WhatsApp number. Please book an appointment or contact the salon before enabling reminders.` : s('No reminders are enabled for this WhatsApp number.')} Existing appointments are unchanged.` };
   // A delayed or same-second START cannot undo a more recent STOP. Meta's
   // second-resolution sender timestamp is the authorization clock here.
   if (enable && customer.opt_out_at) {
     const sentAt = new Date(input.messageAt || input.now || new Date()).getTime();
     const optedOutAt = Date.parse(customer.opt_out_at);
     if (!Number.isFinite(sentAt) || Math.floor(sentAt / 1000) <= Math.floor(optedOutAt / 1000)) {
-      return { handled: true, mode: 'rules', text: 'Reminders are still off. If you want to turn them on, please wait two seconds and send START REMINDERS again. Existing appointments are unchanged.' };
+      return { handled: true, mode: 'rules', text: s('Reminders are still off. If you want to turn them on, please wait two seconds and send START REMINDERS again. Existing appointments are unchanged.') };
     }
   }
   salon.setOptIn(input.client.id, customer.id, enable);
-  return { handled: true, mode: 'rules', text: `${stopDraft ? "I've stopped this booking request. " : ''}${enable ? 'Your reminder preference is on. Reminder delivery still depends on the salon enabling its messaging service.' : 'Reminders are off for this WhatsApp number.'} Existing appointments are unchanged.` };
+  return { handled: true, mode: 'rules', text: m`${stopDraft ? s("I've stopped this booking request. ") : ''}${enable ? s('Your reminder preference is on. Reminder delivery still depends on the salon enabling its messaging service.') : s('Reminders are off for this WhatsApp number.')} Existing appointments are unchanged.` };
 }
 function managementLink(salon, clientId, appointmentId) {
   if (!process.env.PUBLIC_BASE_URL || !process.env.JWT_SECRET) return null;
@@ -136,20 +137,20 @@ function managementLink(salon, clientId, appointmentId) {
   } catch { return null; }
 }
 function customerAppointments(client, customerPhone, now, salon) {
-  if (typeof customerPhone !== 'string' || !/^\+?\d{7,15}$/.test(customerPhone)) return `I can't verify your WhatsApp number. ${contactSalon(client)}`;
+  if (typeof customerPhone !== 'string' || !/^\+?\d{7,15}$/.test(customerPhone)) return m`I can't verify your WhatsApp number. ${contactSalon(client)}`;
   const sender = customerPhone.replace(/^\+/, '');
   const appointments = require('./db').prepare("SELECT a.*, s.name AS staff_name FROM appointments a LEFT JOIN staff s ON s.client_id=a.client_id AND s.id=a.staff_id WHERE a.client_id=? AND (a.customer_phone=? OR a.customer_phone=?) ORDER BY a.starts_at DESC, a.created_at DESC").all(client.id, sender, '+' + sender)
     .filter(a => ['confirmed', 'pending'].includes(a.status) && booking.storedInstant(a.starts_at) >= new Date(now).getTime()).reverse().slice(0, 5);
-  if (!appointments.length) return `I couldn't find an upcoming appointment for this WhatsApp number. ${contactSalon(client)} You can also choose Book Appointment.`;
+  if (!appointments.length) return m`I couldn't find an upcoming appointment for this WhatsApp number. ${contactSalon(client)} You can also choose Book Appointment.`;
   let hasLink = false;
   const lines = appointments.map(a => {
     const instant = booking.storedInstant(a.starts_at);
     const date = salonDate(instant), time = new Intl.DateTimeFormat('en-GB', { timeZone: TIME_ZONE, hour: '2-digit', minute: '2-digit' }).format(instant);
     const link = managementLink(salon, client.id, a.id);
     if (link) hasLink = true;
-    return `${a.service_name}${a.staff_name ? ` with ${a.staff_name}` : ''}: ${date} at ${time} (South Africa), ${a.status}.${link ? `\nManage this appointment: ${link}` : ''}`;
+    return m`${a.service_name}${a.staff_name ? m` with ${a.staff_name}` : ''}: ${date} at ${time} (South Africa), ${s(a.status)}.${link ? m`\nManage this appointment: ${link}` : ''}`;
   });
-  return `Your upcoming appointments:\n${lines.join('\n')}\n${hasLink ? 'Use your private management link to view cancellation and rescheduling options. ' : 'To cancel or reschedule, '}${contactSalon(client).replace(/^Please /, 'please ')}`;
+  return m`Your upcoming appointments:\n${join(lines)}\n${hasLink ? s('Use your private management link to view cancellation and rescheduling options. ') : s('To cancel or reschedule, ')}${contactSalon(client)}`;
 }
 function nameIsUsable(value) {
   return typeof value === 'string' && value.trim().length >= 2 && value.trim().length <= 120
@@ -286,7 +287,7 @@ function rebuildState(history, services, customerName, now, salon, clientId) {
   let state = { active: false, name: nameIsUsable(customerName) ? customerName.trim() : undefined };
   let previousReply = '';
   for (const message of history) {
-    if (typeof message?.body !== 'string') continue;
+    if (typeof message?.body !== 'string' || message.language_control) continue;
     if (message.direction === 'out') {
       previousReply = message.body;
       const confirmed = confirmationFrom(previousReply, services, salon, clientId);
@@ -301,29 +302,29 @@ function rebuildState(history, services, customerName, now, salon, clientId) {
 }
 function failureText(reason) {
   const messages = {
-    past_datetime: 'That date or time has already passed in South Africa. Which future date and time would you like?',
-    bad_datetime: 'Please use a valid date (YYYY-MM-DD) and time (for example 14:30).',
-    closed: "We're closed on that date. Which other day would you like?",
-    outside_hours: "That appointment would be outside the salon's opening hours. Please choose another time.",
-    slot_taken: 'That time is no longer available. Please choose another time.',
-    missing_customer_phone: "I can't verify your WhatsApp number for this booking. Please contact the salon directly.",
-    invalid_hours: 'The salon needs to check its opening hours. Please contact the salon directly before booking.',
-    invalid_calendar: 'The salon needs to check its calendar. Please contact the salon directly before booking.',
-    unknown_service: 'That service is no longer available. Which other service would you like?',
-    missing_message_id: 'I cannot verify this booking request. Please contact the salon directly.',
-    origin_already_used: 'This request already belongs to an existing booking. Please contact the salon directly to change it.',
-    service_changed: 'The service details have changed. Please ask for a new booking summary before confirming.',
-    staff_changed: 'The technician details have changed. Please choose a technician again and review a new booking summary.',
-    no_qualified_staff: 'There are no qualified technicians for that service. Please contact the salon directly.',
-    unqualified_staff: 'That technician is no longer available for this service. Please choose another technician.',
-    staff_unavailable: 'That technician is not available at this time. Please choose another time or technician.',
-    deposit_changed: 'The deposit details have changed. Please review a new booking summary before confirming.',
-    booking_disabled: 'Online booking is currently disabled. Please contact the salon directly.',
-    booking_horizon: 'Please choose a date within the next year.',
+    past_datetime: s('That date or time has already passed in South Africa. Which future date and time would you like?'),
+    bad_datetime: s('Please use a valid date (YYYY-MM-DD) and time (for example 14:30).'),
+    closed: s("We're closed on that date. Which other day would you like?"),
+    outside_hours: s("That appointment would be outside the salon's opening hours. Please choose another time."),
+    slot_taken: s('That time is no longer available. Please choose another time.'),
+    missing_customer_phone: s("I can't verify your WhatsApp number for this booking. Please contact the salon directly."),
+    invalid_hours: s('The salon needs to check its opening hours. Please contact the salon directly before booking.'),
+    invalid_calendar: s('The salon needs to check its calendar. Please contact the salon directly before booking.'),
+    unknown_service: s('That service is no longer available. Which other service would you like?'),
+    missing_message_id: s('I cannot verify this booking request. Please contact the salon directly.'),
+    origin_already_used: s('This request already belongs to an existing booking. Please contact the salon directly to change it.'),
+    service_changed: s('The service details have changed. Please ask for a new booking summary before confirming.'),
+    staff_changed: s('The technician details have changed. Please choose a technician again and review a new booking summary.'),
+    no_qualified_staff: s('There are no qualified technicians for that service. Please contact the salon directly.'),
+    unqualified_staff: s('That technician is no longer available for this service. Please choose another technician.'),
+    staff_unavailable: s('That technician is not available at this time. Please choose another time or technician.'),
+    deposit_changed: s('The deposit details have changed. Please review a new booking summary before confirming.'),
+    booking_disabled: s('Online booking is currently disabled. Please contact the salon directly.'),
+    booking_horizon: s('Please choose a date within the next year.'),
   };
-  return messages[reason] || "I couldn't complete that booking. Please contact the salon directly.";
+  return messages[reason] || s("I couldn't complete that booking. Please contact the salon directly.");
 }
-function rulesRespond({ client, services = [], history = [], incomingMessage, customerPhone, customerName, dryRun, now = new Date(), messageAt = now, receivedAt = now, incomingMessageId, confirmationMessageId, latestBooking, allowAdditionalBooking, bookingNeedsReview = false, photoSelection }) {
+function rulesRespond({ client, services = [], history = [], incomingMessage, customerPhone, customerName, dryRun, now = new Date(), messageAt = now, receivedAt = now, incomingMessageId, confirmationMessageId, latestBooking, allowAdditionalBooking, bookingNeedsReview = false, photoSelection, customerLanguage }) {
   const reminder = reminderPreference({ client, incomingMessage, customerPhone, dryRun, now, messageAt });
   if (reminder) return reminder;
   const salon = booking.modularSalon(client.id), clientId = client.id;
@@ -343,17 +344,17 @@ function rulesRespond({ client, services = [], history = [], incomingMessage, cu
     const hours = parseHours(client);
     const day = parseDate(message, messageAt);
     if (!day.found || !hours) return { handled: true, text: describeHours(hours) };
-    if (!day.date) return { handled: true, text: 'That date is not valid. Please use YYYY-MM-DD.' };
+    if (!day.date) return { handled: true, text: s('That date is not valid. Please use YYYY-MM-DD.') };
     const range = hoursForDate(hours, day.date);
-    return { handled: true, text: range ? `We're open on ${day.date} from ${range.open} to ${range.close} (South Africa).` : `We're closed on ${day.date}.` };
+    return { handled: true, text: range ? m`We're open on ${day.date} from ${range.open} to ${range.close} (South Africa).` : m`We're closed on ${day.date}.` };
   }
   if (/\b(prices?|costs?|how much|menu|services?)\b/i.test(message) && !/\b(?:book|change|different)\b/i.test(message)) return { handled: true, text: describeServices(services) };
   if (/\b(?:cancel|reschedule|move)\s+(?:my|the|an?)?\s*(?:appointment|booking)\b/i.test(message)) {
-    return { handled: true, text: salon ? customerAppointments(client, customerPhone, now, salon) : 'Please contact the salon directly to change or cancel an existing appointment.' };
+    return { handled: true, text: salon ? customerAppointments(client, customerPhone, now, salon) : s('Please contact the salon directly to change or cancel an existing appointment.') };
   }
-  if (bookingNeedsReview) return { handled: true, text: 'The salon needs to review your existing booking and its confirmation before I can make another booking. Please contact the salon directly to resolve it.' };
+  if (bookingNeedsReview) return { handled: true, text: s('The salon needs to review your existing booking and its confirmation before I can make another booking. Please contact the salon directly to resolve it.') };
   if (latestBooking && (latestBooking.client_id !== client.id || latestBooking.customer_phone !== customerPhone)) {
-    return { handled: true, text: 'I cannot verify your existing booking details. Please contact the salon directly.' };
+    return { handled: true, text: s('I cannot verify your existing booking details. Please contact the salon directly.') };
   }
   if (latestBooking) {
     const originIndex = latestBooking.origin_message_id ? history.findIndex(m => m.direction === 'in' && m.wa_message_id === latestBooking.origin_message_id) : -1;
@@ -364,10 +365,10 @@ function rulesRespond({ client, services = [], history = [], incomingMessage, cu
     const allowNew = typeof allowAdditionalBooking === 'boolean' ? allowAdditionalBooking : localIntent;
     if (!allowNew) {
       const instant = booking.storedInstant(latestBooking.starts_at);
-      const when = Number.isFinite(instant) ? `${salonDate(instant)} at ${new Intl.DateTimeFormat('en-GB', { timeZone: TIME_ZONE, hour: '2-digit', minute: '2-digit' }).format(instant)} (South Africa)` : 'the recorded time';
-      const status = latestBooking.status === 'cancelled' ? 'was cancelled' : 'is already recorded';
+      const when = Number.isFinite(instant) ? m`${salonDate(instant)} at ${new Intl.DateTimeFormat('en-GB', { timeZone: TIME_ZONE, hour: '2-digit', minute: '2-digit' }).format(instant)} (South Africa)` : s('the recorded time');
+      const status = latestBooking.status === 'cancelled' ? s('was cancelled') : s('is already recorded');
       const link = salon ? managementLink(salon, client.id, latestBooking.id) : null;
-      return { handled: true, text: `Your ${latestBooking.service_name} appointment for ${when} ${status}. ${link ? `Manage this appointment: ${link}` : 'Please contact the salon directly to change an existing appointment.'} For a separate appointment, say \"new booking\".` };
+      return { handled: true, text: m`Your ${latestBooking.service_name} appointment for ${when} ${status}. ${link ? m`Manage this appointment: ${link}` : s('Please contact the salon directly to change an existing appointment.')} For a separate appointment, say \"new booking\".` };
     }
   }
   const { state: recovered, previousReply } = rebuildState(history, services, customerName, now, salon, clientId);
@@ -392,28 +393,28 @@ function rulesRespond({ client, services = [], history = [], incomingMessage, cu
   const pending = summaryWasShown ? confirmationFrom(previousReply, services, salon, clientId) : null;
   const explainTimingRetry = YES.test(message) && !summaryWasShown && !!confirmationFrom(previousReply, services, salon, clientId);
   if (YES.test(message) && /^(?:You're booked!|Preview complete:)/.test(previousReply)) {
-    return { handled: true, text: previousReply };
+    return { handled: true, text: previousReply, messageFormat: [...history].reverse().find(row => row.direction === 'out' && row.body === previousReply)?.messageFormat };
   }
   if (YES.test(message) && pending) {
     const result = bookAppointment(client.id, {
       customerName: pending.name, customerPhone, serviceName: pending.service.name, durationMins: pending.service.duration_mins,
       dateStr: pending.date, time: pending.time, ...(salon ? { staffId: pending.staffId, expectedStaffName: pending.staffName, expectedDeposit: pending.deposit } : {}), incomingMessageId, expectedPrice: pending.service.price, source: dryRun ? 'simulator' : 'whatsapp', dryRun, now, photoSelection,
     });
-    const details = `${pending.service.name}${salon ? ` with ${pending.staffName}` : ''} on ${pending.date} at ${pending.time} (South Africa), R${pending.service.price}, for ${pending.name}.`;
+    const details = m`${pending.service.name}${salon ? m` with ${pending.staffName}` : ''} on ${pending.date} at ${pending.time} (South Africa), R${pending.service.price}, for ${pending.name}.`;
     if (result.ok) {
       const link = salon && !result.dryRun ? managementLink(salon, client.id, result.id) : null;
-      const deposit = salon && pending.deposit > 0 ? ` Deposit due: R${pending.deposit}; payment is not collected in this chat.` : '';
-      return { handled: true, text: result.dryRun ? `Preview complete: ${details} No appointment was saved.` : `You're booked! ${details}${deposit} See you then! ✨${link ? `\nManage this appointment: ${link}` : ''}` };
+      const deposit = salon && pending.deposit > 0 ? m` Deposit due: R${pending.deposit}; payment is not collected in this chat.` : '';
+      return { handled: true, text: result.dryRun ? m`Preview complete: ${details} No appointment was saved.` : m`You're booked! ${details}${deposit} See you then! ✨${link ? m`\nManage this appointment: ${link}` : ''}` };
     }
     return { handled: true, text: failureText(result.reason) };
   }
   const state = applyBookingInput(recovered, message, previousReply, services, messageAt, salon, clientId);
-  if (state.cancelled) return { handled: true, text: "I've stopped this booking request. Existing appointments are unchanged." };
-  if (!state.active && !/which service/i.test(previousReply)) return salon ? { handled: true, text: frontDoor(client) } : { handled: false, text: client.greeting || 'Hi! I can help with bookings, prices and opening hours. What would you like?' };
+  if (state.cancelled) return { handled: true, text: s("I've stopped this booking request. Existing appointments are unchanged.") };
+  if (!state.active && !/which service/i.test(previousReply)) return salon ? { handled: true, text: frontDoor(client) } : { handled: false, text: (!customerLanguage && client.greeting) || s('Hi! I can help with bookings, prices and opening hours. What would you like?') };
   if (!state.service) return { handled: true, text: salon ? modularServiceQuestion(services) : serviceQuestion(services) };
   if (salon && !state.staffPreference) return { handled: true, text: technicianQuestion(salon, client.id, state.service) };
-  if (state.invalidDate) return { handled: true, text: 'That date is not valid. What day would you like? You can use YYYY-MM-DD.' };
-  if (!state.date) return { handled: true, text: `${state.service.name} is R${state.service.price} (${state.service.duration_mins} min). What day would you like?` };
+  if (state.invalidDate) return { handled: true, text: s('That date is not valid. What day would you like? You can use YYYY-MM-DD.') };
+  if (!state.date) return { handled: true, text: m`${state.service.name} is R${state.service.price} (${state.service.duration_mins} min). What day would you like?` };
   if (state.date < salonDate(now)) return { handled: true, text: failureText('past_datetime') };
   if (!parseHours(client)) return { handled: true, text: failureText('invalid_hours') };
   if (!hoursForDate(parseHours(client), state.date)) return { handled: true, text: failureText('closed') };
@@ -421,15 +422,15 @@ function rulesRespond({ client, services = [], history = [], incomingMessage, cu
   const slots = salon ? [...new Set(salon.availableSlots(client.id, state.service.id, state.date, staffOptions).map(s => s.time))]
     : getAvailableSlots(client.id, client, state.service.duration_mins, state.date, { now });
   if (!state.time || state.invalidTime) {
-    if (!slots.length) return { handled: true, text: `There are no available times for ${state.service.name} on ${state.date}. Which other day would you like?` };
-    return { handled: true, text: `${state.invalidTime ? 'Please use a valid time. ' : ''}Available times for ${state.service.name} on ${state.date}: ${slots.join(', ')} (South Africa). What time would you like?` };
+    if (!slots.length) return { handled: true, text: m`There are no available times for ${state.service.name} on ${state.date}. Which other day would you like?` };
+    return { handled: true, text: m`${state.invalidTime ? s('Please use a valid time. ') : ''}Available times for ${state.service.name} on ${state.date}: ${slots.join(', ')} (South Africa). What time would you like?` };
   }
   const availability = salon ? salon.checkSlot(client.id, state.service.id, state.date, state.time, staffOptions)
     : checkRequestedSlot(client.id, client, state.service.duration_mins, state.date, state.time, { now });
-  if (!availability.ok) return { handled: true, text: `${failureText(availability.reason)}${slots.length && ['slot_taken', 'outside_hours'].includes(availability.reason) ? ` Available times: ${slots.join(', ')} (South Africa).` : ''}` };
-  if (!nameIsUsable(state.name)) return { handled: true, text: `What name should I put on your ${state.service.name} booking for ${state.date} at ${state.time} (South Africa)?` };
+  if (!availability.ok) return { handled: true, text: m`${failureText(availability.reason)}${slots.length && ['slot_taken', 'outside_hours'].includes(availability.reason) ? m` Available times: ${slots.join(', ')} (South Africa).` : ''}` };
+  if (!nameIsUsable(state.name)) return { handled: true, text: m`What name should I put on your ${state.service.name} booking for ${state.date} at ${state.time} (South Africa)?` };
   const preview = dryRun || customerPhone === 'simulator';
-  return { handled: true, text: `${CONFIRM_HEADER}\nService: ${state.service.name}${salon ? `\nTechnician: ${technicianLabel(availability.staff, qualifiedTechnicians(salon, client.id, state.service.id))}\nTechnician reference: ${availability.staff.id}` : ''}\nDate: ${state.date}\nTime: ${state.time} (South Africa)\nName: ${state.name}\nPrice: R${state.service.price}\nDuration: ${state.service.duration_mins} min${salon ? `\nDeposit: R${salon.depositAmount(client.id, state.service.id)} (payment is not collected in this chat)` : ''}\n${explainTimingRetry && !preview ? 'Please check these details, wait two seconds, then reply YES again. Tell me what to change if needed.' : `Reply YES to ${preview ? 'preview' : 'book'}, or tell me what to change.`}${preview ? '\nThis is a simulator; no appointment will be saved.' : ''}` };
+  return { handled: true, text: m`${CONFIRM_HEADER}\nService: ${state.service.name}${salon ? m`\nTechnician: ${technicianLabel(availability.staff, qualifiedTechnicians(salon, client.id, state.service.id))}\nTechnician reference: ${availability.staff.id}` : ''}\nDate: ${state.date}\nTime: ${state.time} (South Africa)\nName: ${state.name}\nPrice: R${state.service.price}\nDuration: ${state.service.duration_mins} min${salon ? m`\nDeposit: R${salon.depositAmount(client.id, state.service.id)} (payment is not collected in this chat)` : ''}\n${explainTimingRetry && !preview ? s('Please check these details, wait two seconds, then reply YES again. Tell me what to change if needed.') : m`Reply YES to ${preview ? s('preview') : s('book')}, or tell me what to change.`}${preview ? s('\nThis is a simulator; no appointment will be saved.') : ''}` };
 }
 
 // Booking state and all mutations are handled above, regardless of AI availability.
@@ -453,7 +454,7 @@ async function callClaude({ client, services, history, incomingMessage, now = ne
   if (!text || /\b(booked|confirmed|reserved|cancelled|canceled|rescheduled)\b|please confirm|reply.{0,20}\byes\b/i.test(text)) throw new Error('unsafe_or_empty_provider_reply');
   return text;
 }
-async function generateReply(input) {
+async function generateReplyCore(input) {
   const context = { services: [], history: [], ...input, dryRun: input.dryRun === true || input.customerPhone === 'simulator' };
   // Reminder controls take precedence over the photo workflow. Plain STOP also
   // runs the existing cancellation cleanup; other controls preserve its context.
@@ -494,11 +495,12 @@ async function generateReply(input) {
   }
   const response = rulesRespond(context);
   if (photoResult?.photoSelection) {
-    const text = response.text + '\nPhoto menu estimate only: the salon must check the work required and agree any price change with you before starting.';
+    const text = m`${response.text}\n${s('Photo menu estimate only: the salon must check the work required and agree any price change with you before starting.')}`;
     return {text, mode:'photo_guided',photoSessionId:photoResult.photoSessionId};
   }
-  if (response.handled || !process.env.ANTHROPIC_API_KEY) return { text: response.text, mode: 'rules' };
+  if (context.customerLanguage || response.handled || !process.env.ANTHROPIC_API_KEY) return { text: response.text, messageFormat: response.messageFormat, mode: 'rules' };
   try { return { text: await callClaude(context), mode: 'claude' }; }
   catch (error) { return { text: response.text, mode: 'rules_fallback', error: String(error.message || error) }; }
 }
-module.exports = { ...booking, generateReply, describeHours, describeServices, additionalBookingIntent };
+async function generateReply(input) { return finish(await generateReplyCore(input)); }
+module.exports = { ...booking, generateReply, describeHours: (...args) => String(describeHours(...args)), describeServices: (...args) => String(describeServices(...args)), additionalBookingIntent };
