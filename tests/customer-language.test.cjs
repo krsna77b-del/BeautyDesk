@@ -213,3 +213,32 @@ test('photo consent remains explicit after a switch; I AGREE remains the documen
     assert.equal(count('appointments'),0);
   } finally { photo.createPhotoFlow=original; }
 });
+
+test('a first-contact photo is deferred until language choice, then requests explicit consent',async()=>{
+  const photo=require('../photo-flow'), original=photo.createPhotoFlow;
+  photo.createPhotoFlow=()=>original({status:()=>({ready:true}),retrieve:()=>{throw Error('No analysis before consent');}});
+  try{
+    db.prepare("UPDATE clients SET photo_estimates_enabled=1 WHERE id='salon'").run();
+    db.prepare("UPDATE services SET photo_eligible=1,photo_category='hair',photo_description='Shoulder-length braids from the salon menu' WHERE id='salon-braids'").run();
+    db.prepare("INSERT INTO photo_uploads VALUES('salon',?,'first-photo','123',NULL,'2031-10-02T00:00:00Z')").run(phone);
+    assert.equal((await send('[Photo received; awaiting consent]',{id:'first-photo',incomingType:'image'})).mode,'language');
+    assert.equal(count('photo_sessions'),0);
+    const result=await send('3');
+    assert.equal(result.language,'af'); assert.ok(result.text.includes('I AGREE'));
+    const session=db.prepare('SELECT * FROM photo_sessions').get();
+    assert.equal(session.stage,'consent'); assert.equal(session.consent_at,null);
+    assert.equal(session.source_message_id,'first-photo'); assert.equal(preference().deferred_photo_id,null);
+  } finally { photo.createPhotoFlow=original; }
+});
+test('localized separate-booking intent is recognized without translating literal service names',()=>{
+  db.prepare("INSERT INTO whatsapp_customer_languages VALUES('salon',?,'af',0,?,NULL)").run(phone,now.getTime());
+  assert.equal(languages.additionalBookingIntent('salon',phone,'nuwe bespreking',[]),true);
+  assert.equal(languages.additionalBookingIntent('salon',phone,'kanselleer',[]),false);
+  assert.equal(languages.normalizeInput('môre','af',[{name:'môre'}]),'môre');
+});
+test('preference survives a fresh Node process using the same SQLite database',async()=>{
+  await select('4');
+  const {spawnSync}=require('node:child_process');
+  const result=spawnSync(process.execPath,['-e',`const db=require('./db'); process.stdout.write(JSON.stringify(db.prepare('SELECT language FROM whatsapp_customer_languages WHERE client_id=? AND customer_phone=?').get('salon','${phone}'))); db.close();`],{cwd:path.resolve(__dirname,'..'),env:process.env,encoding:'utf8'});
+  assert.equal(result.status,0,result.stderr); assert.equal(JSON.parse(result.stdout).language,'xh');
+});

@@ -62,21 +62,27 @@ async function generateReply(input) {
     if (!choice) {
       // Preserve a first substantive request as booking history, but never
       // interpret a first number/YES as a service selection or consent.
-      if (preference || switchMatch || /^(?:[1-9]\d*|yes|no|confirm|ok)$/.test(command) || input.incomingType === 'image') tagControl();
-      db.prepare(`INSERT INTO whatsapp_customer_languages(client_id,customer_phone,language,choosing,updated_at_ms)
-        VALUES (?,?,NULL,1,?) ON CONFLICT(client_id,customer_phone)
-        DO UPDATE SET choosing=1,updated_at_ms=excluded.updated_at_ms`).run(input.client.id,phone,at);
+      if (preference || switchMatch || /^(?:[1-9]\d*|yes|no|confirm|ok|yebo|cha|ja|nee|ewe|hayi)$/.test(command) || input.incomingType === 'image') tagControl();
+      db.prepare(`INSERT INTO whatsapp_customer_languages(client_id,customer_phone,language,choosing,updated_at_ms,deferred_photo_id)
+        VALUES (?,?,NULL,1,?,?) ON CONFLICT(client_id,customer_phone)
+        DO UPDATE SET choosing=1,updated_at_ms=excluded.updated_at_ms,
+          deferred_photo_id=COALESCE(excluded.deferred_photo_id,whatsapp_customer_languages.deferred_photo_id)`)
+        .run(input.client.id,phone,at,input.incomingType === 'image' ? input.incomingMessageId : null);
       return menu();
     }
     tagControl();
     // A selector response is never sent to the booking/consent parser.
     // Rebuild a fresh prompt from canonical history and require a subsequent
     // accepted reply context and later explicit confirmation as before.
-    const result = await ai.generateReply({ ...context, incomingMessage:'', incomingType:'text', customerLanguage:choice });
+    const deferred = preference?.deferred_photo_id
+      ? db.prepare("SELECT * FROM messages WHERE client_id=? AND customer_phone=? AND direction='in' AND incoming_type='image' AND wa_message_id=?")
+        .get(input.client.id,input.customerPhone,preference.deferred_photo_id) : null;
+    const result = await ai.generateReply({ ...context, incomingMessage:'', incomingType:deferred ? 'image' : 'text', customerLanguage:choice,
+      ...(deferred ? { incomingMessageId:deferred.wa_message_id,messageAt:new Date(deferred.created_at) } : {}) });
     const output = display(result, choice);
     db.prepare(`INSERT INTO whatsapp_customer_languages(client_id,customer_phone,language,choosing,updated_at_ms)
       VALUES (?,?,?,0,?) ON CONFLICT(client_id,customer_phone)
-      DO UPDATE SET language=excluded.language,choosing=0,updated_at_ms=excluded.updated_at_ms`).run(input.client.id,phone,choice,at);
+      DO UPDATE SET language=excluded.language,choosing=0,updated_at_ms=excluded.updated_at_ms,deferred_photo_id=NULL`).run(input.client.id,phone,choice,at);
     return output;
   }
   if (incoming !== input.incomingMessage) {
@@ -85,4 +91,9 @@ async function generateReply(input) {
   }
   return display(await ai.generateReply(normalizedContext), language);
 }
-module.exports = { generateReply, canonicalHistory, normalizeInput, LANGUAGES, MENU };
+function additionalBookingIntent(clientId, phone, text, services) {
+  const language = process.env.WHATSAPP_CUSTOMER_LANGUAGES === '1'
+    ? db.prepare('SELECT language FROM whatsapp_customer_languages WHERE client_id=? AND customer_phone=?').get(clientId,String(phone).replace(/^\+/, ''))?.language : 'en';
+  return ai.additionalBookingIntent(normalizeInput(text,language,services));
+}
+module.exports = { additionalBookingIntent, generateReply, canonicalHistory, normalizeInput, LANGUAGES, MENU };

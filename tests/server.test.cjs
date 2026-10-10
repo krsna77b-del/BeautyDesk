@@ -427,3 +427,53 @@ test('normalized email collisions fail closed for both logins and activation wit
   assert.deepEqual(db.prepare('SELECT * FROM signups WHERE id=?').get(signup.id),signup);
   assert.deepEqual(db.prepare('SELECT * FROM clients ORDER BY id').all(),before);
 });
+
+test('language-enabled webhook keeps four choices durable, deduplicated, tenant scoped and within the reply window',async t=>{
+  const h=await launch(t,{WHATSAPP_CUSTOMER_LANGUAGES:'1'}), c=await seed(h); await connect(h,c);
+  const db=new Database(h.dbPath);t.after(()=>db.close());
+  const send=async(id,text,from='27820000000')=>{
+    await webhook(h,c.id,inbound(id,text,'123456789012345',from));
+    await waitFor(()=>['completed','review'].includes(db.prepare('SELECT state FROM whatsapp_jobs WHERE incoming_id=?').get(id)?.state));
+    return db.prepare("SELECT * FROM messages WHERE direction='out' AND customer_phone=? ORDER BY rowid DESC LIMIT 1").get(from);
+  };
+  for(const file of ['/customer-language.js','/customer-copy.js','/customer-copy.json']) assert.equal((await fetch(h.base+file)).status,404);
+  const first=await send('language-first','hello');
+  assert.match(first.body,/1\. English[\s\S]*2\. isiZulu[\s\S]*3\. Afrikaans[\s\S]*4\. isiXhosa/);
+  assert.equal(first.canonical_body,''); assert.equal(first.language_control,1);
+  for(const [choice,language] of [['1','en'],['2','zu'],['3','af'],['4','xh']]){
+    const selected=await send('language-'+language,'LANGUAGE '+choice);
+    assert.equal(selected.customer_language,language);
+    assert.ok(selected.accepted_at); assert.ok(selected.message_format_json);
+    assert.match(selected.canonical_body,/Hi!/);
+    assert.equal(db.prepare('SELECT language FROM whatsapp_customer_languages WHERE client_id=? AND customer_phone=?').get(c.id,'27820000000').language,language);
+  }
+  await webhook(h,c.id,inbound('language-xh','LANGUAGE 4'));
+  await sleep(150);
+  assert.equal(db.prepare("SELECT count(*) n FROM whatsapp_jobs WHERE incoming_id='language-xh'").get().n,1);
+  assert.equal((await send('second-phone','hello','27820000001')).language_control,1);
+  const expired=inbound('language-expired','LANGUAGE 2');
+  expired.entry[0].changes[0].value.messages[0].timestamp=String(Math.floor(Date.now()/1000)-86401);
+  await webhook(h,c.id,expired);
+  await waitFor(()=>db.prepare("SELECT state FROM whatsapp_jobs WHERE incoming_id='language-expired'").get()?.state==='review');
+  assert.equal(db.prepare("SELECT error_code FROM whatsapp_jobs WHERE incoming_id='language-expired'").get().error_code,'message_window_expired');
+  assert.equal(db.prepare('SELECT language FROM whatsapp_customer_languages WHERE client_id=? AND customer_phone=?').get(c.id,'27820000000').language,'xh');
+  assert.equal(db.prepare('SELECT count(*) n FROM appointments').get().n,0);
+});
+for(const failure of ['failed','unknown']) test(`localized ${failure} final reply retains committed booking and blocks another booking`,async t=>{
+  const h=await launch(t,{WHATSAPP_CUSTOMER_LANGUAGES:'1',TEST_FINAL_REPLY_MODE:failure}), c=await seed(h); await connect(h,c);
+  await request(h,'POST','/api/client/services',{name:'Haircut',price:150,durationMins:60},c.cookie);
+  const db=new Database(h.dbPath);t.after(()=>db.close());
+  const send=async(id,text)=>{
+    await webhook(h,c.id,inbound(id,text));
+    await waitFor(()=>['completed','failed','unknown','review'].includes(db.prepare('SELECT state FROM whatsapp_jobs WHERE incoming_id=?').get(id)?.state));
+  };
+  await send('choose','LANGUAGE af');
+  await send('summary','book Haircut 2027-01-05 at 12 for Alan');
+  assert.match(db.prepare("SELECT body FROM messages WHERE direction='out' ORDER BY rowid DESC LIMIT 1").get().body,/Bevestig asseblief/);
+  await sleep(1100); await send('consent','ja');
+  assert.equal(db.prepare('SELECT count(*) n FROM appointments').get().n,1);
+  assert.equal(db.prepare("SELECT state FROM whatsapp_jobs WHERE incoming_id='consent'").get().state,failure);
+  await send('repeat','ja'); await send('separate','nuwe bespreking');
+  assert.equal(db.prepare('SELECT count(*) n FROM appointments').get().n,1);
+  assert.match(db.prepare("SELECT canonical_body FROM messages WHERE direction='out' ORDER BY rowid DESC LIMIT 1").get().canonical_body,/needs to review/);
+});

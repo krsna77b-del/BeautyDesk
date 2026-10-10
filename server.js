@@ -591,7 +591,7 @@ async function drainWhatsAppJobs() {
             const origin = db.prepare("SELECT rowid FROM messages WHERE client_id=? AND direction='in' AND wa_message_id=?").get(client.id, latestBooking.origin_message_id);
             if (origin) allowAdditionalBooking = db.prepare(`SELECT COALESCE(canonical_body,body) AS body FROM messages WHERE language_control=0 AND client_id=? AND customer_phone=?
               AND direction='in' AND rowid>? AND rowid<=? ORDER BY rowid`).all(client.id, job.customer_phone, origin.rowid, incoming.rowid)
-              .reduce((allowed, m) => { const intent = ai.additionalBookingIntent(m.body); return intent == null ? allowed : intent; }, false);
+              .reduce((allowed, m) => { const intent = customerLanguage.additionalBookingIntent(client.id,job.customer_phone,m.body,services); return intent == null ? allowed : intent; }, false);
           }
           const bookingNeedsReview = !!db.prepare(`SELECT j.id FROM whatsapp_jobs j JOIN appointments a
             ON a.client_id=j.client_id AND a.origin_message_id=j.incoming_id

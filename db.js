@@ -167,8 +167,10 @@ db.exec(`CREATE TABLE IF NOT EXISTS whatsapp_customer_languages (
   language TEXT CHECK(language IN ('en','zu','af','xh')),
   choosing INTEGER NOT NULL DEFAULT 0 CHECK(choosing IN (0,1)),
   updated_at_ms INTEGER NOT NULL,
+  deferred_photo_id TEXT,
   PRIMARY KEY(client_id,customer_phone)
 )`);
+addColumnIfMissing('whatsapp_customer_languages', 'deferred_photo_id TEXT');
 addColumnIfMissing('messages', 'canonical_body TEXT');
 addColumnIfMissing('messages', 'message_format_json TEXT');
 addColumnIfMissing('messages', 'customer_language TEXT');

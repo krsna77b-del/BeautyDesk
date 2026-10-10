@@ -24,7 +24,7 @@ Required before release:
 - Pass the Node 22 syntax, application regression and QA suites in a working environment.
 - Review the additive schema and verify backup/restore and preference persistence with a disposable copy of the database.
 - Verify real WhatsApp four-language conversations using authorized test numbers, including failed sends and late/duplicate inputs.
-- Review first-contact photos and legacy conversations; a photo sent before choosing a language currently prompts for language first and must be resent after selecting.
+- Review first-contact photos and legacy conversations. A first photo is deferred using only its existing temporary reference; after language selection the original photo consent/expiry checks apply.
 - Obtain explicit rollout authorization; do not deploy this draft.
 
 ## Reminders and Meta templates
