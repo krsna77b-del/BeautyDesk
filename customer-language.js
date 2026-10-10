@@ -55,6 +55,14 @@ async function generateReply(input) {
   const normalizedContext = { ...context, incomingMessage: incoming, customerLanguage: language };
   // These controls must never be swallowed by onboarding or an open menu.
   if (/^(stop|stop reminders|unsubscribe|start reminders)$/.test(command)) {
+    if (command === 'stop' && preference?.deferred_photo_id) {
+      db.transaction(() => {
+        db.prepare('DELETE FROM photo_uploads WHERE client_id=? AND customer_phone=? AND incoming_id=?')
+          .run(input.client.id,input.customerPhone,preference.deferred_photo_id);
+        db.prepare('UPDATE whatsapp_customer_languages SET deferred_photo_id=NULL WHERE client_id=? AND customer_phone=?')
+          .run(input.client.id,phone);
+      })();
+    }
     return display(await ai.generateReply(normalizedContext), language);
   }
   const switchMatch = /^(?:\/?language|ulimi|taal|ulwimi)(?:\s+(.+))?$/.exec(command);

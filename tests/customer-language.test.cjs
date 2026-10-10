@@ -242,3 +242,12 @@ test('preference survives a fresh Node process using the same SQLite database',a
   const result=spawnSync(process.execPath,['-e',`const db=require('./db'); process.stdout.write(JSON.stringify(db.prepare('SELECT language FROM whatsapp_customer_languages WHERE client_id=? AND customer_phone=?').get('salon','${phone}'))); db.close();`],{cwd:path.resolve(__dirname,'..'),env:process.env,encoding:'utf8'});
   assert.equal(result.status,0,result.stderr); assert.equal(JSON.parse(result.stdout).language,'xh');
 });
+
+test('STOP removes a deferred first photo and selection cannot revive it',async()=>{
+  db.prepare("INSERT INTO photo_uploads VALUES('salon',?,'pending-photo','123',NULL,'2031-10-02T00:00:00Z')").run(phone);
+  await send('[Photo received; awaiting consent]',{id:'pending-photo',incomingType:'image'});
+  assert.equal(preference().deferred_photo_id,'pending-photo');
+  await send('STOP');
+  assert.equal(preference().deferred_photo_id,null); assert.equal(count('photo_uploads'),0);
+  await send('2'); assert.equal(count('photo_sessions'),0); assert.equal(count('appointments'),0);
+});
