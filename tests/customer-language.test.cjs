@@ -106,7 +106,7 @@ test('language numbers are interpreted only while choosing; fourth choice is nev
   assert.equal(preference().language,'xh'); assert.equal(count('appointments'),0);
 });
 test('missing/invalid choices re-prompt, direct commands and localized switch words work',async()=>{
-  for(const text of ['', '5', 'French', 'YES']) assert.equal((await send(text)).mode,'language');
+  for(const text of ['', '5', 'French', 'YES', '__proto__', 'LANGUAGE __proto__']) assert.equal((await send(text)).mode,'language');
   assert.equal(preference().language,null); assert.equal(count('appointments'),0);
   await send('isiZulu');
   for(const [command,language] of [['taal Afrikaans','af'],['ulwimi isiXhosa','xh'],['ulimi English','en'],['/language zu','zu']]) {

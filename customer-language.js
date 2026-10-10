@@ -13,7 +13,9 @@ function normalizeInput(value, language, services = []) {
   const raw = String(value || '');
   // A salon's literal service name always wins over a command/date alias.
   if (services.some(service => service.name.toLowerCase() === raw.trim().toLowerCase())) return raw;
-  return ALIASES[language]?.[raw.trim().replace(/[.!]+$/, '').toLowerCase()] || raw;
+  const key = raw.trim().replace(/[.!]+$/, '').toLowerCase();
+  const aliases = ALIASES[language];
+  return aliases && Object.hasOwn(aliases,key) ? aliases[key] : raw;
 }
 function canonicalHistory(history = []) {
   return history.filter(row => !row.language_control || row.direction === 'in').map(row => {
@@ -56,9 +58,13 @@ async function generateReply(input) {
     return display(await ai.generateReply(normalizedContext), language);
   }
   const switchMatch = /^(?:\/?language|ulimi|taal|ulwimi)(?:\s+(.+))?$/.exec(command);
-  if (preference && at < preference.updated_at_ms) { tagControl(); return menu(); }
+  if (preference && at < preference.updated_at_ms) {
+    tagControl();
+    return preference.choosing ? menu() : display(await ai.generateReply({ ...context, incomingMessage:'', incomingType:'text', customerLanguage:language }),language);
+  }
   if (switchMatch || !preference?.language || preference.choosing) {
-    const choice = CHOICES[switchMatch?.[1] || (preference?.choosing ? command : '')];
+    const key = switchMatch?.[1] || (preference?.choosing ? command : '');
+    const choice = Object.hasOwn(CHOICES,key) ? CHOICES[key] : null;
     if (!choice) {
       // Preserve a first substantive request as booking history, but never
       // interpret a first number/YES as a service selection or consent.

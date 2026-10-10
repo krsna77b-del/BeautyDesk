@@ -40,6 +40,6 @@ No Node/SQLite suite is claimed to have passed locally.
 
 The orchestration V8 runtime parsed the changed JavaScript and rendered 118 catalog entries in all four languages (472 render checks), preserving every placeholder. This is only syntax/catalog evidence; it is not Node, SQLite, HTTP, migration, concurrency or fluent-language verification.
 
-New tests/customer-language.test.cjs exercises the real SQLite domain with synthetic fixtures and no real providers. The draft PR includes a test-only Node 22 GitHub Actions workflow (read-only repository token, no secrets, no deployment), running npm ci, npm run check, npm test, npm run build, static build consistency and the qa suite. Use its actual run result as the runtime evidence.
+New tests/customer-language.test.cjs exercises the real SQLite domain with synthetic fixtures and no real providers. The draft PR includes a test-only Node 22 GitHub Actions workflow (read-only repository token, no secrets, no deployment), running npm ci, npm run check, npm test, npm run build, static build consistency and the qa suite. These checks all passed for 7b304e4f6d7ac94452667e1f7ee2bdfa51f814c6 in https://github.com/krsna77b-del/BeautyDesk/actions/runs/38094268430. Subsequent commits must pass their own run before review/merge.
 
 Regression suites include booking-conversation, modular-whatsapp, server and photo-flow. Existing provider mocks remain in use; nothing sends customer messages.
