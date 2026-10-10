@@ -1,9 +1,10 @@
+const { m, s, join, finish } = require('./customer-copy');
 // Deterministic, consent-first photo workflow. Images never enter chat history.
 const crypto = require('node:crypto');
 const db = require('./db');
 const TTL_MS = 30 * 60 * 1000;
-const CONSULT = 'I can’t safely estimate this from the photo. Please contact the salon directly for a consultation and a confirmed quote. No appointment has been made.';
-const DISABLED = 'Photo estimates are not enabled for this salon yet. Please describe the look you want or send Bookings to choose from the salon’s menu. You can also contact the salon directly for a consultation.';
+const CONSULT = s('I can’t safely estimate this from the photo. Please contact the salon directly for a consultation and a confirmed quote. No appointment has been made.');
+const DISABLED = s('Photo estimates are not enabled for this salon yet. Please describe the look you want or send Bookings to choose from the salon’s menu. You can also contact the salon directly for a consultation.');
 const CANCEL = /^(?:cancel|stop|no|no thanks|decline)[.!\s]*$/i;
 const CONSENT = /^I AGREE[.!\s]*$/i;
 const CATEGORIES = ['hair', 'nails', 'beauty'];
@@ -44,17 +45,17 @@ function freshReply(session, input) {
     && Number.isFinite(accepted) && Number.isFinite(sent) && Number.isFinite(received) && received >= accepted && Math.floor(sent/1000) > Math.floor(accepted/1000);
 }
 function consentText() {
-  return `Before analysing: with your permission I’ll send this photo and the style details you provide to Anthropic for automated service matching. Only share a reference or your own photo that you have permission to use, without other people or private health information. BeautyDesk does not save the image file; its temporary reference expires after 30 minutes. Anthropic’s processing and retention are explained in the salon’s privacy notice: ${process.env.PHOTO_PRIVACY_URL}. Reply I AGREE to continue, or NO to use text booking. This does not book an appointment.`;
+  return m`Before analysing: with your permission I’ll send this photo and the style details you provide to Anthropic for automated service matching. Only share a reference or your own photo that you have permission to use, without other people or private health information. BeautyDesk does not save the image file; its temporary reference expires after 30 minutes. Anthropic’s processing and retention are explained in the salon’s privacy notice: ${process.env.PHOTO_PRIVACY_URL}. Reply I AGREE to continue, or NO to use text booking. This does not book an appointment.`;
 }
 function prompt(session) {
   if (session.stage === 'consent') return consentText();
-  if (session.stage === 'role') return 'Is this a REFERENCE photo of the look you want, or a CURRENT photo of your own hair, nails or style? Reply REFERENCE or CURRENT. Please use one clear photo without unrelated people.';
-  if (session.stage === 'details') return 'In one message, describe your desired result and your current length and condition, including existing colour, extensions, gel or other product where relevant. Don’t include private health information. Say CONSULTATION if you’re unsure. A photo cannot establish condition, treatment suitability or a guaranteed outcome.';
+  if (session.stage === 'role') return s('Is this a REFERENCE photo of the look you want, or a CURRENT photo of your own hair, nails or style? Reply REFERENCE or CURRENT. Please use one clear photo without unrelated people.');
+  if (session.stage === 'details') return s('In one message, describe your desired result and your current length and condition, including existing colour, extensions, gel or other product where relevant. Don’t include private health information. Say CONSULTATION if you’re unsure. A photo cannot establish condition, treatment suitability or a guaranteed outcome.');
   if (session.stage === 'choose') return estimateText(JSON.parse(session.candidates_json));
-  return 'Please continue your booking or reply CANCEL to stop this request.';
+  return s('Please continue your booking or reply CANCEL to stop this request.');
 }
 function estimateText(candidates) {
-  return `Photo-based menu estimate, subject to the salon checking your hair/nails and the work required:\n${candidates.map((s,i)=>`${i+1}. ${s.name}: estimated R${s.price}, ${s.duration_mins} min. Includes: ${s.photo_description}`).join('\n')}\nThese are possible matches from this salon’s approved menu. A photo cannot guarantee the result or final cost. Extra work or add-ons are not included unless listed; contact the salon for those. Reply BOOK 1${candidates.length > 1 ? ` (or BOOK 2${candidates.length > 2 ? '/BOOK 3' : ''})` : ''} to choose a service and continue to available times, or CONSULTATION. Nothing is booked yet.`;
+  return m`Photo-based menu estimate, subject to the salon checking your hair/nails and the work required:\n${join(candidates.map((s,i)=>m`${i+1}. ${s.name}: estimated R${s.price}, ${s.duration_mins} min. Includes: ${s.photo_description}`))}\nThese are possible matches from this salon’s approved menu. A photo cannot guarantee the result or final cost. Extra work or add-ons are not included unless listed; contact the salon for those. Reply BOOK 1${candidates.length > 1 ? m` (or BOOK 2${candidates.length > 2 ? '/BOOK 3' : ''})` : ''} to choose a service and continue to available times, or CONSULTATION. Nothing is booked yet.`;
 }
 function createPhotoFlow(deps = {}) {
   const status = deps.status || photoStatus;
@@ -65,14 +66,14 @@ function createPhotoFlow(deps = {}) {
     cleanup(now);
     let session = db.prepare('SELECT * FROM photo_sessions WHERE client_id=? AND customer_phone=?').get(input.client.id,input.customerPhone);
     const tag = s => db.prepare('UPDATE messages SET photo_session_id=? WHERE client_id=? AND customer_phone=? AND direction=\'in\' AND wa_message_id=?').run(s.id,input.client.id,input.customerPhone,input.incomingMessageId);
-    const answer = (s,message) => ({text:message, mode:'photo_guided', photoSessionId:s?.id || null});
+    const answer = (s,message) => finish({text:message, mode:'photo_guided', photoSessionId:s?.id || null});
     const activeClient = () => db.prepare('SELECT * FROM clients WHERE id=?').get(input.client.id);
     const catalog = () => eligibleServices(input.client.id,db.prepare('SELECT * FROM services WHERE client_id=?').all(input.client.id));
     if (input.incomingType === 'image') {
       if (input.bookingNeedsReview || (input.latestBooking && !input.allowAdditionalBooking)) {
         db.prepare('DELETE FROM photo_uploads WHERE client_id=? AND customer_phone=? AND incoming_id=?').run(input.client.id,input.customerPhone,input.incomingMessageId);
         if (session) end(session);
-        return answer(null,'Your existing appointment is unchanged. Please contact the salon to change it. For a separate appointment, say new booking before sending a photo.');
+        return answer(null,s('Your existing appointment is unchanged. Please contact the salon to change it. For a separate appointment, say new booking before sending a photo.'));
       }
       if (!activeClient()?.photo_estimates_enabled || !status().ready || !catalog().length) {
         db.prepare('DELETE FROM photo_uploads WHERE client_id=? AND customer_phone=? AND incoming_id=?').run(input.client.id,input.customerPhone,input.incomingMessageId);
@@ -85,11 +86,11 @@ function createPhotoFlow(deps = {}) {
         if (!upload || !Number.isFinite(Date.parse(source?.created_at)) || new Date(input.messageAt).getTime() <= Date.parse(source.created_at)) {
           db.prepare('DELETE FROM photo_uploads WHERE client_id=? AND customer_phone=? AND incoming_id=? AND incoming_id<>?').run(input.client.id,input.customerPhone,input.incomingMessageId,session.source_message_id);
           tag(session);
-          return answer(session,`That older or unavailable photo has not replaced your current request.\n${prompt(session)}`);
+          return answer(session,m`That older or unavailable photo has not replaced your current request.\n${prompt(session)}`);
         }
         end(session);
       }
-      if (!upload) return answer(null,'This photo is unavailable or unsupported. Please send one clear JPEG or PNG photo, or contact the salon for a consultation.');
+      if (!upload) return answer(null,s('This photo is unavailable or unsupported. Please send one clear JPEG or PNG photo, or contact the salon for a consultation.'));
       session = {id:crypto.randomUUID(),client_id:input.client.id,customer_phone:input.customerPhone,source_message_id:input.incomingMessageId,stage:'consent',expires_at:upload.expires_at};
       db.prepare('INSERT INTO photo_sessions(id,client_id,customer_phone,source_message_id,stage,expires_at) VALUES (@id,@client_id,@customer_phone,@source_message_id,@stage,@expires_at)').run(session);
       tag(session);
@@ -101,30 +102,30 @@ function createPhotoFlow(deps = {}) {
         const marker = {id:previous.photo_session_id};
         tag(marker);
         db.prepare("UPDATE messages SET body='[Expired photo reply removed]' WHERE client_id=? AND customer_phone=? AND wa_message_id=? AND direction='in'").run(input.client.id,input.customerPhone,input.incomingMessageId);
-        return answer(marker,'That photo request has ended or expired. Send a new photo for a fresh estimate, or send Bookings to start a text booking. Existing appointments are unchanged.');
+        return answer(marker,s('That photo request has ended or expired. Send a new photo for a fresh estimate, or send Bookings to start a text booking. Existing appointments are unchanged.'));
       }
       return null;
     }
     tag(session);
     if (CANCEL.test(text) || /^consultation[.!\s]*$/i.test(text)) {
       end(session);
-      return answer(session,CANCEL.test(text) ? "I've stopped this booking request and removed the temporary photo reference. Existing appointments are unchanged. Send Bookings to choose a service without a photo." : CONSULT);
+      return answer(session,CANCEL.test(text) ? s("I've stopped this booking request and removed the temporary photo reference. Existing appointments are unchanged. Send Bookings to choose a service without a photo.") : CONSULT);
     }
     if (input.bookingNeedsReview || (input.latestBooking && !input.allowAdditionalBooking)) {
-      end(session); return answer(session,'Your existing appointment is unchanged. Please contact the salon before making any changes.');
+      end(session); return answer(session,s('Your existing appointment is unchanged. Please contact the salon before making any changes.'));
     }
     if (!activeClient()?.photo_estimates_enabled || !status().ready) { end(session); return answer(session,DISABLED); }
     if (session.stage === 'booking') {
       const selected = JSON.parse(session.selected_json);
       const current = catalog().find(s=>s.id===selected.id);
       if (!current || JSON.stringify(snapshot(current)) !== JSON.stringify(selected)) {
-        end(session); return answer(session,'The salon’s service details have changed since your estimate. Please send a new photo for a fresh estimate, or send Bookings to choose from the current menu. Nothing new has been booked.');
+        end(session); return answer(session,s('The salon’s service details have changed since your estimate. Please send a new photo for a fresh estimate, or send Bookings to choose from the current menu. Nothing new has been booked.'));
       }
       return { photoSelection:{ sessionId:session.id,service:current }, photoSessionId:session.id };
     }
     // Every stage requires a later response to its accepted prompt, not a batched
     // or delayed answer received before the relevant question was shown.
-    if (!freshReply(session,input)) return answer(session,`Please read this message, wait two seconds, then reply.\n${prompt(session)}`);
+    if (!freshReply(session,input)) return answer(session,m`Please read this message, wait two seconds, then reply.\n${prompt(session)}`);
     if (session.stage === 'consent') {
       if (!CONSENT.test(text)) return answer(session,prompt(session));
       db.prepare("UPDATE photo_sessions SET stage='role', consent_at=?, consent_message_id=? WHERE id=?").run(iso(now),input.incomingMessageId,session.id);
@@ -139,7 +140,7 @@ function createPhotoFlow(deps = {}) {
     if (session.stage === 'details') {
       if (text.length < 15 || text.length > 1000 || /[\p{Cc}\p{Cf}]/u.test(text)) return answer(session,prompt(session));
       const upload=db.prepare('SELECT * FROM photo_uploads WHERE client_id=? AND customer_phone=? AND incoming_id=?').get(input.client.id,input.customerPhone,session.source_message_id);
-      if (!upload || !session.consent_at) { end(session); return answer(session,'The temporary photo reference expired. Please send a new photo, or contact the salon directly.'); }
+      if (!upload || !session.consent_at) { end(session); return answer(session,s('The temporary photo reference expired. Please send a new photo, or contact the salon directly.')); }
       const services=catalog(), before=fingerprint(services), client=activeClient();
       if (!services.length) { end(session); return answer(session,CONSULT); }
       let image;
@@ -174,12 +175,12 @@ function createPhotoFlow(deps = {}) {
       if (!selected) return answer(session,prompt(session));
       const current=catalog().find(s=>s.id===selected.id);
       if (!current || JSON.stringify(snapshot(current))!==JSON.stringify(selected)) {
-        end(session); return answer(session,'The salon’s menu changed after that estimate. Please send a new photo for a fresh estimate, or send Bookings for the current menu.');
+        end(session); return answer(session,s('The salon’s menu changed after that estimate. Please send a new photo for a fresh estimate, or send Bookings for the current menu.'));
       }
       db.prepare("UPDATE photo_sessions SET stage='booking', selected_json=?, selection_message_id=?, candidates_json=NULL WHERE id=?").run(JSON.stringify(selected),input.incomingMessageId,session.id);
       return {photoSelection:{sessionId:session.id,service:current},photoSessionId:session.id};
     }
-    end(session); return answer(session,'That photo request needs a fresh start. Please send a new photo or contact the salon directly. No new appointment has been made.');
+    end(session); return answer(session,s('That photo request needs a fresh start. Please send a new photo or contact the salon directly. No new appointment has been made.'));
   }
   return {handle};
 }

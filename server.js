@@ -28,6 +28,7 @@ if (PRODUCTION && !path.isAbsolute(process.env.DB_PATH || '')) throw new Error('
 const db = require('./db');
 const { normalizeEmail, findClientsByEmail } = require('./auth-email');
 const ai = require('./ai');
+const customerLanguage = require('./customer-language');
 const photo = require('./photo-flow');
 if (!META_APP_SECRET) console.warn('WhatsApp webhooks disabled until META_APP_SECRET is configured.');
 app.disable('x-powered-by');
@@ -588,7 +589,7 @@ async function drainWhatsAppJobs() {
           let allowAdditionalBooking = false;
           if (latestBooking) {
             const origin = db.prepare("SELECT rowid FROM messages WHERE client_id=? AND direction='in' AND wa_message_id=?").get(client.id, latestBooking.origin_message_id);
-            if (origin) allowAdditionalBooking = db.prepare(`SELECT body FROM messages WHERE client_id=? AND customer_phone=?
+            if (origin) allowAdditionalBooking = db.prepare(`SELECT COALESCE(canonical_body,body) AS body FROM messages WHERE language_control=0 AND client_id=? AND customer_phone=?
               AND direction='in' AND rowid>? AND rowid<=? ORDER BY rowid`).all(client.id, job.customer_phone, origin.rowid, incoming.rowid)
               .reduce((allowed, m) => { const intent = ai.additionalBookingIntent(m.body); return intent == null ? allowed : intent; }, false);
           }
@@ -596,7 +597,7 @@ async function drainWhatsAppJobs() {
             ON a.client_id=j.client_id AND a.origin_message_id=j.incoming_id
             WHERE j.client_id=? AND j.customer_phone=? AND j.id<>? AND j.state IN ('review','unknown','failed') LIMIT 1`)
             .get(client.id, job.customer_phone, job.id);
-          const reply = await ai.generateReply({ client, services, history, incomingMessage: incoming.body, incomingType: incoming.incoming_type,
+          const reply = await customerLanguage.generateReply({ client, services, history, incomingMessage: incoming.body, incomingType: incoming.incoming_type,
             customerPhone: job.customer_phone, customerName: job.customer_name, dryRun: false,
             incomingMessageId: job.incoming_id, confirmationMessageId: job.reply_context_id, latestBooking, allowAdditionalBooking, bookingNeedsReview,
             messageAt: new Date(incoming.created_at), receivedAt: new Date(job.created_at) });
@@ -605,6 +606,9 @@ async function drainWhatsAppJobs() {
           db.transaction(() => {
             db.prepare(`INSERT INTO messages (id,client_id,customer_phone,customer_name,direction,body,created_at,delivery_status)
               VALUES (?,?,?,?,?,?,?,'pending')`).run(outgoingId, client.id, job.customer_phone, job.customer_name, 'out', reply.text.slice(0, 4096), nowIso());
+            db.prepare('UPDATE messages SET canonical_body=?,message_format_json=?,customer_language=?,language_control=? WHERE id=?')
+              .run(reply.canonicalText ?? reply.text, reply.messageFormat ? JSON.stringify(reply.messageFormat) : null,
+                reply.language || null, reply.languageControl ? 1 : 0, outgoingId);
             if (reply.photoSessionId) {
               db.prepare('UPDATE messages SET photo_session_id=? WHERE id=?').run(reply.photoSessionId,outgoingId);
               photo.bindReply(reply.photoSessionId,client.id,job.customer_phone,outgoingId);

@@ -1,0 +1,592 @@
+{
+  "Please confirm your booking:": {
+    "zu": "Sicela uqinisekise ukubhukha kwakho:",
+    "af": "Bevestig asseblief jou bespreking:",
+    "xh": "Nceda uqinisekise ukubhukisha kwakho:"
+  },
+  "The salon needs to check its opening hours. Please contact the salon directly before booking.": {
+    "zu": "Isaluni idinga ukuhlola amahora ayo okuvula. Sicela uxhumane nesaluni ngqo ngaphambi kokubhukha.",
+    "af": "Die salon moet sy openingstye nagaan. Kontak die salon direk voordat jy bespreek.",
+    "xh": "Isaluni kufuneka ihlole iiyure zayo zokuvula. Nceda uqhagamshelane nesaluni ngqo phambi kokubhukisha."
+  },
+  "We're open {0} (South Africa time).": {
+    "zu": "Sivula ngo-{0} (isikhathi saseNingizimu Afrika).",
+    "af": "Ons is oop {0} (Suid-Afrikaanse tyd).",
+    "xh": "Sivula ngo-{0} (ixesha laseMzantsi Afrika)."
+  },
+  "Online booking is currently closed. Please contact the salon directly.": {
+    "zu": "Ukubhukha ku-inthanethi kuvaliwe okwamanje. Sicela uxhumane nesaluni ngqo.",
+    "af": "Aanlyn besprekings is tans gesluit. Kontak asseblief die salon direk.",
+    "xh": "Ukubhukisha kwi-intanethi kuvaliwe okwangoku. Nceda uqhagamshelane nesaluni ngqo."
+  },
+  "{0} (R{1}, {2} min)": {
+    "zu": "{0} (R{1}, {2} min)",
+    "af": "{0} (R{1}, {2} min)",
+    "xh": "{0} (R{1}, {2} min)"
+  },
+  "Here's what we offer: {0}.": {
+    "zu": "Izinsizakalo zethu: {0}.",
+    "af": "Ons bied die volgende aan: {0}.",
+    "xh": "Iinkonzo zethu: {0}."
+  },
+  "The salon hasn't loaded its services yet. Please contact the salon directly to book.": {
+    "zu": "Isaluni ayikafaki izinsizakalo zayo. Sicela uxhumane nesaluni ngqo ukuze ubhukhe.",
+    "af": "Die salon het nog nie sy dienste gelaai nie. Kontak die salon direk om te bespreek.",
+    "xh": "Isaluni ayikafaki iinkonzo zayo. Nceda uqhagamshelane nesaluni ngqo ukuze ubhukishe."
+  },
+  "{0} (R{1})": {
+    "zu": "{0} (R{1})",
+    "af": "{0} (R{1})",
+    "xh": "{0} (R{1})"
+  },
+  "Which service would you like to book? {0}.": {
+    "zu": "Iyiphi insizakalo ongathanda ukuyibhukha? {0}.",
+    "af": "Watter diens wil jy bespreek? {0}.",
+    "xh": "Yeyiphi inkonzo ongathanda ukuyibhukisha? {0}."
+  },
+  "Hi! Welcome to {0}.\n1. Book Appointment\n2. View Services\n3. My Appointment\n4. Contact Salon\nReply with an option.": {
+    "zu": "Sawubona! Siyakwamukela e-{0}.\n1. Bhukha\n2. Buka izinsizakalo\n3. Ukubhukha kwami\n4. Xhumana nesaluni\nPhendula ngenombolo.",
+    "af": "Hallo! Welkom by {0}.\n1. Bespreek afspraak\n2. Bekyk dienste\n3. My afspraak\n4. Kontak salon\nAntwoord met 'n opsie.",
+    "xh": "Molo! Wamkelekile e-{0}.\n1. Bhukisha\n2. Jonga iinkonzo\n3. Ubhukisho lwam\n4. Qhagamshelana nesaluni\nPhendula ngenombolo."
+  },
+  "{0}. {1} (R{2}, {3} min)": {
+    "zu": "{0}. {1} (R{2}, {3} min)",
+    "af": "{0}. {1} (R{2}, {3} min)",
+    "xh": "{0}. {1} (R{2}, {3} min)"
+  },
+  "Which service would you like to book?\n{0}\nReply with a service name or number.": {
+    "zu": "Iyiphi insizakalo ongathanda ukuyibhukha?\n{0}\nPhendula ngegama lensizakalo noma inombolo.",
+    "af": "Watter diens wil jy bespreek?\n{0}\nAntwoord met 'n diensnaam of nommer.",
+    "xh": "Yeyiphi inkonzo ongathanda ukuyibhukisha?\n{0}\nPhendula ngegama lenkonzo okanye inombolo."
+  },
+  "There are no qualified technicians available to book {0} online. Please contact the salon directly.": {
+    "zu": "Abekho abasebenzi abaqeqeshiwe abatholakalayo ukuze ubhukhe i-{0} ku-inthanethi. Sicela uxhumane nesaluni ngqo.",
+    "af": "Geen gekwalifiseerde personeel is beskikbaar om {0} aanlyn te bespreek nie. Kontak die salon direk.",
+    "xh": "Akukho basebenzi baqeqeshiweyo bafumanekayo ukuze ubhukishe i-{0} kwi-intanethi. Nceda uqhagamshelane nesaluni ngqo."
+  },
+  "Which technician would you prefer for {0}?\n{1}\n{2}. Any qualified technician\nReply with a name, number, or \"any\".": {
+    "zu": "Ungathanda muphi umsebenzi we-{0}?\n{1}\n{2}. Noma yimuphi umsebenzi oqeqeshiwe\nPhendula ngegama, inombolo, noma \"any\".",
+    "af": "Wie verkies jy vir {0}?\n{1}\n{2}. Enige gekwalifiseerde personeellid\nAntwoord met 'n naam, nommer, of \"any\".",
+    "xh": "Ungathanda muphi umsebenzi we-{0}?\n{1}\n{2}. Nawuphi na umsebenzi oqeqeshiweyo\nPhendula ngegama, inombolo, okanye \"any\"."
+  },
+  " on {0}": {
+    "zu": " ku-{0}",
+    "af": " by {0}",
+    "xh": " ku-{0}"
+  },
+  "Please contact {0} directly{1} for help.": {
+    "zu": "Sicela uxhumane ne-{0} ngqo{1} ukuze uthole usizo.",
+    "af": "Kontak {0} direk{1} vir hulp.",
+    "xh": "Nceda uqhagamshelane ne-{0} ngqo{1} ukuze ufumane uncedo."
+  },
+  "on": {
+    "zu": "zivuliwe",
+    "af": "aan",
+    "xh": "zivuliwe"
+  },
+  "off": {
+    "zu": "zivaliwe",
+    "af": "af",
+    "xh": "zivaliwe"
+  },
+  "Simulator preview: reminders would be turned {0} for a recognized customer. No reminder preferences or appointments were changed.": {
+    "zu": "Isibonelo: izikhumbuzo bezizoba {0} kukhasimende elaziwayo. Akukho zintandokazi zezikhumbuzo noma ukubhukha okushintshiwe.",
+    "af": "Voorskou: herinnerings sou {0} wees vir 'n bekende kliënt. Geen herinneringsvoorkeure of afsprake is verander nie.",
+    "xh": "Umzekelo: izikhumbuzo beziza kuba {0} kumthengi owaziwayo. Akukho zikhetho zezikhumbuzo okanye amadinga atshintshiweyo."
+  },
+  "I can't verify your WhatsApp number, so I haven't changed reminder preferences. {0}": {
+    "zu": "Angikwazi ukuqinisekisa inombolo yakho ye-WhatsApp, ngakho angizishintshanga izintandokazi zezikhumbuzo. {0}",
+    "af": "Ek kan nie jou WhatsApp-nommer verifieer nie en het dus nie herinneringsvoorkeure verander nie. {0}",
+    "xh": "Andikwazi ukuqinisekisa inombolo yakho ye-WhatsApp, ngoko andizitshintshanga izikhetho zezikhumbuzo. {0}"
+  },
+  "I've stopped this booking request. ": {
+    "zu": "Ngisimisile lesi sicelo sokubhukha. ",
+    "af": "Ek het hierdie besprekingsversoek gestop. ",
+    "xh": "Ndisimisile esi sicelo sokubhukisha. "
+  },
+  "I couldn't find a customer record for this WhatsApp number. Please book an appointment or contact the salon before enabling reminders.": {
+    "zu": "Angilitholanga irekhodi lekhasimende lale nombolo ye-WhatsApp. Sicela ubhukhe noma uxhumane nesaluni ngaphambi kokuvula izikhumbuzo.",
+    "af": "Ek kon geen kliëntrekord vir hierdie WhatsApp-nommer vind nie. Bespreek 'n afspraak of kontak die salon voordat jy herinnerings aanskakel.",
+    "xh": "Andifumananga rekhodi lomthengi wale nombolo ye-WhatsApp. Nceda ubhukishe okanye uqhagamshelane nesaluni phambi kokuvula izikhumbuzo."
+  },
+  "No reminders are enabled for this WhatsApp number.": {
+    "zu": "Azikho izikhumbuzo ezivuliwe zale nombolo ye-WhatsApp.",
+    "af": "Geen herinnerings is vir hierdie WhatsApp-nommer aangeskakel nie.",
+    "xh": "Akukho zikhumbuzo zivuliweyo zale nombolo ye-WhatsApp."
+  },
+  "{0}{1} Existing appointments are unchanged.": {
+    "zu": "{0}{1} Ukubhukha okukhona akushintshile.",
+    "af": "{0}{1} Bestaande afsprake bly onveranderd.",
+    "xh": "{0}{1} Amadinga akhoyo akatshintshanga."
+  },
+  "Reminders are still off. If you want to turn them on, please wait two seconds and send START REMINDERS again. Existing appointments are unchanged.": {
+    "zu": "Izikhumbuzo zisavaliwe. Ukuze uzivule, linda imizuzwana emibili bese uthumela START REMINDERS futhi. Ukubhukha okukhona akushintshile.",
+    "af": "Herinnerings is steeds af. Wag twee sekondes en stuur weer START REMINDERS om dit aan te skakel. Bestaande afsprake bly onveranderd.",
+    "xh": "Izikhumbuzo zisavaliwe. Ukuze uzivule, linda imizuzwana emibini uze uthumele START REMINDERS kwakhona. Amadinga akhoyo akatshintshanga."
+  },
+  "Your reminder preference is on. Reminder delivery still depends on the salon enabling its messaging service.": {
+    "zu": "Ukhethe ukuthola izikhumbuzo. Ukuthunyelwa kwazo kusancike ekutheni isaluni ivule isevisi yayo yemiyalezo.",
+    "af": "Jou herinneringsvoorkeur is aan. Aflewering hang steeds daarvan af dat die salon sy boodskapdiens aanskakel.",
+    "xh": "Ukhethe ukufumana izikhumbuzo. Ukuthunyelwa kwazo kusaxhomekeke ekubeni isaluni ivule inkonzo yayo yemiyalezo."
+  },
+  "Reminders are off for this WhatsApp number.": {
+    "zu": "Izikhumbuzo zivaliwe zale nombolo ye-WhatsApp.",
+    "af": "Herinnerings is af vir hierdie WhatsApp-nommer.",
+    "xh": "Izikhumbuzo zivaliwe zale nombolo ye-WhatsApp."
+  },
+  "I can't verify your WhatsApp number. {0}": {
+    "zu": "Angikwazi ukuqinisekisa inombolo yakho ye-WhatsApp. {0}",
+    "af": "Ek kan nie jou WhatsApp-nommer verifieer nie. {0}",
+    "xh": "Andikwazi ukuqinisekisa inombolo yakho ye-WhatsApp. {0}"
+  },
+  "I couldn't find an upcoming appointment for this WhatsApp number. {0} You can also choose Book Appointment.": {
+    "zu": "Angikutholanga ukubhukha okuzayo kwale nombolo ye-WhatsApp. {0} Ungathumela futhi Book Appointment.",
+    "af": "Ek kon geen komende afspraak vir hierdie WhatsApp-nommer vind nie. {0} Jy kan ook Book Appointment stuur.",
+    "xh": "Andifumananga dinga lizayo lale nombolo ye-WhatsApp. {0} Ungathumela no-Book Appointment."
+  },
+  " with {0}": {
+    "zu": " no-{0}",
+    "af": " by {0}",
+    "xh": " no-{0}"
+  },
+  "\nManage this appointment: {0}": {
+    "zu": "\nPhatha lokhu kubhukha: {0}",
+    "af": "\nBestuur hierdie afspraak: {0}",
+    "xh": "\nLawula eli dinga: {0}"
+  },
+  "{0}{1}: {2} at {3} (South Africa), {4}.{5}": {
+    "zu": "{0}{1}: {2} ngo-{3} (eNingizimu Afrika), {4}.{5}",
+    "af": "{0}{1}: {2} om {3} (Suid-Afrika), {4}.{5}",
+    "xh": "{0}{1}: {2} ngo-{3} (eMzantsi Afrika), {4}.{5}"
+  },
+  "Use your private management link to view cancellation and rescheduling options. ": {
+    "zu": "Sebenzisa isixhumanisi sakho sangasese ukuze ubuke izindlela zokukhansela noma ukushintsha isikhathi. ",
+    "af": "Gebruik jou private bestuurskakel om kansellasie- en herskeduleringsopsies te sien. ",
+    "xh": "Sebenzisa ikhonkco lakho labucala ukujonga iindlela zokurhoxisa okanye ukutshintsha ixesha. "
+  },
+  "To cancel or reschedule, ": {
+    "zu": "Ukuze ukhansele noma ushintshe isikhathi, ",
+    "af": "Om te kanselleer of te herskeduleer, ",
+    "xh": "Ukuze urhoxise okanye utshintshe ixesha, "
+  },
+  "Your upcoming appointments:\n{0}\n{1}{2}": {
+    "zu": "Ukubhukha kwakho okuzayo:\n{0}\n{1}{2}",
+    "af": "Jou komende afsprake:\n{0}\n{1}{2}",
+    "xh": "Amadinga akho azayo:\n{0}\n{1}{2}"
+  },
+  "That date or time has already passed in South Africa. Which future date and time would you like?": {
+    "zu": "Lolo suku noma isikhathi sesidlulile eNingizimu Afrika. Ufuna luphi usuku nesikhathi esizayo?",
+    "af": "Daardie datum of tyd is reeds verby in Suid-Afrika. Watter toekomstige datum en tyd verkies jy?",
+    "xh": "Olo suku okanye ixesha selidlulile eMzantsi Afrika. Ufuna luphi usuku nexesha elizayo?"
+  },
+  "Please use a valid date (YYYY-MM-DD) and time (for example 14:30).": {
+    "zu": "Sicela usebenzise usuku oluvumelekile (YYYY-MM-DD) nesikhathi (isibonelo 14:30).",
+    "af": "Gebruik asseblief 'n geldige datum (YYYY-MM-DD) en tyd (byvoorbeeld 14:30).",
+    "xh": "Nceda usebenzise umhla ochanekileyo (YYYY-MM-DD) nexesha (umzekelo 14:30)."
+  },
+  "We're closed on that date. Which other day would you like?": {
+    "zu": "Sivaliwe ngalolo suku. Ufuna luphi olunye usuku?",
+    "af": "Ons is daardie dag gesluit. Watter ander dag verkies jy?",
+    "xh": "Sivaliwe ngaloo mini. Ufuna luphi olunye usuku?"
+  },
+  "That appointment would be outside the salon's opening hours. Please choose another time.": {
+    "zu": "Lokho kubhukha kungaba ngaphandle kwamahora okuvula kwesaluni. Sicela ukhethe esinye isikhathi.",
+    "af": "Daardie afspraak val buite die salon se openingstye. Kies asseblief 'n ander tyd.",
+    "xh": "Elo dinga lingaphandle kweeyure zokuvula zesaluni. Nceda ukhethe elinye ixesha."
+  },
+  "That time is no longer available. Please choose another time.": {
+    "zu": "Leso sikhathi asisatholakali. Sicela ukhethe esinye isikhathi.",
+    "af": "Daardie tyd is nie meer beskikbaar nie. Kies asseblief 'n ander tyd.",
+    "xh": "Elo xesha alisafumaneki. Nceda ukhethe elinye ixesha."
+  },
+  "I can't verify your WhatsApp number for this booking. Please contact the salon directly.": {
+    "zu": "Angikwazi ukuqinisekisa inombolo yakho ye-WhatsApp yalokhu kubhukha. Sicela uxhumane nesaluni ngqo.",
+    "af": "Ek kan nie jou WhatsApp-nommer vir hierdie bespreking verifieer nie. Kontak die salon direk.",
+    "xh": "Andikwazi ukuqinisekisa inombolo yakho ye-WhatsApp yolu bhukisho. Nceda uqhagamshelane nesaluni ngqo."
+  },
+  "The salon needs to check its calendar. Please contact the salon directly before booking.": {
+    "zu": "Isaluni idinga ukuhlola ikhalenda layo. Sicela uxhumane nesaluni ngqo ngaphambi kokubhukha.",
+    "af": "Die salon moet sy kalender nagaan. Kontak die salon direk voordat jy bespreek.",
+    "xh": "Isaluni kufuneka ihlole ikhalenda yayo. Nceda uqhagamshelane nesaluni ngqo phambi kokubhukisha."
+  },
+  "That service is no longer available. Which other service would you like?": {
+    "zu": "Leyo nsizakalo ayisatholakali. Ufuna yiphi enye insizakalo?",
+    "af": "Daardie diens is nie meer beskikbaar nie. Watter ander diens verkies jy?",
+    "xh": "Loo nkonzo ayisafumaneki. Ufuna yeyiphi enye inkonzo?"
+  },
+  "I cannot verify this booking request. Please contact the salon directly.": {
+    "zu": "Angikwazi ukuqinisekisa lesi sicelo sokubhukha. Sicela uxhumane nesaluni ngqo.",
+    "af": "Ek kan nie hierdie besprekingsversoek verifieer nie. Kontak die salon direk.",
+    "xh": "Andikwazi ukuqinisekisa esi sicelo sokubhukisha. Nceda uqhagamshelane nesaluni ngqo."
+  },
+  "This request already belongs to an existing booking. Please contact the salon directly to change it.": {
+    "zu": "Lesi sicelo sesihlobene nokubhukha okukhona. Sicela uxhumane nesaluni ngqo ukuze ukushintshe.",
+    "af": "Hierdie versoek behoort reeds aan 'n bestaande bespreking. Kontak die salon direk om dit te verander.",
+    "xh": "Esi sicelo sele sinxulumene nobhukisho olukhoyo. Nceda uqhagamshelane nesaluni ngqo ukuze ulutshintshe."
+  },
+  "The service details have changed. Please ask for a new booking summary before confirming.": {
+    "zu": "Imininingwane yensizakalo isishintshile. Sicela ucele isifinyezo esisha sokubhukha ngaphambi kokuqinisekisa.",
+    "af": "Die diensbesonderhede het verander. Vra vir 'n nuwe besprekingsopsomming voordat jy bevestig.",
+    "xh": "Iinkcukacha zenkonzo zitshintshile. Nceda ucele isishwankathelo esitsha sobhukisho phambi kokuqinisekisa."
+  },
+  "The technician details have changed. Please choose a technician again and review a new booking summary.": {
+    "zu": "Imininingwane yomsebenzi isishintshile. Sicela ukhethe umsebenzi futhi ubuyekeze isifinyezo esisha sokubhukha.",
+    "af": "Die personeellid se besonderhede het verander. Kies weer 'n personeellid en gaan 'n nuwe besprekingsopsomming na.",
+    "xh": "Iinkcukacha zomsebenzi zitshintshile. Nceda ukhethe umsebenzi kwakhona uze ujonge isishwankathelo esitsha sobhukisho."
+  },
+  "There are no qualified technicians for that service. Please contact the salon directly.": {
+    "zu": "Abekho abasebenzi abaqeqeshiwe baleyo nsizakalo. Sicela uxhumane nesaluni ngqo.",
+    "af": "Geen gekwalifiseerde personeel is vir daardie diens beskikbaar nie. Kontak die salon direk.",
+    "xh": "Akukho basebenzi baqeqeshiweyo baloo nkonzo. Nceda uqhagamshelane nesaluni ngqo."
+  },
+  "That technician is no longer available for this service. Please choose another technician.": {
+    "zu": "Lowo msebenzi akasatholakali kule nsizakalo. Sicela ukhethe omunye umsebenzi.",
+    "af": "Daardie personeellid is nie meer vir hierdie diens beskikbaar nie. Kies asseblief iemand anders.",
+    "xh": "Loo msebenzi akasafumaneki kule nkonzo. Nceda ukhethe omnye umsebenzi."
+  },
+  "That technician is not available at this time. Please choose another time or technician.": {
+    "zu": "Lowo msebenzi akatholakali ngalesi sikhathi. Sicela ukhethe esinye isikhathi noma omunye umsebenzi.",
+    "af": "Daardie personeellid is nie op hierdie tyd beskikbaar nie. Kies 'n ander tyd of personeellid.",
+    "xh": "Loo msebenzi akafumaneki ngeli xesha. Nceda ukhethe elinye ixesha okanye omnye umsebenzi."
+  },
+  "The deposit details have changed. Please review a new booking summary before confirming.": {
+    "zu": "Imininingwane yediphozithi isishintshile. Sicela ubuyekeze isifinyezo esisha sokubhukha ngaphambi kokuqinisekisa.",
+    "af": "Die deposito se besonderhede het verander. Gaan 'n nuwe besprekingsopsomming na voordat jy bevestig.",
+    "xh": "Iinkcukacha zediphozithi zitshintshile. Nceda ujonge isishwankathelo esitsha sobhukisho phambi kokuqinisekisa."
+  },
+  "Online booking is currently disabled. Please contact the salon directly.": {
+    "zu": "Ukubhukha ku-inthanethi kuvaliwe okwamanje. Sicela uxhumane nesaluni ngqo.",
+    "af": "Aanlyn besprekings is tans afgeskakel. Kontak die salon direk.",
+    "xh": "Ukubhukisha kwi-intanethi kuvaliwe okwangoku. Nceda uqhagamshelane nesaluni ngqo."
+  },
+  "Please choose a date within the next year.": {
+    "zu": "Sicela ukhethe usuku phakathi nonyaka ozayo.",
+    "af": "Kies asseblief 'n datum binne die volgende jaar.",
+    "xh": "Nceda ukhethe umhla phakathi konyaka ozayo."
+  },
+  "I couldn't complete that booking. Please contact the salon directly.": {
+    "zu": "Angikwazanga ukuqedela lokho kubhukha. Sicela uxhumane nesaluni ngqo.",
+    "af": "Ek kon nie daardie bespreking voltooi nie. Kontak die salon direk.",
+    "xh": "Andikwazanga ukugqiba olo bhukisho. Nceda uqhagamshelane nesaluni ngqo."
+  },
+  "That date is not valid. Please use YYYY-MM-DD.": {
+    "zu": "Lolo suku aluvumelekile. Sicela usebenzise YYYY-MM-DD.",
+    "af": "Daardie datum is ongeldig. Gebruik asseblief YYYY-MM-DD.",
+    "xh": "Loo mhla awuchanekanga. Nceda usebenzise YYYY-MM-DD."
+  },
+  "We're open on {0} from {1} to {2} (South Africa).": {
+    "zu": "Sivula ngo-{0} kusukela ngo-{1} kuya ku-{2} (eNingizimu Afrika).",
+    "af": "Ons is op {0} oop van {1} tot {2} (Suid-Afrika).",
+    "xh": "Sivula ngo-{0} ukusuka ngo-{1} ukuya ku-{2} (eMzantsi Afrika)."
+  },
+  "We're closed on {0}.": {
+    "zu": "Sivaliwe ngo-{0}.",
+    "af": "Ons is op {0} gesluit.",
+    "xh": "Sivaliwe ngo-{0}."
+  },
+  "Please contact the salon directly to change or cancel an existing appointment.": {
+    "zu": "Sicela uxhumane nesaluni ngqo ukuze ushintshe noma ukhansele ukubhukha okukhona.",
+    "af": "Kontak die salon direk om 'n bestaande afspraak te verander of te kanselleer.",
+    "xh": "Nceda uqhagamshelane nesaluni ngqo ukuze utshintshe okanye urhoxise idinga elikhoyo."
+  },
+  "The salon needs to review your existing booking and its confirmation before I can make another booking. Please contact the salon directly to resolve it.": {
+    "zu": "Isaluni idinga ukubuyekeza ukubhukha kwakho okukhona nokuqinisekiswa kwakho ngaphambi kokunye ukubhukha. Sicela uxhumane nesaluni ngqo ukuze kuxazululwe.",
+    "af": "Die salon moet jou bestaande bespreking en bevestiging nagaan voordat ek nog een kan maak. Kontak die salon direk om dit op te los.",
+    "xh": "Isaluni kufuneka ihlole ubhukisho lwakho olukhoyo nesiqinisekiso salo phambi kokwenza obunye. Nceda uqhagamshelane nesaluni ngqo ukuze kusonjululwe."
+  },
+  "I cannot verify your existing booking details. Please contact the salon directly.": {
+    "zu": "Angikwazi ukuqinisekisa imininingwane yokubhukha kwakho okukhona. Sicela uxhumane nesaluni ngqo.",
+    "af": "Ek kan nie jou bestaande besprekingsbesonderhede verifieer nie. Kontak die salon direk.",
+    "xh": "Andikwazi ukuqinisekisa iinkcukacha zobhukisho lwakho olukhoyo. Nceda uqhagamshelane nesaluni ngqo."
+  },
+  "{0} at {1} (South Africa)": {
+    "zu": "{0} ngo-{1} (eNingizimu Afrika)",
+    "af": "{0} om {1} (Suid-Afrika)",
+    "xh": "{0} ngo-{1} (eMzantsi Afrika)"
+  },
+  "the recorded time": {
+    "zu": "isikhathi esirekhodiwe",
+    "af": "die aangetekende tyd",
+    "xh": "ixesha elirekhodiweyo"
+  },
+  "was cancelled": {
+    "zu": "kwakhanselwa",
+    "af": "is gekanselleer",
+    "xh": "lwarhoxiswa"
+  },
+  "is already recorded": {
+    "zu": "sekurekhodiwe",
+    "af": "is reeds aangeteken",
+    "xh": "sele lurekhodiwe"
+  },
+  "Manage this appointment: {0}": {
+    "zu": "Phatha lokhu kubhukha: {0}",
+    "af": "Bestuur hierdie afspraak: {0}",
+    "xh": "Lawula eli dinga: {0}"
+  },
+  "Please contact the salon directly to change an existing appointment.": {
+    "zu": "Sicela uxhumane nesaluni ngqo ukuze ushintshe ukubhukha okukhona.",
+    "af": "Kontak die salon direk om 'n bestaande afspraak te verander.",
+    "xh": "Nceda uqhagamshelane nesaluni ngqo ukuze utshintshe idinga elikhoyo."
+  },
+  "Your {0} appointment for {1} {2}. {3} For a separate appointment, say \"new booking\".": {
+    "zu": "Ukubhukha kwakho kwe-{0} ngo-{1} {2}. {3} Ukuze ubhukhe ngokwehlukile, thumela \"new booking\".",
+    "af": "Jou {0}-afspraak vir {1} {2}. {3} Sê \"new booking\" vir 'n aparte afspraak.",
+    "xh": "Ubhukisho lwakho lwe-{0} ngo-{1} {2}. {3} Ukuze wenze elinye idinga, thumela \"new booking\"."
+  },
+  "{0}{1} on {2} at {3} (South Africa), R{4}, for {5}.": {
+    "zu": "{0}{1} ngo-{2} ngo-{3} (eNingizimu Afrika), R{4}, ka-{5}.",
+    "af": "{0}{1} op {2} om {3} (Suid-Afrika), R{4}, vir {5}.",
+    "xh": "{0}{1} ngo-{2} ngo-{3} (eMzantsi Afrika), R{4}, ka-{5}."
+  },
+  " Deposit due: R{0}; payment is not collected in this chat.": {
+    "zu": " Idiphozithi edingekayo: R{0}; akukho nkokhelo eqoqwayo kule ngxoxo.",
+    "af": " Deposito verskuldig: R{0}; geen betaling word in hierdie gesprek ingevorder nie.",
+    "xh": " Idiphozithi efunekayo: R{0}; akukho ntlawulo iqokelelwayo kule ngxoxo."
+  },
+  "Preview complete: {0} No appointment was saved.": {
+    "zu": "Isibonelo siphelile: {0} Akukho kubhukha okulondoloziwe.",
+    "af": "Voorskou voltooi: {0} Geen afspraak is gestoor nie.",
+    "xh": "Umzekelo ugqityiwe: {0} Akukho dinga ligciniweyo."
+  },
+  "You're booked! {0}{1} See you then! ✨{2}": {
+    "zu": "Ukubhukha kwakho kuqinisekisiwe! {0}{1} Sizokubona-ke! ✨{2}",
+    "af": "Jou afspraak is bespreek! {0}{1} Sien jou dan! ✨{2}",
+    "xh": "Ubhukisho lwakho luqinisekisiwe! {0}{1} Sobonana ngoko! ✨{2}"
+  },
+  "I've stopped this booking request. Existing appointments are unchanged.": {
+    "zu": "Ngisimisile lesi sicelo sokubhukha. Ukubhukha okukhona akushintshile.",
+    "af": "Ek het hierdie besprekingsversoek gestop. Bestaande afsprake bly onveranderd.",
+    "xh": "Ndisimisile esi sicelo sokubhukisha. Amadinga akhoyo akatshintshanga."
+  },
+  "Hi! I can help with bookings, prices and opening hours. What would you like?": {
+    "zu": "Sawubona! Ngingakusiza ngokubhukha, amanani namahora okuvula. Ungathandani?",
+    "af": "Hallo! Ek kan help met besprekings, pryse en openingstye. Waarmee kan ek help?",
+    "xh": "Molo! Ndingakunceda ngokubhukisha, amaxabiso neeyure zokuvula. Ungathanda ntoni?"
+  },
+  "That date is not valid. What day would you like? You can use YYYY-MM-DD.": {
+    "zu": "Lolo suku aluvumelekile. Ufuna luphi usuku? Ungasebenzisa YYYY-MM-DD.",
+    "af": "Daardie datum is ongeldig. Watter dag verkies jy? Jy kan YYYY-MM-DD gebruik.",
+    "xh": "Loo mhla awuchanekanga. Ufuna luphi usuku? Ungasebenzisa YYYY-MM-DD."
+  },
+  "{0} is R{1} ({2} min). What day would you like?": {
+    "zu": "I-{0} ingu-R{1} ({2} min). Ufuna luphi usuku?",
+    "af": "{0} kos R{1} ({2} min). Watter dag verkies jy?",
+    "xh": "I-{0} yi-R{1} ({2} min). Ufuna luphi usuku?"
+  },
+  "There are no available times for {0} on {1}. Which other day would you like?": {
+    "zu": "Azikho izikhathi ezitholakalayo ze-{0} ngo-{1}. Ufuna luphi olunye usuku?",
+    "af": "Daar is geen tye vir {0} op {1} beskikbaar nie. Watter ander dag verkies jy?",
+    "xh": "Akukho maxesha afumanekayo e-{0} ngo-{1}. Ufuna luphi olunye usuku?"
+  },
+  "Please use a valid time. ": {
+    "zu": "Sicela usebenzise isikhathi esivumelekile. ",
+    "af": "Gebruik asseblief 'n geldige tyd. ",
+    "xh": "Nceda usebenzise ixesha elichanekileyo. "
+  },
+  "{0}Available times for {1} on {2}: {3} (South Africa). What time would you like?": {
+    "zu": "{0}Izikhathi ezitholakalayo ze-{1} ngo-{2}: {3} (eNingizimu Afrika). Ufuna siphi isikhathi?",
+    "af": "{0}Beskikbare tye vir {1} op {2}: {3} (Suid-Afrika). Watter tyd verkies jy?",
+    "xh": "{0}Amaxesha afumanekayo e-{1} ngo-{2}: {3} (eMzantsi Afrika). Ufuna liphi ixesha?"
+  },
+  " Available times: {0} (South Africa).": {
+    "zu": " Izikhathi ezitholakalayo: {0} (eNingizimu Afrika).",
+    "af": " Beskikbare tye: {0} (Suid-Afrika).",
+    "xh": " Amaxesha afumanekayo: {0} (eMzantsi Afrika)."
+  },
+  "What name should I put on your {0} booking for {1} at {2} (South Africa)?": {
+    "zu": "Ngisebenzise liphi igama ekubhukheni kwakho i-{0} ngo-{1} ngo-{2} (eNingizimu Afrika)?",
+    "af": "Watter naam moet ek gebruik vir jou {0}-bespreking op {1} om {2} (Suid-Afrika)?",
+    "xh": "Ndisebenzise liphi igama kubhukisho lwakho lwe-{0} ngo-{1} ngo-{2} (eMzantsi Afrika)?"
+  },
+  "\nTechnician: {0}\nTechnician reference: {1}": {
+    "zu": "\nUmsebenzi: {0}\nInombolo yomsebenzi: {1}",
+    "af": "\nPersoneellid: {0}\nPersoneelverwysing: {1}",
+    "xh": "\nUmsebenzi: {0}\nIsalathiso somsebenzi: {1}"
+  },
+  "\nDeposit: R{0} (payment is not collected in this chat)": {
+    "zu": "\nIdiphozithi: R{0} (akukho nkokhelo eqoqwayo kule ngxoxo)",
+    "af": "\nDeposito: R{0} (geen betaling word in hierdie gesprek ingevorder nie)",
+    "xh": "\nIdiphozithi: R{0} (akukho ntlawulo iqokelelwayo kule ngxoxo)"
+  },
+  "Please check these details, wait two seconds, then reply YES again. Tell me what to change if needed.": {
+    "zu": "Sicela uhlole le mininingwane, ulinde imizuzwana emibili, bese uphendula YES futhi. Ngitshele okufanele kushintshwe.",
+    "af": "Gaan hierdie besonderhede na, wag twee sekondes en antwoord weer YES. Sê wat verander moet word.",
+    "xh": "Nceda uhlole ezi nkcukacha, ulinde imizuzwana emibini, uze uphendule YES kwakhona. Ndixelele ekufuneka kutshintshwe."
+  },
+  "preview": {
+    "zu": "ubuke isibonelo",
+    "af": "'n voorskou te sien",
+    "xh": "ubone umzekelo"
+  },
+  "book": {
+    "zu": "ubhukhe",
+    "af": "te bespreek",
+    "xh": "ubhukishe"
+  },
+  "Reply YES to {0}, or tell me what to change.": {
+    "zu": "Phendula YES ukuze {0}, noma ungitshele okufanele kushintshwe.",
+    "af": "Antwoord YES om {0}, of sê wat verander moet word.",
+    "xh": "Phendula YES ukuze {0}, okanye undixelele ekufuneka kutshintshwe."
+  },
+  "\nThis is a simulator; no appointment will be saved.": {
+    "zu": "\nLesi yisibonelo; akukho kubhukha okuzolondolozwa.",
+    "af": "\nDit is 'n simulator; geen afspraak sal gestoor word nie.",
+    "xh": "\nLo ngumzekelo; akukho dinga liza kugcinwa."
+  },
+  "{0}\nService: {1}{2}\nDate: {3}\nTime: {4} (South Africa)\nName: {5}\nPrice: R{6}\nDuration: {7} min{8}\n{9}{10}": {
+    "zu": "{0}\nInsizakalo: {1}{2}\nUsuku: {3}\nIsikhathi: {4} (eNingizimu Afrika)\nIgama: {5}\nInani: R{6}\nUbude besikhathi: {7} min{8}\n{9}{10}",
+    "af": "{0}\nDiens: {1}{2}\nDatum: {3}\nTyd: {4} (Suid-Afrika)\nNaam: {5}\nPrys: R{6}\nDuur: {7} min{8}\n{9}{10}",
+    "xh": "{0}\nInkonzo: {1}{2}\nUmhla: {3}\nIxesha: {4} (eMzantsi Afrika)\nIgama: {5}\nIxabiso: R{6}\nUbude bexesha: {7} min{8}\n{9}{10}"
+  },
+  "Photo menu estimate only: the salon must check the work required and agree any price change with you before starting.": {
+    "zu": "Lesi yisilinganiso semenyu esivela esithombeni kuphela: isaluni kufanele ihlole umsebenzi odingekayo futhi ivumelane nawe nganoma yiluphi ushintsho lwenani ngaphambi kokuqala.",
+    "af": "Slegs 'n foto-gebaseerde spyskaartraming: die salon moet die nodige werk nagaan en enige prysverandering vooraf met jou ooreenkom.",
+    "xh": "Olu luqikelelo lwemenyu oluvela kwifoto kuphela: isaluni kufuneka ihlole umsebenzi ofunekayo ize ivumelane nawe ngalo naluphi utshintsho lwexabiso phambi kokuqala."
+  },
+  "I can’t safely estimate this from the photo. Please contact the salon directly for a consultation and a confirmed quote. No appointment has been made.": {
+    "zu": "Angikwazi ukulinganisela lokhu ngokuphepha ngesithombe. Sicela uxhumane nesaluni ngqo ukuze nixoxe futhi uthole inani eliqinisekisiwe. Akukho kubhukha okwenziwe.",
+    "af": "Ek kan dit nie veilig vanaf die foto skat nie. Kontak die salon direk vir 'n konsultasie en bevestigde kwotasie. Geen afspraak is gemaak nie.",
+    "xh": "Andikwazi ukuqikelela oku ngokukhuselekileyo ngefoto. Nceda uqhagamshelane nesaluni ngqo ukuze nixoxe uze ufumane ixabiso eliqinisekisiweyo. Akukho dinga lenziweyo."
+  },
+  "Photo estimates are not enabled for this salon yet. Please describe the look you want or send Bookings to choose from the salon’s menu. You can also contact the salon directly for a consultation.": {
+    "zu": "Izilinganiso zezithombe azikavulwa kule saluni. Chaza okufunayo noma uthumele Bookings ukuze ukhethe kumenyu yesaluni. Ungaxhumana nesaluni ngqo ukuze nixoxe.",
+    "af": "Fotoramings is nog nie vir hierdie salon aangeskakel nie. Beskryf die voorkoms wat jy wil hê of stuur Bookings om uit die salon se spyskaart te kies. Jy kan die salon ook direk vir 'n konsultasie kontak.",
+    "xh": "Uqikelelo lweefoto alukavulwa kule saluni. Chaza okufunayo okanye uthumele Bookings ukuze ukhethe kwimenyu yesaluni. Ungaqhagamshelana nesaluni ngqo ukuze nixoxe."
+  },
+  "Before analysing: with your permission I’ll send this photo and the style details you provide to Anthropic for automated service matching. Only share a reference or your own photo that you have permission to use, without other people or private health information. BeautyDesk does not save the image file; its temporary reference expires after 30 minutes. Anthropic’s processing and retention are explained in the salon’s privacy notice: {0}. Reply I AGREE to continue, or NO to use text booking. This does not book an appointment.": {
+    "zu": "Ngaphambi kokuhlaziya: ngemvume yakho ngizothumela lesi sithombe nemininingwane yesitayela oyinikezayo ku-Anthropic ukuze kuqhathaniswe izinsizakalo ngokuzenzakalela. Yabelana kuphela ngesithombe esiyisibonelo noma esakho onemvume yokusisebenzisa, esingenabo abanye abantu noma imininingwane yezempilo eyimfihlo. I-BeautyDesk ayigcini ifayela lesithombe; ireferensi yesikhashana iphelelwa ngemva kwemizuzu engu-30. Ukucubungula nokugcinwa kwe-Anthropic kuchazwe esazisweni sobumfihlo sesaluni: {0}. Phendula I AGREE ukuze uqhubeke, noma NO ukuze ubhukhe ngombhalo. Lokhu akubhukhi isikhathi.",
+    "af": "Voor ontleding: met jou toestemming stuur ek hierdie foto en jou stylbesonderhede aan Anthropic vir outomatiese dienspassing. Deel slegs 'n verwysingsfoto of jou eie foto waarvoor jy gebruikstoestemming het, sonder ander mense of private gesondheidsinligting. BeautyDesk stoor nie die beeldlêer nie; die tydelike verwysing verval ná 30 minute. Anthropic se verwerking en bewaring word in die salon se privaatheidskennisgewing verduidelik: {0}. Antwoord I AGREE om voort te gaan, of NO vir teksbespreking. Dit bespreek nie 'n afspraak nie.",
+    "xh": "Phambi kohlalutyo: ngemvume yakho ndiza kuthumela le foto neenkcukacha zesimbo ozinikayo ku-Anthropic ukuze kuthelekiswe iinkonzo ngokuzenzekelayo. Yabelana kuphela ngefoto engumzekelo okanye eyakho onemvume yokuyisebenzisa, engenabanye abantu okanye iinkcukacha zempilo zabucala. I-BeautyDesk ayigcini ifayile yomfanekiso; isalathiso sexeshana siphelelwa emva kwemizuzu engama-30. Ukucubungula nokugcinwa kwe-Anthropic kuchazwe kwisaziso sabucala sesaluni: {0}. Phendula I AGREE ukuze uqhubeke, okanye NO ukuze ubhukishe ngombhalo. Oku akubhukishi dinga."
+  },
+  "Is this a REFERENCE photo of the look you want, or a CURRENT photo of your own hair, nails or style? Reply REFERENCE or CURRENT. Please use one clear photo without unrelated people.": {
+    "zu": "Ingabe lesi yisithombe esiyisibonelo sokufunayo (REFERENCE), noma esezinwele, izinzipho noma isitayela sakho samanje (CURRENT)? Phendula REFERENCE noma CURRENT. Sicela usebenzise isithombe esisodwa esicacile esingenabo abantu abangahlobene.",
+    "af": "Is dit 'n verwysingsfoto van die voorkoms wat jy wil hê (REFERENCE), of 'n huidige foto van jou eie hare, naels of styl (CURRENT)? Antwoord REFERENCE of CURRENT. Gebruik een duidelike foto sonder ander mense.",
+    "xh": "Ingaba le yifoto engumzekelo wento oyifunayo (REFERENCE), okanye eyeenwele, iinzipho okanye isimbo sakho sangoku (CURRENT)? Phendula REFERENCE okanye CURRENT. Nceda usebenzise ifoto enye ecacileyo engenabanye abantu."
+  },
+  "In one message, describe your desired result and your current length and condition, including existing colour, extensions, gel or other product where relevant. Don’t include private health information. Say CONSULTATION if you’re unsure. A photo cannot establish condition, treatment suitability or a guaranteed outcome.": {
+    "zu": "Ngomyalezo owodwa, chaza umphumela owufunayo nobude nesimo samanje, ufake umbala, izandiso, ijeli noma omunye umkhiqizo lapho kufanele khona. Ungafaki imininingwane yezempilo eyimfihlo. Thumela CONSULTATION uma ungaqiniseki. Isithombe asikwazi ukuqinisekisa isimo, ukufaneleka kokwelashwa noma umphumela.",
+    "af": "Beskryf in een boodskap die gewenste resultaat en huidige lengte en toestand, met bestaande kleur, verlengings, jel of ander produkte waar toepaslik. Moenie private gesondheidsinligting insluit nie. Stuur CONSULTATION as jy onseker is. 'n Foto kan nie toestand, geskiktheid van behandeling of 'n gewaarborgde resultaat bepaal nie.",
+    "xh": "Ngomyalezo omnye, chaza isiphumo osifunayo nobude nemeko yangoku, ufake umbala, izandiso, ijeli okanye omnye umveliso apho kufanelekile. Ungafaki iinkcukacha zempilo zabucala. Thumela CONSULTATION ukuba awuqinisekanga. Ifoto ayikwazi ukuqinisekisa imeko, ukufaneleka konyango okanye isiphumo."
+  },
+  "Please continue your booking or reply CANCEL to stop this request.": {
+    "zu": "Sicela uqhubeke nokubhukha noma uphendule CANCEL ukuze umise lesi sicelo.",
+    "af": "Gaan voort met jou bespreking of antwoord CANCEL om hierdie versoek te stop.",
+    "xh": "Nceda uqhubeke nokubhukisha okanye uphendule CANCEL ukuze umise esi sicelo."
+  },
+  "{0}. {1}: estimated R{2}, {3} min. Includes: {4}": {
+    "zu": "{0}. {1}: kulinganiselwa ku-R{2}, {3} min. Kufaka: {4}",
+    "af": "{0}. {1}: geraamde R{2}, {3} min. Sluit in: {4}",
+    "xh": "{0}. {1}: kuqikelelwa kwi-R{2}, {3} min. Kubandakanya: {4}"
+  },
+  " (or BOOK 2{0})": {
+    "zu": " (noma BOOK 2{0})",
+    "af": " (of BOOK 2{0})",
+    "xh": " (okanye BOOK 2{0})"
+  },
+  "Photo-based menu estimate, subject to the salon checking your hair/nails and the work required:\n{0}\nThese are possible matches from this salon’s approved menu. A photo cannot guarantee the result or final cost. Extra work or add-ons are not included unless listed; contact the salon for those. Reply BOOK 1{1} to choose a service and continue to available times, or CONSULTATION. Nothing is booked yet.": {
+    "zu": "Isilinganiso semenyu esivela esithombeni, esincike ekuhloleni izinwele/izinzipho zakho nomsebenzi odingekayo esaluni:\n{0}\nLezi yizinsizakalo ezingahle zifane nezidingo zakho ezisuka kumenyu evunyelwe yale saluni. Isithombe asiqinisekisi umphumela noma inani lokugcina. Umsebenzi owengeziwe nezinto ezengeziwe azifakiwe ngaphandle kokuthi zibhalwe; xhumana nesaluni ngazo. Phendula BOOK 1{1} ukuze ukhethe insizakalo uqhubekele ezikhathini ezitholakalayo, noma CONSULTATION. Akukho okubhukhiwe okwamanje.",
+    "af": "Foto-gebaseerde spyskaartraming, onderhewig aan die salon se ondersoek van jou hare/naels en die nodige werk:\n{0}\nDit is moontlike passings uit hierdie salon se goedgekeurde spyskaart. 'n Foto waarborg nie die resultaat of finale koste nie. Ekstra werk of byvoegings is slegs ingesluit indien aangedui; kontak die salon daaroor. Antwoord BOOK 1{1} om 'n diens te kies en na beskikbare tye te gaan, of CONSULTATION. Niks is nog bespreek nie.",
+    "xh": "Uqikelelo lwemenyu oluvela kwifoto, oluxhomekeke ekuhloleni iinwele/iinzipho zakho nomsebenzi ofunekayo esaluni:\n{0}\nEzi ziinkonzo ezinokuhambelana neemfuno zakho ezivela kwimenyu evunyiweyo yale saluni. Ifoto ayiqinisekisi isiphumo okanye ixabiso lokugqibela. Umsebenzi nezinto ezongezelelweyo azibandakanywanga ngaphandle kokuba zidwelisiwe; qhagamshelana nesaluni ngazo. Phendula BOOK 1{1} ukuze ukhethe inkonzo uqhubekele kumaxesha afumanekayo, okanye CONSULTATION. Akukho nto ibhukishiweyo okwangoku."
+  },
+  "Your existing appointment is unchanged. Please contact the salon to change it. For a separate appointment, say new booking before sending a photo.": {
+    "zu": "Ukubhukha kwakho okukhona akushintshile. Xhumana nesaluni ukuze ukushintshe. Ukuze wenze okunye ukubhukha, thumela new booking ngaphambi kokuthumela isithombe.",
+    "af": "Jou bestaande afspraak bly onveranderd. Kontak die salon om dit te verander. Stuur new booking voor 'n foto vir 'n aparte afspraak.",
+    "xh": "Idinga lakho elikhoyo alitshintshanga. Qhagamshelana nesaluni ukuze ulitshintshe. Ukuze wenze elinye idinga, thumela new booking phambi kokuthumela ifoto."
+  },
+  "That older or unavailable photo has not replaced your current request.\n{0}": {
+    "zu": "Leso sithombe esidala noma esingatholakali asishintshanga isicelo sakho samanje.\n{0}",
+    "af": "Daardie ouer of onbeskikbare foto het nie jou huidige versoek vervang nie.\n{0}",
+    "xh": "Loo foto indala okanye engafumanekiyo ayitshintshanga isicelo sakho sangoku.\n{0}"
+  },
+  "This photo is unavailable or unsupported. Please send one clear JPEG or PNG photo, or contact the salon for a consultation.": {
+    "zu": "Lesi sithombe asitholakali noma asisekelwa. Sicela uthumele isithombe esisodwa esicacile se-JPEG noma PNG, noma uxhumane nesaluni ukuze nixoxe.",
+    "af": "Hierdie foto is onbeskikbaar of word nie ondersteun nie. Stuur een duidelike JPEG- of PNG-foto, of kontak die salon vir 'n konsultasie.",
+    "xh": "Le foto ayifumaneki okanye ayixhaswa. Nceda uthumele ifoto enye ecacileyo ye-JPEG okanye PNG, okanye uqhagamshelane nesaluni ukuze nixoxe."
+  },
+  "That photo request has ended or expired. Send a new photo for a fresh estimate, or send Bookings to start a text booking. Existing appointments are unchanged.": {
+    "zu": "Leso sicelo sesithombe siphelile noma siphelelwe yisikhathi. Thumela isithombe esisha ukuze uthole isilinganiso esisha, noma Bookings ukuze ubhukhe ngombhalo. Ukubhukha okukhona akushintshile.",
+    "af": "Daardie fotoversoek is beëindig of het verval. Stuur 'n nuwe foto vir 'n nuwe raming, of Bookings vir 'n teksbespreking. Bestaande afsprake bly onveranderd.",
+    "xh": "Eso sicelo sefoto siphelile okanye siphelelwe lixesha. Thumela ifoto entsha ukuze ufumane uqikelelo olutsha, okanye Bookings ukuze ubhukishe ngombhalo. Amadinga akhoyo akatshintshanga."
+  },
+  "I've stopped this booking request and removed the temporary photo reference. Existing appointments are unchanged. Send Bookings to choose a service without a photo.": {
+    "zu": "Ngisimisile lesi sicelo sokubhukha futhi ngasusa ireferensi yesithombe yesikhashana. Ukubhukha okukhona akushintshile. Thumela Bookings ukuze ukhethe insizakalo ngaphandle kwesithombe.",
+    "af": "Ek het hierdie besprekingsversoek gestop en die tydelike fotoverwysing verwyder. Bestaande afsprake bly onveranderd. Stuur Bookings om 'n diens sonder 'n foto te kies.",
+    "xh": "Ndisimisile esi sicelo sokubhukisha ndaza ndasusa isalathiso sefoto sexeshana. Amadinga akhoyo akatshintshanga. Thumela Bookings ukuze ukhethe inkonzo ngaphandle kwefoto."
+  },
+  "Your existing appointment is unchanged. Please contact the salon before making any changes.": {
+    "zu": "Ukubhukha kwakho okukhona akushintshile. Sicela uxhumane nesaluni ngaphambi kokwenza ushintsho.",
+    "af": "Jou bestaande afspraak bly onveranderd. Kontak die salon voordat jy enige veranderinge maak.",
+    "xh": "Idinga lakho elikhoyo alitshintshanga. Nceda uqhagamshelane nesaluni phambi kokwenza utshintsho."
+  },
+  "The salon’s service details have changed since your estimate. Please send a new photo for a fresh estimate, or send Bookings to choose from the current menu. Nothing new has been booked.": {
+    "zu": "Imininingwane yezinsizakalo zesaluni isishintshile kusukela esilinganisweni sakho. Thumela isithombe esisha ukuze uthole isilinganiso esisha, noma Bookings ukuze ukhethe kumenyu yamanje. Akukho okusha okubhukhiwe.",
+    "af": "Die salon se diensbesonderhede het sedert jou raming verander. Stuur 'n nuwe foto vir 'n nuwe raming, of Bookings vir die huidige spyskaart. Geen nuwe afspraak is bespreek nie.",
+    "xh": "Iinkcukacha zeenkonzo zesaluni zitshintshile ukusukela kuqikelelo lwakho. Thumela ifoto entsha ukuze ufumane uqikelelo olutsha, okanye Bookings ukuze ukhethe kwimenyu yangoku. Akukho nto intsha ibhukishiweyo."
+  },
+  "Please read this message, wait two seconds, then reply.\n{0}": {
+    "zu": "Sicela ufunde lo myalezo, ulinde imizuzwana emibili, bese uphendula.\n{0}",
+    "af": "Lees hierdie boodskap, wag twee sekondes en antwoord dan.\n{0}",
+    "xh": "Nceda ufunde lo myalezo, ulinde imizuzwana emibini, uze uphendule.\n{0}"
+  },
+  "The temporary photo reference expired. Please send a new photo, or contact the salon directly.": {
+    "zu": "Ireferensi yesithombe yesikhashana isiphelelwe yisikhathi. Sicela uthumele isithombe esisha noma uxhumane nesaluni ngqo.",
+    "af": "Die tydelike fotoverwysing het verval. Stuur 'n nuwe foto of kontak die salon direk.",
+    "xh": "Isalathiso sefoto sexeshana siphelelwe lixesha. Nceda uthumele ifoto entsha okanye uqhagamshelane nesaluni ngqo."
+  },
+  "The salon’s menu changed after that estimate. Please send a new photo for a fresh estimate, or send Bookings for the current menu.": {
+    "zu": "Imenyu yesaluni isishintshile ngemva kwaleso silinganiso. Thumela isithombe esisha ukuze uthole isilinganiso esisha, noma Bookings ukuze ubone imenyu yamanje.",
+    "af": "Die salon se spyskaart het ná daardie raming verander. Stuur 'n nuwe foto vir 'n nuwe raming, of Bookings vir die huidige spyskaart.",
+    "xh": "Imenyu yesaluni itshintshile emva kolo qikelelo. Thumela ifoto entsha ukuze ufumane uqikelelo olutsha, okanye Bookings ukuze ubone imenyu yangoku."
+  },
+  "That photo request needs a fresh start. Please send a new photo or contact the salon directly. No new appointment has been made.": {
+    "zu": "Leso sicelo sesithombe sidinga ukuqala kabusha. Sicela uthumele isithombe esisha noma uxhumane nesaluni ngqo. Akukho kubhukha okusha okwenziwe.",
+    "af": "Daardie fotoversoek moet van voor af begin. Stuur 'n nuwe foto of kontak die salon direk. Geen nuwe afspraak is gemaak nie.",
+    "xh": "Eso sicelo sefoto kufuneka siqale ngokutsha. Nceda uthumele ifoto entsha okanye uqhagamshelane nesaluni ngqo. Akukho dinga litsha lenziweyo."
+  },
+  "Mon": {
+    "zu": "Msombuluko",
+    "af": "Maandag",
+    "xh": "Mvulo"
+  },
+  "Tue": {
+    "zu": "Lwesibili",
+    "af": "Dinsdag",
+    "xh": "Lwesibini"
+  },
+  "Wed": {
+    "zu": "Lwesithathu",
+    "af": "Woensdag",
+    "xh": "Lwesithathu"
+  },
+  "Thu": {
+    "zu": "Lwesine",
+    "af": "Donderdag",
+    "xh": "Lwesine"
+  },
+  "Fri": {
+    "zu": "Lwesihlanu",
+    "af": "Vrydag",
+    "xh": "Lwesihlanu"
+  },
+  "Sat": {
+    "zu": "Mgqibelo",
+    "af": "Saterdag",
+    "xh": "Mgqibelo"
+  },
+  "Sun": {
+    "zu": "Sonto",
+    "af": "Sondag",
+    "xh": "Cawe"
+  },
+  "confirmed": {
+    "zu": "kuqinisekisiwe",
+    "af": "bevestig",
+    "xh": "liqinisekisiwe"
+  },
+  "pending": {
+    "zu": "kulindile",
+    "af": "hangende",
+    "xh": "lisalindile"
+  }
+}

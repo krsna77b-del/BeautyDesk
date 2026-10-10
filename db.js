@@ -160,6 +160,20 @@ CREATE INDEX IF NOT EXISTS message_conversation ON messages(client_id, customer_
 addColumnIfMissing('whatsapp_jobs', 'sender_phone_number_id TEXT');
 addColumnIfMissing('whatsapp_jobs', 'reply_context_id TEXT');
 
+// Customer language is tenant + verified WhatsApp sender scoped, independent of CRM.
+db.exec(`CREATE TABLE IF NOT EXISTS whatsapp_customer_languages (
+  client_id TEXT NOT NULL,
+  customer_phone TEXT NOT NULL,
+  language TEXT CHECK(language IN ('en','zu','af','xh')),
+  choosing INTEGER NOT NULL DEFAULT 0 CHECK(choosing IN (0,1)),
+  updated_at_ms INTEGER NOT NULL,
+  PRIMARY KEY(client_id,customer_phone)
+)`);
+addColumnIfMissing('messages', 'canonical_body TEXT');
+addColumnIfMissing('messages', 'message_format_json TEXT');
+addColumnIfMissing('messages', 'customer_language TEXT');
+addColumnIfMissing('messages', 'language_control INTEGER NOT NULL DEFAULT 0');
+
 // Photo workflow is opt-in at host, salon and service levels. No image bytes,
 // media URLs or free-form vision response are stored in this database.
 addColumnIfMissing('clients', 'photo_estimates_enabled INTEGER NOT NULL DEFAULT 0');
